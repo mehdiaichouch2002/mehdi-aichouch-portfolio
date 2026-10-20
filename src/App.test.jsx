@@ -35,7 +35,7 @@ describe("Experience and education", () => {
   test("shows the ENSA diploma with honours and no dates on diplomas", () => {
     render(<App />);
 
-    const diploma = screen.getByText(/university diploma \(bac\+3\)/i).closest("li");
+    const diploma = screen.getByText(/university licence \(bac\+3\)/i).closest("li");
     expect(within(diploma).getByText(/mention très bien/i)).toBeInTheDocument();
     expect(within(diploma).queryByText(/20\d\d/)).not.toBeInTheDocument();
   });
@@ -44,6 +44,7 @@ describe("Experience and education", () => {
     render(<App />);
 
     expect(screen.getByText(/jan 2024 – jul 2026/i)).toBeInTheDocument();
+    expect(screen.getByText(/aug 2026 – present/i)).toBeInTheDocument();
   });
 });
 
@@ -72,14 +73,14 @@ describe("Projects", () => {
 });
 
 describe("Resume modal", () => {
-  test("opens with a role choice and download buttons", () => {
+  test("opens with a download button per language", () => {
     render(<App />);
 
     fireEvent.click(screen.getByRole("button", { name: /download resume/i }));
 
     const dialog = screen.getByRole("dialog", { name: /download my resume/i });
-    expect(within(dialog).getByRole("radio", { name: /magento 2/i })).toBeInTheDocument();
     expect(within(dialog).getByRole("button", { name: /english \(pdf\)/i })).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: /french \(pdf\)/i })).toBeInTheDocument();
   });
 });
 

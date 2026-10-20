@@ -1,12 +1,15 @@
 import { useLanguage } from "../context/LanguageContext";
 
-// Mirrors the Skills section of the resume PDFs in public/
+// Mirrors the Skills section of the resume PDFs in public/. "also" holds what I've
+// studied or used outside production, kept apart so it doesn't read as daily stack.
 const SKILL_GROUPS = {
-  backend: ["PHP 8", "Laravel", "Magento 2 / Adobe Commerce", "Java / Spring Boot", "C# / .NET", "Python"],
-  frontend: ["React", "JavaScript (ES6+)", "Alpine.js", "Tailwind CSS", "Hyvä", "Knockout.js"],
-  apis: ["REST API design", "OAuth2 / JWT", "Microsoft Entra ID SSO", "RBAC", "Amplience", "Adyen"],
+  backend: ["PHP 8", "Magento 2.4.x / Adobe Commerce", "Laravel", "Bagisto"],
+  frontend: ["Hyvä", "Alpine.js", "Tailwind CSS", "React", "JavaScript (ES6+)", "Knockout.js"],
+  apis: ["REST API design", "JWT / OAuth2", "Microsoft Entra ID SSO", "RBAC", "Amplience", "Adyen", "PayPal"],
   data: ["MySQL", "Elasticsearch / OpenSearch", "Redis", "Varnish"],
-  devops: ["Docker", "Git / GitHub", "CI/CD", "Nginx", "Linux", "Composer"],
+  tools: ["Docker", "Git / GitHub", "CI/CD (GitHub Actions)", "Nginx", "Linux (Ubuntu)", "Composer", "Claude Code / MCP"],
+  quality: ["PHPStan", "Xdebug", "Pest", "Playwright"],
+  also: ["Java / Java EE", "Spring Boot", "C# / .NET", "Python"],
 };
 
 const Skills = () => {
@@ -20,16 +23,21 @@ const Skills = () => {
           <p className="mt-4 text-muted leading-relaxed max-w-[22rem]">{t("skills.description")}</p>
         </div>
 
-        <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+        <dl className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
           {Object.entries({ ...SKILL_GROUPS, languages: t("skills.spoken") }).map(([group, skills]) => (
             <div key={group}>
               <dt className="font-display font-bold text-fg text-[1rem] pb-2 border-b border-muted">
                 {t(`skills.groups.${group}`)}
               </dt>
               <dd>
-                <ul>
+                <ul className="mt-3 flex flex-wrap gap-2">
                   {skills.map((skill) => (
-                    <li key={skill} className="py-2 border-b border-line text-fg/85">
+                    <li
+                      key={skill}
+                      className={`px-3 py-1.5 rounded-md border border-line text-[0.95rem] ${
+                        group === "also" ? "text-muted" : "text-fg/85"
+                      }`}
+                    >
                       {skill}
                     </li>
                   ))}

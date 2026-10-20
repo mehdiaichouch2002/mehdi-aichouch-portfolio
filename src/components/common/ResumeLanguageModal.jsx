@@ -1,20 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FiDownload, FiX } from "react-icons/fi";
 import { useResumeModal } from "../../context/ResumeModalContext";
 import { useLanguage } from "../../context/LanguageContext";
 
-// Files live in public/ as MEHDI-AICHOUCH-<ROLE>-<LANG>.pdf
-const ROLES = ["fullstack", "magento2"];
+// Files live in public/ as MEHDI-AICHOUCH-<LANG>.pdf (one resume covers Magento and full-stack)
 const LANGS = ["en", "fr"];
 
 const ResumeLanguageModal = () => {
   const { isOpen, close } = useResumeModal();
   const { t, lang } = useLanguage();
-  const [role, setRole] = useState(ROLES[0]);
   const dialogRef = useRef(null);
 
   const handleDownload = (language) => {
-    const fileName = `MEHDI-AICHOUCH-${role.toUpperCase()}-${language.toUpperCase()}.pdf`;
+    const fileName = `MEHDI-AICHOUCH-${language.toUpperCase()}.pdf`;
     const link = document.createElement("a");
     link.href = `/${fileName}`;
     link.download = fileName;
@@ -64,27 +62,7 @@ const ResumeLanguageModal = () => {
         </h2>
         <p className="mt-1 text-muted">{t("resumeModal.subtitle")}</p>
 
-        <div
-          role="radiogroup"
-          aria-label={t("resumeModal.roleLabel")}
-          className="mt-6 grid grid-cols-2 gap-1 p-1 bg-canvas rounded-md border border-line"
-        >
-          {ROLES.map((r) => (
-            <button
-              key={r}
-              role="radio"
-              aria-checked={role === r}
-              onClick={() => setRole(r)}
-              className={`py-2 px-3 rounded font-semibold transition-colors ${
-                role === r ? "bg-fg text-canvas" : "text-muted hover:text-fg"
-              }`}
-            >
-              {t(`resumeModal.${r}`)}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-4 grid gap-2">
+        <div className="mt-6 grid gap-2">
           {langOrder.map((l, i) => (
             <button
               key={l}

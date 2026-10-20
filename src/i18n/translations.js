@@ -11,7 +11,7 @@ const translations = {
       headline: "I build Magento 2 stores for European brands.",
       description:
         "Full-stack developer with three years on the Magento 2 platforms of Carhartt WIP, Anita and Edwin Europe. I work in PHP, Laravel and React, from REST APIs and integrations to fast Hyvä storefronts.",
-      availability: "Available immediately · Based in Fès, Morocco",
+      availability: "Available immediately · Based in Fès, Morocco · Open to remote, hybrid or on-site",
       cta: "See my work",
       resume: "Download resume",
       liveStores: "Live stores I've worked on",
@@ -20,7 +20,7 @@ const translations = {
     about: {
       title: "Experience",
       intro:
-        "Three years building Magento 2 and Laravel features end to end at Cartware / Morocommerce in Fès, backed by a Bac+3 university diploma in web frameworks and Java EE.",
+        "Three years on Magento 2 / Adobe Commerce and Laravel: at Cartware / Morocommerce in Fès until the company closed, then freelance since August 2026. Backed by a Bac+3 university licence in web frameworks and Java EE.",
       educationTitle: "Education",
       certificationTitle: "Certification",
     },
@@ -72,9 +72,11 @@ const translations = {
       groups: {
         backend: "Backend",
         frontend: "Frontend",
-        apis: "APIs and auth",
+        apis: "APIs and integrations",
         data: "Data and performance",
-        devops: "DevOps",
+        tools: "Tools and DevOps",
+        quality: "Testing and quality",
+        also: "Also worked with",
         languages: "Spoken languages",
       },
       spoken: ["Arabic, native", "English, professional (B2)", "French, intermediate (B1)"],
@@ -101,10 +103,7 @@ const translations = {
     },
     resumeModal: {
       title: "Download my resume",
-      subtitle: "Pick the version that fits the role.",
-      roleLabel: "Resume version",
-      fullstack: "Full-Stack",
-      magento2: "Magento 2",
+      subtitle: "Magento 2 / Adobe Commerce and full-stack PHP, in one PDF.",
       english: "English (PDF)",
       french: "French (PDF)",
       cancel: "Close",
@@ -128,15 +127,27 @@ const translations = {
     },
     experience: [
       {
-        org: "Cartware / Morocommerce, Fès",
-        role: "Magento 2 developer (full-stack)",
-        date: "Jan 2024 – Jul 2026",
+        org: "Self-employed · Remote",
+        role: "Full-stack developer (freelance)",
+        date: "Aug 2026 – Present",
+        note: "Client projects through agencies, plus a Magento 2 bug-fix service on Fiverr.",
         points: [
-          "Built and maintained features end to end on three Magento 2.4 platforms (Carhartt WIP B2B, Anita, Edwin Europe) serving 50,000+ monthly users.",
-          "Cut product listing load time from 3.2s to 0.8s through Elasticsearch mapping, MySQL query and index tuning, and Redis and Varnish caching.",
-          "Delivered Hyvä storefronts with Alpine.js and Tailwind CSS: 40% faster page loads, Google PageSpeed consistently above 95.",
-          "Integrated Microsoft Entra ID single sign-on and designed the REST API layer for the Carhartt WIP digital asset integration.",
-          "Refactored 50,000+ lines of legacy code and stabilised Docker and CI/CD pipelines, cutting production bugs by 45%.",
+          "Building the online store of a Moroccan home-appliance retailer (via the agency J2HB) on Laravel 12 / Bagisto, PHP 8.3, MySQL 8 and Redis: stock management, guest checkout, cash on delivery, prices in dirhams.",
+          "Shipped the storefront in French, Arabic (RTL), English and Spanish, with PayPal and EUR conversion wired in and ready to switch on.",
+          "Migrated the old site's full catalogue (categories, products, prices, images, stock) into seeders, with a one-command Docker setup and Pest and Playwright tests in all four languages.",
+        ],
+      },
+      {
+        org: "Cartware / Morocommerce, Fès",
+        role: "Magento 2 / Adobe Commerce developer",
+        date: "Jan 2024 – Jul 2026",
+        note: "Full-time permanent contract, ended when the company closed.",
+        points: [
+          "Built and maintained features on three Magento 2.4.x stores (Carhartt WIP B2B, Anita, Edwin Europe) serving 50,000+ monthly users, including tiered pricing, catalogue permissions and REST stock sync.",
+          "Designed the REST API of Carhartt WIP's digital asset management app (service contracts, webapi.xml): image data, Amplience CDN URLs and JWT auth. Added Microsoft Entra ID single sign-on with JWKS validation.",
+          "Cut product listing load time from 3.2s to 0.8s through Elasticsearch mapping, MySQL indexes, Redis and Varnish, and delivered Hyvä storefronts scoring 95+ on Google PageSpeed.",
+          "Created Cartware_Translation, an admin module with CSV import and bulk upsert; patched a MySQL collation error caused by invalid UTF-8 in URL paths; set up Apple Pay on Adyen for Edwin.",
+          "Built the Docker environments for Carhartt B2B and Edwin and rolled out Claude Code with MCP servers (Playwright, MySQL) to the team. Legacy refactoring cut production bugs by 45%.",
         ],
       },
       {
@@ -144,8 +155,7 @@ const translations = {
         role: "Laravel developer (internship)",
         date: "Aug – Dec 2023",
         points: [
-          "Built a full-stack internal management platform with Laravel 10 and Tailwind CSS, used daily by 25+ employees.",
-          "Implemented role-based access control and optimised the underlying queries, halving response times.",
+          "Built an internal management platform used daily by 25+ employees (Laravel 10, Tailwind CSS): 15+ REST endpoints and role-based access control, with query tuning that halved response times.",
         ],
       },
       {
@@ -160,7 +170,7 @@ const translations = {
     education: [
       {
         org: "ENSA Fès, Sidi Mohamed Ben Abdellah University",
-        degree: "University diploma (Bac+3) in Web Development Frameworks & Java EE",
+        degree: "University licence (Bac+3) in Web Frameworks & Java EE",
         note: "Graduated with highest honours (mention Très Bien). Java EE, Spring Boot, C# / .NET, software architecture.",
       },
       {
@@ -188,7 +198,7 @@ const translations = {
       headline: "Je développe des boutiques Magento 2 pour des marques européennes.",
       description:
         "Développeur full-stack avec trois ans d'expérience sur les plateformes Magento 2 de Carhartt WIP, Anita et Edwin Europe. Je travaille en PHP, Laravel et React, des API REST et intégrations jusqu'aux vitrines Hyvä rapides.",
-      availability: "Disponible immédiatement · Basé à Fès, Maroc",
+      availability: "Disponible immédiatement · Basé à Fès, Maroc · Télétravail, hybride ou sur site",
       cta: "Voir mes projets",
       resume: "Télécharger le CV",
       liveStores: "Boutiques en ligne sur lesquelles j'ai travaillé",
@@ -197,7 +207,7 @@ const translations = {
     about: {
       title: "Parcours",
       intro:
-        "Trois ans à développer des fonctionnalités Magento 2 et Laravel de bout en bout chez Cartware / Morocommerce à Fès, avec un diplôme d'université Bac+3 en frameworks web et Java EE.",
+        "Trois ans sur Magento 2 / Adobe Commerce et Laravel : chez Cartware / Morocommerce à Fès jusqu'à la fermeture de l'entreprise, puis en freelance depuis août 2026. Avec une licence d'université Bac+3 en frameworks web et Java EE.",
       educationTitle: "Formation",
       certificationTitle: "Certification",
     },
@@ -249,9 +259,11 @@ const translations = {
       groups: {
         backend: "Backend",
         frontend: "Frontend",
-        apis: "API et authentification",
+        apis: "API et intégrations",
         data: "Données et performance",
-        devops: "DevOps",
+        tools: "Outils et DevOps",
+        quality: "Tests et qualité",
+        also: "Également",
         languages: "Langues",
       },
       spoken: ["Arabe, langue maternelle", "Anglais, professionnel (B2)", "Français, intermédiaire (B1)"],
@@ -278,10 +290,7 @@ const translations = {
     },
     resumeModal: {
       title: "Télécharger mon CV",
-      subtitle: "Choisissez la version adaptée au poste.",
-      roleLabel: "Version du CV",
-      fullstack: "Full-Stack",
-      magento2: "Magento 2",
+      subtitle: "Magento 2 / Adobe Commerce et full-stack PHP, en un seul PDF.",
       english: "Anglais (PDF)",
       french: "Français (PDF)",
       cancel: "Fermer",
@@ -305,15 +314,27 @@ const translations = {
     },
     experience: [
       {
-        org: "Cartware / Morocommerce, Fès",
-        role: "Développeur Magento 2 (full-stack)",
-        date: "Janv. 2024 – Juil. 2026",
+        org: "Indépendant · À distance",
+        role: "Développeur full-stack freelance",
+        date: "Depuis août 2026",
+        note: "Projets clients via des agences, et une offre de correction de bugs Magento 2 sur Fiverr.",
         points: [
-          "Développement et maintenance de fonctionnalités de bout en bout sur trois plateformes Magento 2.4 (Carhartt WIP B2B, Anita, Edwin Europe) servant plus de 50 000 utilisateurs par mois.",
-          "Temps de chargement des listes produits réduit de 3,2 s à 0,8 s : mapping Elasticsearch, optimisation des requêtes et index MySQL, cache Redis et Varnish.",
-          "Livraison de vitrines Hyvä avec Alpine.js et Tailwind CSS : pages 40 % plus rapides, score Google PageSpeed constamment au-dessus de 95.",
-          "Intégration du SSO Microsoft Entra ID et conception de la couche API REST pour l'intégration des ressources numériques de Carhartt WIP.",
-          "Refactorisation de plus de 50 000 lignes de code legacy et stabilisation des pipelines Docker et CI/CD, avec 45 % de bugs en production en moins.",
+          "Développement de la boutique en ligne d'un revendeur marocain d'électroménager (via l'agence J2HB) sous Laravel 12 / Bagisto, PHP 8.3, MySQL 8 et Redis : stocks, commande sans compte, paiement à la livraison, prix en dirhams.",
+          "Site livré en français, arabe (RTL), anglais et espagnol, avec PayPal et conversion en euros intégrés, prêts à activer.",
+          "Reprise de tout le catalogue de l'ancien site (catégories, produits, prix, images, stocks) en seeders, avec installation Docker en une commande et tests Pest et Playwright dans les 4 langues.",
+        ],
+      },
+      {
+        org: "Cartware / Morocommerce, Fès",
+        role: "Développeur Magento 2 / Adobe Commerce",
+        date: "Janv. 2024 – Juil. 2026",
+        note: "CDI, terminé à la fermeture de l'entreprise.",
+        points: [
+          "Développement et maintenance de trois boutiques Magento 2.4.x (Carhartt WIP B2B, Anita, Edwin Europe ; 50 000+ utilisateurs par mois), dont prix par palier, permissions catalogue et synchro des stocks en REST.",
+          "Conception de l'API REST de l'application DAM de Carhartt WIP (service contracts, webapi.xml) : données images, URL CDN Amplience, authentification JWT. Ajout du SSO Microsoft Entra ID avec validation JWKS.",
+          "Chargement des pages catalogue réduit de 3,2 s à 0,8 s (mapping Elasticsearch, index MySQL, Redis, Varnish) et vitrines Hyvä notées 95+ sur Google PageSpeed.",
+          "Création du module admin Cartware_Translation (import CSV, upsert en masse) ; correctif d'une erreur de collation MySQL due à de l'UTF-8 invalide dans les URL ; mise en place d'Apple Pay sur Adyen pour Edwin.",
+          "Mise en place des environnements Docker de Carhartt B2B et Edwin, et déploiement de Claude Code avec serveurs MCP (Playwright, MySQL) pour l'équipe. La refonte du code legacy a réduit de 45 % les bugs en production.",
         ],
       },
       {
@@ -321,8 +342,7 @@ const translations = {
         role: "Développeur Laravel (stage)",
         date: "Août – Déc. 2023",
         points: [
-          "Développement d'une plateforme de gestion interne full-stack avec Laravel 10 et Tailwind CSS, utilisée chaque jour par plus de 25 employés.",
-          "Mise en place d'un contrôle d'accès par rôles et optimisation des requêtes, avec des temps de réponse divisés par deux.",
+          "Développement d'une plateforme de gestion interne utilisée chaque jour par 25+ collaborateurs (Laravel 10, Tailwind CSS) : 15+ endpoints REST, contrôle d'accès par rôles, requêtes optimisées (temps de réponse divisé par deux).",
         ],
       },
       {
@@ -337,7 +357,7 @@ const translations = {
     education: [
       {
         org: "ENSA Fès, Université Sidi Mohamed Ben Abdellah",
-        degree: "Diplôme d'Université (Bac+3) Frameworks de développement web & Java EE",
+        degree: "Licence d'université (Bac+3) Frameworks Web & Java EE",
         note: "Obtenu avec la mention Très Bien. Java EE, Spring Boot, C# / .NET, architecture logicielle.",
       },
       {

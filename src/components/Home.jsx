@@ -21,8 +21,8 @@ const Home = () => {
           <p className="mt-5 text-muted text-[1.12rem] leading-[1.65] max-w-[34rem]">
             {t("home.description")}
           </p>
-          <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-fg">
-            <span className="w-2 h-2 rounded-full bg-live" aria-hidden="true" />
+          <p className="mt-4 flex items-start gap-2 text-sm font-semibold text-fg">
+            <span className="mt-[0.4rem] w-2 h-2 shrink-0 rounded-full bg-live" aria-hidden="true" />
             {t("home.availability")}
           </p>
 

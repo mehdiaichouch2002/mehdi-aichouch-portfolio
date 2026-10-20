@@ -30,6 +30,7 @@ const About = () => {
                   {job.role}
                 </h3>
                 <p className="font-medium text-accent">{job.org}</p>
+                {job.note && <p className="mt-1 text-sm text-muted">{job.note}</p>}
                 <ul className="mt-3 space-y-2 max-w-[42rem]">
                   {job.points.map((point) => (
                     <li key={point} className="relative pl-4 text-fg/80 leading-[1.6]">
