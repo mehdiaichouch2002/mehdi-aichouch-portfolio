@@ -36,14 +36,16 @@ Skills:
 Open-source and personal projects (code on GitHub):
 1. Attribute Import – Magento 2 module for bulk importing product attribute options from CSV
 2. Magento 2 Innovation Lab – Dockerized Magento 2 sandbox (Varnish, Redis, RabbitMQ, Robo)
-3. EChallenge – Online exam platform with timed tests and JWT security (Spring Boot 3 + React 19 + MySQL)
-4. Free Space Blog – Django 6 blog with nested comments, AJAX likes, infinite scroll
-5. JEE Product Management – Layered Jakarta EE CRUD catalog (Servlet MVC, JDBC, MySQL)
-6. Library Management System – PHP, MySQL, Nginx, Docker
-7. Daily Meeting Host Slack Bot – Python bot automating stand-ups
-8. Freespace – Space management app (PHP)
-9. Requestify – Request management system (Laravel)
-10. This portfolio – React, Tailwind CSS and this AI assistant
+3. Atelier – Management app for a Moroccan handicraft workshop: weekly pay, cash advances, orders, cash ledger, reports; FR/AR (RTL)/EN/ES (Next.js 16 + TypeScript + PostgreSQL with row-level security)
+4. Job Application Bot – Python bot that scrapes job boards, scores ads with deterministic matching, drafts applications with a free LLM and only emails verified recruiter addresses (SQLite, GitHub Actions)
+5. EChallenge – Online exam platform with timed tests and JWT security (Spring Boot 3 + React 19 + MySQL)
+6. Free Space Blog – Django 6 blog with nested comments, AJAX likes, infinite scroll
+7. JEE Product Management – Layered Jakarta EE CRUD catalog (Servlet MVC, JDBC, MySQL)
+8. Library Management System – PHP, MySQL, Nginx, Docker
+9. Daily Meeting Host Slack Bot – Python bot automating stand-ups
+10. Freespace – Space management app (PHP)
+11. Requestify – Request management system (Laravel)
+12. This portfolio – React, Tailwind CSS and this AI assistant
 
 Rules:
 - Only answer questions about Mehdi's professional background

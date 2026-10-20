@@ -11,8 +11,30 @@ import MagentoFeaturesImg from "../assets/projects/magento-features.svg";
 import EChallengeImg from "../assets/projects/echallenge.svg";
 import JeeProductsImg from "../assets/projects/jee-products.svg";
 import FreespaceBlogImg from "../assets/projects/freespace-blog.svg";
+import AtelierImg from "../assets/projects/atelier.svg";
+import JobBotImg from "../assets/projects/job-bot.svg";
 
 const projects = [
+  {
+    id: 14,
+    src: AtelierImg,
+    href: "https://github.com/mehdiaichouch2002/atelier-artisanat",
+    title: "Atelier",
+    hosted: false,
+    category: "opensource",
+    descriptionKey: "atelier",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind"],
+  },
+  {
+    id: 15,
+    src: JobBotImg,
+    href: "https://github.com/mehdiaichouch2002/job-bot",
+    title: "Job Application Bot",
+    hosted: false,
+    category: "opensource",
+    descriptionKey: "jobBot",
+    tech: ["Python", "SQLite", "LLM", "GitHub Actions"],
+  },
   {
     id: 11,
     src: EChallengeImg,

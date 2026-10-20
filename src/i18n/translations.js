@@ -60,6 +60,10 @@ const translations = {
           "Django 6 blog platform with featured-post slider, nested comments, AJAX likes, infinite scroll, and user profiles.",
         jeeProducts:
           "Layered Jakarta EE product catalog with full CRUD, servlet MVC controller, and JDBC DAO on MySQL.",
+        atelier:
+          "Management app for a Moroccan handicraft workshop: weekly pay, cash advances, customer orders, expenses and a single cash ledger, with 13 reports. Next.js 16 and PostgreSQL row-level security, in French, Arabic (RTL), English and Spanish.",
+        jobBot:
+          "Python bot that scrapes seven job boards, scores each ad against my profile with deterministic matching, drafts applications with a free LLM, and only emails verified recruiter addresses. Runs on a GitHub Actions schedule.",
       },
     },
     skills: {
@@ -233,6 +237,10 @@ const translations = {
           "Plateforme de blog Django 6 avec slider de posts mis en avant, commentaires imbriqués, likes AJAX, défilement infini et profils utilisateurs.",
         jeeProducts:
           "Catalogue de produits Jakarta EE en couches avec CRUD complet, contrôleur servlet MVC et DAO JDBC sur MySQL.",
+        atelier:
+          "Application de gestion pour un atelier d'artisanat marocain : paie hebdomadaire, msrouf (avances), commandes clients, dépenses et journal de caisse unique, avec 13 rapports. Next.js 16 et sécurité PostgreSQL au niveau des lignes, en français, arabe (RTL), anglais et espagnol.",
+        jobBot:
+          "Bot Python qui collecte les offres de sept sites d'emploi, évalue chaque annonce face à mon profil avec un matching déterministe, rédige les candidatures avec un LLM gratuit et n'écrit qu'à des adresses de recruteurs vérifiées. Planifié sur GitHub Actions.",
       },
     },
     skills: {
