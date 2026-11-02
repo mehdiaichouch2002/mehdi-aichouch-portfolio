@@ -4,27 +4,33 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.svg?v=2" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0E0F12" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600..800&family=Instrument+Sans:ital,wght@0,400..700;1,400&display=swap" rel="stylesheet" />
-    <title>Mehdi Aichouch – Magento 2 &amp; Full-Stack Developer</title>
-    <meta name="description" content="Magento 2 and full-stack developer (PHP, Laravel, React) in Fès, Morocco. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
+    <meta name="theme-color" content="#0a0a0b" />
+    <!-- Self-hosted Geist (OFL, see /fonts/OFL.txt), subset to Latin + punctuation -->
+    <link rel="preload" href="%PUBLIC_URL%/fonts/geist-sans-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="%PUBLIC_URL%/fonts/geist-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face { font-family: "Geist"; font-style: normal; font-weight: 400; font-display: swap; src: url("%PUBLIC_URL%/fonts/geist-sans-400.woff2") format("woff2"); }
+      @font-face { font-family: "Geist"; font-style: normal; font-weight: 600; font-display: swap; src: url("%PUBLIC_URL%/fonts/geist-sans-600.woff2") format("woff2"); }
+      @font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("%PUBLIC_URL%/fonts/geist-mono-400.woff2") format("woff2"); }
+      html { background: #0a0a0b; }
+    </style>
+    <title>Mehdi Aichouch – Full-Stack Web Developer (Magento 2, PHP, React)</title>
+    <meta name="description" content="Full-stack web developer in Fès, Morocco: PHP, Laravel, React and Magento 2 / Adobe Commerce. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
     <link rel="canonical" href="https://mehdi-aichouch.vercel.app/" />
 
     <!-- Link previews (LinkedIn, X, Slack, WhatsApp) -->
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://mehdi-aichouch.vercel.app/" />
-    <meta property="og:title" content="Mehdi Aichouch – Magento 2 &amp; Full-Stack Developer" />
-    <meta property="og:description" content="Magento 2 and full-stack developer (PHP, Laravel, React) in Fès, Morocco. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
+    <meta property="og:title" content="Mehdi Aichouch – Full-Stack Web Developer (Magento 2, PHP, React)" />
+    <meta property="og:description" content="Full-stack web developer in Fès, Morocco: PHP, Laravel, React and Magento 2 / Adobe Commerce. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
     <meta property="og:image" content="https://mehdi-aichouch.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="fr_FR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Mehdi Aichouch – Magento 2 &amp; Full-Stack Developer" />
-    <meta name="twitter:description" content="Magento 2 and full-stack developer (PHP, Laravel, React) in Fès, Morocco. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
+    <meta name="twitter:title" content="Mehdi Aichouch – Full-Stack Web Developer (Magento 2, PHP, React)" />
+    <meta name="twitter:description" content="Full-stack web developer in Fès, Morocco: PHP, Laravel, React and Magento 2 / Adobe Commerce. Three years on the stores of Carhartt WIP, Anita and Edwin Europe. Available immediately." />
     <meta name="twitter:image" content="https://mehdi-aichouch.vercel.app/og-image.png" />
 
     <script type="application/ld+json">
@@ -34,7 +40,7 @@
   "name": "Mehdi Aichouch",
   "url": "https://mehdi-aichouch.vercel.app/",
   "image": "https://mehdi-aichouch.vercel.app/og-image.png",
-  "jobTitle": "Magento 2 & Full-Stack Developer",
+  "jobTitle": "Full-Stack Web Developer",
   "email": "mailto:mehdi2002aichouch@gmail.com",
   "address": {
     "@type": "PostalAddress",

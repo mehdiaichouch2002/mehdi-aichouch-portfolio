@@ -2,12 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens. Fonts are declared in public/index.html (preloaded, self-hosted).
+   Colors are "R G B" triplets so Tailwind opacity modifiers work (bg-accent/20). */
+:root {
+  /* Color */
+  --bg: 10 10 11;            /* #0a0a0b */
+  --surface: 17 17 19;       /* #111113 cards, inputs */
+  --surface-2: 24 24 27;     /* #18181b raised: modals, chat */
+  --text: 237 237 239;       /* #ededef */
+  --muted: 141 141 150;      /* #8d8d96, 6:1 on --bg */
+  --border: 34 34 38;        /* #222226 hairlines */
+  --border-strong: 50 50 56; /* #323238 hover / dividers */
+  --accent: 76 201 255;      /* #4CC9FF */
+  --accent-soft: rgb(76 201 255 / 0.12);
+  --live: 126 224 184;       /* green, live-store status only */
+  --danger: 255 138 128;
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow-panel: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+  --shadow-glow: 0 0 0 1px var(--accent-soft), 0 8px 40px -8px rgb(76 201 255 / 0.35);
+
+  /* Motion: one curve, three durations (mirrored in src/lib/motion.js) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 400ms;
+  --dur-slow: 800ms;
+
+  /* Layout */
+  --page-max: 1200px;
+  --nav-h: 64px;
+}
+
 @layer base {
   html {
     @apply font-sans bg-canvas text-fg;
     font-size: 17px;
     color-scheme: dark;
     scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-h);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
@@ -18,17 +53,25 @@
 
   body {
     -webkit-tap-highlight-color: transparent;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Fine film grain, tiled SVG (no image request) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  h1, h2 {
-    @apply font-display;
+  h1, h2, h3, h4 {
+    @apply font-semibold text-fg;
+    text-wrap: balance;
   }
 
-  img, svg, video {
+  p {
+    text-wrap: pretty;
+  }
+
+  img, svg, video, canvas {
     max-width: 100%;
+  }
+  img, video {
     height: auto;
   }
 
@@ -37,61 +80,108 @@
   }
 
   :focus-visible {
-    @apply outline outline-2 outline-offset-2 outline-accent;
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
+  .page {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8;
+  }
+
+  .section {
+    @apply border-t border-line py-24 md:py-32;
+  }
+
+  /* "01 / Work" micro-label above every section title */
+  .eyebrow {
+    @apply font-mono text-[0.75rem] uppercase tracking-[0.14em] text-muted;
+  }
+
   .section-title {
-    @apply font-display font-bold text-fg tracking-[-0.02em] leading-[1.1];
-    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    @apply font-semibold text-fg;
+    font-size: clamp(2.2rem, 5.2vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 font-semibold text-[0.95rem] transition-colors duration-200;
+    @apply relative inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 text-[0.95rem] font-semibold
+           transition-[transform,background-color,border-color,color] duration-fast ease-out active:scale-[0.97];
   }
   .btn-primary {
-    @apply btn bg-accent text-canvas hover:bg-accent-hover;
+    @apply btn bg-accent text-canvas hover:bg-[#7dd8ff];
   }
   .btn-secondary {
-    @apply btn border border-line text-fg hover:border-muted;
+    @apply btn border border-line-strong bg-surface/60 text-fg backdrop-blur hover:border-muted;
   }
 
   .text-link {
-    @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors;
+    @apply text-accent underline decoration-accent/30 underline-offset-4 transition-colors duration-fast hover:decoration-accent;
   }
 
-  /* The one bold element: the hero headline in iridescent chrome */
-  .chrome-text {
-    background-image: linear-gradient(
-      100deg,
-      #c9d6ff 0%,
-      #f1d9ff 30%,
-      #d6fff4 55%,
-      #ffffff 70%,
-      #c9d6ff 100%
+  /* Mono tag for tech names */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 font-mono text-[0.72rem] text-muted;
+  }
+
+  /* Bordered panel; .spotlight adds the cursor-following glow (--mx/--my set from JS) */
+  .card {
+    @apply relative rounded-lg border border-line bg-surface;
+  }
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(76 201 255 / 0.09),
+      transparent 60%
     );
-    background-size: 220% 100%;
-    background-position: 0% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: chrome-sweep 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .spotlight:hover::before,
+  .spotlight:focus-within::before {
+    opacity: 1;
   }
 
-  /* Thin chrome border around the portrait */
-  .chrome-frame {
-    background: linear-gradient(140deg, #c9d6ff, #f1d9ff 45%, #d6fff4 70%, #3a3f4a);
-    padding: 1px;
+  /* Faint engineering grid, faded out toward the edges */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgb(var(--text) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--text) / 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
   }
 }
 
-@keyframes chrome-sweep {
-  from { background-position: 100% 0; opacity: 0.2; }
-  to   { background-position: 0% 0; opacity: 1; }
+/* Hero headline: each line slides up once from behind a mask (transform only,
+   so the text is painted immediately and LCP isn't delayed) */
+.rise-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.rise-line > span {
+  display: inline-block;
+  animation: rise var(--dur-slow) var(--ease-out) both;
+}
+.rise-line:nth-child(2) > span {
+  animation-delay: 90ms;
 }
 
-/* Respect users who prefer reduced motion */
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to   { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
