@@ -2,25 +2,35 @@ const translations = {
   en: {
     nav: {
       home: "Home",
-      about: "Experience",
+      about: "About",
       portfolio: "Work",
       skills: "Skills",
+      experience: "Experience",
       contact: "Contact",
     },
     home: {
-      headline: "I build Magento 2 stores for European brands.",
-      description:
-        "Full-stack developer with three years on the Magento 2 platforms of Carhartt WIP, Anita and Edwin Europe. I work in PHP, Laravel and React, from REST APIs and integrations to fast Hyvä storefronts.",
-      availability: "Available immediately · Based in Fès, Morocco · Open to remote, hybrid or on-site",
+      // Two lines; the word between asterisks is set in the accent color
+      headline: ["Full-stack developer.", "I build *anything* for the web."],
+      eyebrow: "Mehdi Aichouch · Fès, Morocco",
+      subline: "Most recently: Magento 2 / Adobe Commerce stores for European brands.",
       cta: "See my work",
+      contactCta: "Get in touch",
       resume: "Download resume",
+      availability: "Available immediately · Based in Fès, Morocco · Open to remote, hybrid or on-site",
       liveStores: "Live stores I've worked on",
-      photoAlt: "Portrait of Mehdi Aichouch",
+      visualAlt: "Abstract iridescent 3D shape",
     },
     about: {
-      title: "Experience",
+      title: "About",
+      lead:
+        "Full-stack developer with three years on the Magento 2 platforms of Carhartt WIP, Anita and Edwin Europe. I work in PHP, Laravel and React, from REST APIs and integrations to fast Hyvä storefronts.",
+      photoAlt: "Portrait of Mehdi Aichouch",
       intro:
         "Three years on Magento 2 / Adobe Commerce and Laravel: at Cartware / Morocommerce in Fès until the company closed, then freelance since August 2026. Backed by a Bac+3 university licence in web frameworks and Java EE.",
+    },
+    timeline: {
+      title: "Experience",
+      intro: "Jobs and freelance work, most recent first.",
       educationTitle: "Education",
       certificationTitle: "Certification",
     },
@@ -36,6 +46,11 @@ const translations = {
       viewCode: "View code",
       showAll: "Show all {count} projects",
       showLess: "Show fewer",
+      clientTitle: "Client stores",
+      details: "Details",
+      caseStudy: "Case study",
+      close: "Close",
+      visitStore: "Visit the store",
       projects: {
         carhartt:
           "B2B wholesale store for Carhartt WIP's retail partners. I designed the REST API layer for the digital asset integration (Amplience CDN), integrated Microsoft Entra ID single sign-on, and built B2B features: tiered pricing, catalogue permissions and inventory sync over REST.",
@@ -91,6 +106,7 @@ const translations = {
       sending: "Sending…",
       cta: "Send message",
       resume: "Resume",
+      direct: "Or reach me directly",
       errors: {
         name: "Enter your name",
         email: "Enter a valid email address, like name@company.com",
@@ -109,7 +125,9 @@ const translations = {
       cancel: "Close",
     },
     footer: {
-      location: "Fez, Morocco.",
+      location: "Fès, Morocco.",
+      backToTop: "Back to top",
+      builtWith: "Built with React, Tailwind CSS and three.js.",
     },
     chat: {
       open: "Ask AI",
@@ -189,25 +207,34 @@ const translations = {
   fr: {
     nav: {
       home: "Accueil",
-      about: "Parcours",
+      about: "À propos",
       portfolio: "Projets",
       skills: "Compétences",
+      experience: "Parcours",
       contact: "Contact",
     },
     home: {
-      headline: "Je développe des boutiques Magento 2 pour des marques européennes.",
-      description:
-        "Développeur full-stack avec trois ans d'expérience sur les plateformes Magento 2 de Carhartt WIP, Anita et Edwin Europe. Je travaille en PHP, Laravel et React, des API REST et intégrations jusqu'aux vitrines Hyvä rapides.",
-      availability: "Disponible immédiatement · Basé à Fès, Maroc · Télétravail, hybride ou sur site",
+      headline: ["Développeur full-stack.", "Sur le web, je construis *tout*."],
+      eyebrow: "Mehdi Aichouch · Fès, Maroc",
+      subline: "Ces dernières années : des boutiques Magento 2 / Adobe Commerce pour des marques européennes.",
       cta: "Voir mes projets",
+      contactCta: "Me contacter",
       resume: "Télécharger le CV",
+      availability: "Disponible immédiatement · Basé à Fès, Maroc · Télétravail, hybride ou sur site",
       liveStores: "Boutiques en ligne sur lesquelles j'ai travaillé",
-      photoAlt: "Portrait de Mehdi Aichouch",
+      visualAlt: "Forme 3D abstraite irisée",
     },
     about: {
-      title: "Parcours",
+      title: "À propos",
+      lead:
+        "Développeur full-stack avec trois ans d'expérience sur les plateformes Magento 2 de Carhartt WIP, Anita et Edwin Europe. Je travaille en PHP, Laravel et React, des API REST et intégrations jusqu'aux vitrines Hyvä rapides.",
+      photoAlt: "Portrait de Mehdi Aichouch",
       intro:
         "Trois ans sur Magento 2 / Adobe Commerce et Laravel : chez Cartware / Morocommerce à Fès jusqu'à la fermeture de l'entreprise, puis en freelance depuis août 2026. Avec une licence d'université Bac+3 en frameworks web et Java EE.",
+    },
+    timeline: {
+      title: "Parcours",
+      intro: "Postes et missions freelance, du plus récent au plus ancien.",
       educationTitle: "Formation",
       certificationTitle: "Certification",
     },
@@ -223,6 +250,11 @@ const translations = {
       viewCode: "Voir le code",
       showAll: "Afficher les {count} projets",
       showLess: "Afficher moins",
+      clientTitle: "Boutiques clientes",
+      details: "Détails",
+      caseStudy: "Étude de cas",
+      close: "Fermer",
+      visitStore: "Voir la boutique",
       projects: {
         carhartt:
           "Boutique B2B de vente en gros pour les revendeurs de Carhartt WIP. J'ai conçu la couche API REST pour l'intégration des ressources numériques (CDN Amplience), intégré le SSO Microsoft Entra ID et développé des fonctionnalités B2B : prix par paliers, droits sur le catalogue et synchronisation des stocks via REST.",
@@ -278,6 +310,7 @@ const translations = {
       sending: "Envoi…",
       cta: "Envoyer le message",
       resume: "CV",
+      direct: "Ou contactez-moi directement",
       errors: {
         name: "Saisissez votre nom",
         email: "Saisissez une adresse email valide, par exemple nom@entreprise.com",
@@ -297,6 +330,8 @@ const translations = {
     },
     footer: {
       location: "Fès, Maroc.",
+      backToTop: "Haut de page",
+      builtWith: "Réalisé avec React, Tailwind CSS et three.js.",
     },
     chat: {
       open: "Demander à l'IA",
