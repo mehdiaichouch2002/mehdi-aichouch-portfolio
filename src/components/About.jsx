@@ -1,4 +1,7 @@
-import portrait from "../assets/portfolio/me.png";
+import portrait320Avif from "../assets/portfolio/portrait-320.avif";
+import portrait640Avif from "../assets/portfolio/portrait-640.avif";
+import portrait320Webp from "../assets/portfolio/portrait-320.webp";
+import portrait640Webp from "../assets/portfolio/portrait-640.webp";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
 import Reveal from "./motion/Reveal";
@@ -13,15 +16,20 @@ const About = () => {
         <div>
           <SectionHeader id="about-title" section="about" title={t("about.title")} />
           <Reveal as="figure" delay={0.1} className="mt-10 w-full max-w-[280px] overflow-hidden rounded-lg border border-line bg-surface">
-            <img
-              src={portrait}
-              alt={t("about.photoAlt")}
-              width="832"
-              height="1248"
-              loading="lazy"
-              decoding="async"
-              className="block aspect-[4/5] w-full object-cover object-top grayscale-[35%]"
-            />
+            {/* 4:5 crops of the original photo, 320/640 px wide (1x/2x of the 280 px frame) */}
+            <picture>
+              <source type="image/avif" srcSet={`${portrait320Avif} 320w, ${portrait640Avif} 640w`} sizes="280px" />
+              <source type="image/webp" srcSet={`${portrait320Webp} 320w, ${portrait640Webp} 640w`} sizes="280px" />
+              <img
+                src={portrait640Webp}
+                alt={t("about.photoAlt")}
+                width="640"
+                height="800"
+                loading="lazy"
+                decoding="async"
+                className="block aspect-[4/5] w-full object-cover grayscale-[35%]"
+              />
+            </picture>
           </Reveal>
         </div>
 

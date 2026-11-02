@@ -48,7 +48,7 @@ Open-source and personal projects (code on GitHub):
 9. Daily Meeting Host Slack Bot – Python bot automating stand-ups
 10. Freespace – Space management app (PHP)
 11. Requestify – Request management system (Laravel)
-12. This portfolio – React, Tailwind CSS and this AI assistant
+12. This portfolio – React, Tailwind CSS, Motion, a three.js hero object and this AI assistant
 
 Rules:
 - Only answer questions about Mehdi's professional background

@@ -60,7 +60,7 @@ const translations = {
           "European online store for the Japanese denim brand, on Magento 2.4. I built features end to end and set up Apple Pay on Adyen.",
         freespace: "Application for managing spaces, written in PHP.",
         requestify: "Request management system built with Laravel.",
-        portfolio: "This site: React, Tailwind CSS and an AI assistant that answers questions about my work.",
+        portfolio: "This site: React, Tailwind CSS, Motion, a three.js hero object and an AI assistant that answers questions about my work.",
         slackbot:
           "Python Slack bot that automatically hosts and manages daily stand-up meetings.",
         library:
@@ -264,7 +264,7 @@ const translations = {
           "Boutique en ligne européenne de la marque de denim japonaise, sous Magento 2.4. J'ai développé des fonctionnalités de bout en bout et mis en place Apple Pay sur Adyen.",
         freespace: "Application de gestion d'espaces, écrite en PHP.",
         requestify: "Système de gestion des demandes développé avec Laravel.",
-        portfolio: "Ce site : React, Tailwind CSS et un assistant IA qui répond aux questions sur mon travail.",
+        portfolio: "Ce site : React, Tailwind CSS, Motion, un objet 3D three.js et un assistant IA qui répond aux questions sur mon travail.",
         slackbot:
           "Bot Slack Python qui anime et gère automatiquement les réunions daily stand-up.",
         library:

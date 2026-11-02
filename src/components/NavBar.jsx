@@ -65,7 +65,7 @@ const useActiveSection = () => {
       if (frame === null) frame = requestAnimationFrame(update);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    update();
+    onScroll(); // first read in a frame, not during mount (avoids a forced reflow)
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (frame !== null) cancelAnimationFrame(frame);

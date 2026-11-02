@@ -18,7 +18,7 @@ const ScrollProgress = () => {
       if (frame === null) frame = requestAnimationFrame(update);
     };
 
-    update();
+    onScroll(); // first read in a frame, not during mount (avoids a forced reflow)
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

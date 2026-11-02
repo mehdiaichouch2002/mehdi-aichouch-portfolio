@@ -43,6 +43,8 @@
     color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: var(--nav-h);
+    /* Reserve the scrollbar from the start: no shift when the page grows after first paint */
+    scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
@@ -62,10 +64,6 @@
   h1, h2, h3, h4 {
     @apply font-semibold text-fg;
     text-wrap: balance;
-  }
-
-  p {
-    text-wrap: pretty;
   }
 
   img, svg, video, canvas {

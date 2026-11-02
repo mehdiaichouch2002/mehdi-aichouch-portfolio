@@ -4,34 +4,63 @@ import HeroFallback from "./HeroFallback";
 const HeroScene = lazy(() => import("./HeroScene"));
 
 // The 3D object only runs where it stays smooth: a large screen with a mouse,
-// no reduced-motion preference, a reasonably strong device and working WebGL.
+// no reduced-motion preference, a reasonably strong device and no Save-Data.
 // Everyone else keeps the static fallback, and three.js is never downloaded.
-const canRender3D = () => {
+const deviceQualifies = () => {
   if (typeof window === "undefined" || !window.matchMedia) return false;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
   if (!window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)").matches) return false;
   if (navigator.deviceMemory && navigator.deviceMemory < 4) return false;
   if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) return false;
   if (navigator.connection?.saveData) return false;
+  return true;
+};
+
+// Creating a WebGL context can block the main thread for a long time, so this probe
+// only runs in the deferred callback, never during page load, and is released at once.
+const hasWebGL = () => {
   try {
-    const canvas = document.createElement("canvas");
-    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+    const gl = document.createElement("canvas").getContext("webgl2") || document.createElement("canvas").getContext("webgl");
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return !!gl;
   } catch {
     return false;
   }
 };
 
-// Wait for the page to finish loading, then for an idle moment, so the 3D chunk
-// never competes with first paint or the LCP.
-const whenIdleAfterLoad = (cb) => {
+// Start loading the 3D chunk on the visitor's first sign of activity (a desktop
+// visitor moves the mouse almost immediately), or a few seconds after load at the
+// latest, during idle time. Parsing three.js and compiling the shader then never
+// competes with first paint, the LCP or the page settling down.
+const INTENT_EVENTS = ["pointermove", "scroll", "keydown"];
+const FALLBACK_DELAY = 4000;
+
+const whenVisitorIsActive = (cb) => {
+  let done = false;
+  let timer;
   let idleId;
-  const schedule = () => {
-    idleId = window.requestIdleCallback ? window.requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200);
+  const fire = () => {
+    if (done) return;
+    done = true;
+    cleanup();
+    idleId = window.requestIdleCallback ? window.requestIdleCallback(cb, { timeout: 1000 }) : setTimeout(cb, 0);
   };
-  if (document.readyState === "complete") schedule();
-  else window.addEventListener("load", schedule, { once: true });
+  const startTimer = () => {
+    timer = setTimeout(fire, FALLBACK_DELAY);
+  };
+  const cleanup = () => {
+    INTENT_EVENTS.forEach((e) => window.removeEventListener(e, fire));
+    window.removeEventListener("load", startTimer);
+    clearTimeout(timer);
+  };
+
+  INTENT_EVENTS.forEach((e) => window.addEventListener(e, fire, { once: true, passive: true }));
+  if (document.readyState === "complete") startTimer();
+  else window.addEventListener("load", startTimer, { once: true });
+
   return () => {
-    window.removeEventListener("load", schedule);
+    done = true;
+    cleanup();
     if (idleId !== undefined) (window.cancelIdleCallback || clearTimeout)(idleId);
   };
 };
@@ -42,9 +71,9 @@ const HeroVisual = ({ className = "" }) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!canRender3D()) return undefined;
+    if (!deviceQualifies()) return undefined;
     // Re-check at fire time: the window may have been resized in the meantime
-    return whenIdleAfterLoad(() => canRender3D() && setMount3D(true));
+    return whenVisitorIsActive(() => deviceQualifies() && hasWebGL() && setMount3D(true));
   }, []);
 
   return (
