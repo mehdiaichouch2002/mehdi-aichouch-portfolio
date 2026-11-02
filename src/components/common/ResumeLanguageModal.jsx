@@ -41,7 +41,7 @@ const ResumeLanguageModal = () => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-[80] p-4"
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[80] p-4"
       onClick={close}
     >
       <div
@@ -50,14 +50,14 @@ const ResumeLanguageModal = () => {
         role="dialog"
         aria-modal="true"
         aria-labelledby="resume-title"
-        className="relative bg-surface border border-line rounded-lg p-6 sm:p-8 max-w-md w-full max-h-[90dvh] overflow-y-auto shadow-2xl focus:outline-none"
+        className="relative bg-surface-2 border border-line-strong rounded-lg p-6 sm:p-8 max-w-md w-full max-h-[90dvh] overflow-y-auto shadow-panel focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={close} className="absolute top-4 right-4 p-1.5 text-muted hover:text-fg" aria-label={t("resumeModal.cancel")}>
+        <button onClick={close} className="absolute top-3 right-3 grid h-11 w-11 place-items-center text-muted hover:text-fg" aria-label={t("resumeModal.cancel")}>
           <FiX size={20} />
         </button>
 
-        <h2 id="resume-title" className="font-display text-2xl font-bold text-fg">
+        <h2 id="resume-title" className="text-2xl tracking-[-0.03em]">
           {t("resumeModal.title")}
         </h2>
         <p className="mt-1 text-muted">{t("resumeModal.subtitle")}</p>

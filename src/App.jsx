@@ -1,9 +1,10 @@
-import { LazyMotion } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import Portfolio from "./components/Portfolio";
+import Experience from "./components/Experience";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { ResumeModalProvider } from "./context/ResumeModalContext";
@@ -18,6 +19,8 @@ const loadMotionFeatures = () => import("./lib/motionFeatures").then((mod) => mo
 function App() {
   return (
     <LazyMotion features={loadMotionFeatures} strict>
+      {/* With prefers-reduced-motion, motion drops transforms and keeps opacity fades */}
+      <MotionConfig reducedMotion="user">
       <LanguageProvider>
         <ResumeModalProvider>
           <div>
@@ -25,11 +28,12 @@ function App() {
               Skip to content
             </a>
             <NavBar />
-            <main id="main">
+            <main id="main" tabIndex={-1} className="outline-none">
               <Home />
               <About />
               <Portfolio />
               <Skills />
+              <Experience />
               <Contact />
             </main>
             <Footer />
@@ -38,6 +42,7 @@ function App() {
           <AIChatAssistant />
         </ResumeModalProvider>
       </LanguageProvider>
+      </MotionConfig>
     </LazyMotion>
   );
 }

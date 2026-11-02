@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, within, act } from "@testing-library/react";
+import { render, screen, fireEvent, within, act, waitFor } from "@testing-library/react";
 import ScrollProgress from "./components/common/ScrollProgress";
 import App from "./App";
 
@@ -7,17 +7,19 @@ describe("App smoke test", () => {
     render(<App />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: /i build magento 2 stores/i })
+      screen.getByRole("heading", { level: 1, name: /full-stack developer\. i build anything for the web/i })
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /^work$/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /^skills$/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /^about$/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /^experience$/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /send message/i })).toBeInTheDocument();
   });
 
   test("renders navigation with all section links", () => {
     render(<App />);
 
-    for (const label of [/experience/i, /work/i, /skills/i, /contact/i]) {
+    for (const label of [/about/i, /experience/i, /work/i, /skills/i, /contact/i]) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
   });
@@ -35,7 +37,7 @@ describe("Experience and education", () => {
   test("shows the ENSA diploma with honours and no dates on diplomas", () => {
     render(<App />);
 
-    const diploma = screen.getByText(/university licence \(bac\+3\)/i).closest("li");
+    const diploma = screen.getByText(/university licence \(bac\+3\)/i).closest("article");
     expect(within(diploma).getByText(/mention très bien/i)).toBeInTheDocument();
     expect(within(diploma).queryByText(/20\d\d/)).not.toBeInTheDocument();
   });
@@ -55,7 +57,7 @@ describe("Language switcher", () => {
     fireEvent.click(screen.getAllByRole("button", { name: "FR" })[0]);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: /je développe des boutiques magento 2/i })
+      screen.getByRole("heading", { level: 1, name: /développeur full-stack\. sur le web, je construis tout/i })
     ).toBeInTheDocument();
   });
 });
@@ -69,6 +71,20 @@ describe("Projects", () => {
 
     expect(screen.getByRole("button", { name: /show fewer/i })).toBeInTheDocument();
     expect(screen.getByText("Portfolio")).toBeInTheDocument();
+  });
+});
+
+describe("Project case study", () => {
+  test("opens a dialog with the project details and closes on Escape", async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /case study.*anita/i }));
+
+    const dialog = screen.getByRole("dialog", { name: /anita/i });
+    expect(within(dialog).getByRole("link", { name: /visit the store/i })).toHaveAttribute("href", "https://www.anita.com");
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: /anita/i })).not.toBeInTheDocument());
   });
 });
 
