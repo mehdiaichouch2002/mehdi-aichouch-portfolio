@@ -1,7 +1,8 @@
 // Static stand-in for the 3D object: same box, same palette, zero JS cost.
 // Rendered first everywhere, and kept as the final visual on mobile,
 // low-end devices and with prefers-reduced-motion.
-const HeroFallback = () => (
+// `sphereHidden` fades out only the sphere once the 3D object is drawn; the halo stays behind it.
+const HeroFallback = ({ sphereHidden = false }) => (
   <div className="absolute inset-0" aria-hidden="true">
     {/* Iridescent halo */}
     <div
@@ -10,7 +11,7 @@ const HeroFallback = () => (
     />
     {/* Glossy dark sphere with a chrome rim */}
     <div
-      className="absolute inset-[18%] rounded-full"
+      className={`absolute inset-[18%] rounded-full transition-opacity duration-slow ease-out ${sphereHidden ? "opacity-0" : "opacity-100"}`}
       style={{
         background:
           "radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.22) 0%, transparent 18%), radial-gradient(circle at 50% 50%, #17181d 0%, #0d0d10 62%, #0a0a0b 100%)",
