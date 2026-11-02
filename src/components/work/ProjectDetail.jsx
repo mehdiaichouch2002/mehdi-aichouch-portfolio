@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { m } from "motion/react";
+import { m, useIsPresent } from "motion/react";
 import { FiArrowUpRight, FiGithub, FiX } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext";
 import { DUR, EASE } from "../../lib/motion";
@@ -14,8 +14,11 @@ const ProjectDetail = ({ project, onClose }) => {
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
   const isClient = project.category === "commercial";
+  // False while the exit animation plays: from that moment it's no longer a dialog
+  const isPresent = useIsPresent();
 
   useEffect(() => {
+    if (!isPresent) return;
     closeRef.current?.focus({ preventScroll: true });
     document.body.classList.add("overflow-hidden");
 
@@ -39,12 +42,15 @@ const ProjectDetail = ({ project, onClose }) => {
       window.removeEventListener("keydown", onKey);
       document.body.classList.remove("overflow-hidden");
     };
-  }, [onClose]);
+  }, [onClose, isPresent]);
 
   const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
+    <div
+      className={`fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6 ${isPresent ? "" : "pointer-events-none"}`}
+      inert={isPresent ? undefined : ""}
+    >
       <m.div
         {...fade}
         transition={{ duration: DUR.base, ease: EASE }}
@@ -55,8 +61,9 @@ const ProjectDetail = ({ project, onClose }) => {
 
       <div
         ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
+        role={isPresent ? "dialog" : undefined}
+        aria-modal={isPresent ? "true" : undefined}
+        aria-hidden={isPresent ? undefined : "true"}
         aria-labelledby={`project-${project.id}-title`}
         className="relative max-h-[92dvh] w-full max-w-[880px] overflow-y-auto rounded-t-lg border border-line-strong bg-surface-2 shadow-panel sm:rounded-lg"
       >

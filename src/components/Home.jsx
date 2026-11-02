@@ -3,6 +3,7 @@ import projects from "../data/projects";
 import { useLanguage } from "../context/LanguageContext";
 import { useResumeModal } from "../context/ResumeModalContext";
 import HeroVisual from "./hero/HeroVisual";
+import Magnetic from "./motion/Magnetic";
 
 const liveStores = projects.filter((p) => p.category === "commercial");
 const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
@@ -51,10 +52,12 @@ const Home = () => {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#portfolio" className="btn-primary group">
-              {t("home.cta")}
-              <FiArrowRight className="transition-transform duration-fast ease-out group-hover:translate-x-0.5" aria-hidden="true" />
-            </a>
+            <Magnetic>
+              <a href="#portfolio" className="btn-primary group">
+                {t("home.cta")}
+                <FiArrowRight className="transition-transform duration-fast ease-out group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+            </Magnetic>
             <a href="#contact" className="btn-secondary">
               {t("home.contactCta")}
             </a>

@@ -3,6 +3,8 @@ import useContactForm from "../hooks/useContactForm";
 import LoadingOverlay from "./common/LoadingOverlay";
 import Notification from "./common/Notification";
 import SectionHeader from "./common/SectionHeader";
+import Magnetic from "./motion/Magnetic";
+import Reveal from "./motion/Reveal";
 import { useLanguage } from "../context/LanguageContext";
 import { useResumeModal } from "../context/ResumeModalContext";
 import { contactLinks, EMAIL } from "../data/contactLinks";
@@ -73,7 +75,8 @@ const Contact = () => {
           </ul>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate className="card flex flex-col gap-6 p-6 md:p-10 lg:mt-[4.5rem]">
+        <Reveal delay={0.1} className="lg:mt-[4.5rem]">
+        <form onSubmit={handleSubmit} noValidate className="card flex flex-col gap-6 p-6 md:p-10">
           {Field({
             id: "contact-name",
             name: "name",
@@ -130,10 +133,13 @@ const Contact = () => {
             ),
           })}
 
-          <button type="submit" disabled={isLoading} className="btn-primary self-start disabled:cursor-not-allowed disabled:opacity-60">
-            {isLoading ? t("contact.sending") : t("contact.cta")}
-          </button>
+          <Magnetic className="self-start">
+            <button type="submit" disabled={isLoading} className="btn-primary disabled:cursor-not-allowed disabled:opacity-60">
+              {isLoading ? t("contact.sending") : t("contact.cta")}
+            </button>
+          </Magnetic>
         </form>
+        </Reveal>
       </div>
 
       <Notification

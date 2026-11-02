@@ -1,6 +1,8 @@
 import { m } from "motion/react";
 import { FiArrowUpRight, FiGithub } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext";
+import usePointerCard from "../../hooks/usePointerCard";
+import { fadeUp } from "../../lib/motion";
 
 export const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
 
@@ -16,12 +18,18 @@ export const TechList = ({ tech, className = "" }) => (
 
 // The whole card opens the case study (a stretched button covers it);
 // the external link sits above that layer so it stays independently clickable.
-const ProjectCard = ({ project, onOpen, featured = false, className = "" }) => {
+const ProjectCard = ({ project, onOpen, featured = false, index = 0, className = "" }) => {
   const { t } = useLanguage();
+  const { handlers, style } = usePointerCard({ tilt: featured ? 2 : 4 });
   const isClient = project.category === "commercial";
 
   return (
-    <article className={`card spotlight group flex flex-col overflow-hidden transition-colors duration-base ease-out hover:border-line-strong ${className}`}>
+    <m.article
+      {...fadeUp((index % 3) * 0.08)}
+      {...handlers}
+      style={style}
+      className={`card spotlight group flex flex-col overflow-hidden transition-colors duration-base ease-out hover:border-line-strong ${className}`}
+    >
       <m.div
         layoutId={`media-${project.id}`}
         className={`relative overflow-hidden border-b border-line bg-surface-2 ${featured ? "aspect-[1200/630] lg:aspect-auto lg:flex-1" : "aspect-[1200/630]"}`}
@@ -81,7 +89,7 @@ const ProjectCard = ({ project, onOpen, featured = false, className = "" }) => {
           <span className="sr-only">: {project.title}</span>
         </button>
       </div>
-    </article>
+    </m.article>
   );
 };
 

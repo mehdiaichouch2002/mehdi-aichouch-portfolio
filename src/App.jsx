@@ -12,9 +12,9 @@ import { LanguageProvider } from "./context/LanguageContext";
 import ResumeLanguageModal from "./components/common/ResumeLanguageModal";
 import AIChatAssistant from "./components/chat/AIChatAssistant";
 
-// Animation features load as their own chunk after the first render;
-// `strict` makes sure nothing imports the full `motion` component by mistake.
-const loadMotionFeatures = () => import("./lib/motionFeatures").then((mod) => mod.default);
+import loadMotionFeatures from "./lib/loadMotionFeatures";
+
+// `strict` makes sure nothing imports the full `motion` component by mistake (use `m`).
 
 function App() {
   return (

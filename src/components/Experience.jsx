@@ -1,11 +1,18 @@
+import { useRef } from "react";
+import { m, useScroll, useSpring } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
+import Reveal from "./motion/Reveal";
 
 const Experience = () => {
   const { t } = useLanguage();
   const experience = t("experience");
   const education = t("education");
   const certification = t("certification");
+  const listRef = useRef(null);
+  // 0 → 1 while the list crosses the middle of the viewport; drives the accent line (scaleY only)
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 60%", "end 60%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   return (
     <section id="experience" aria-labelledby="experience-title" className="section">
@@ -16,10 +23,15 @@ const Experience = () => {
 
         <div>
           {/* Jobs keep their dates; diplomas below don't */}
-          <ol className="relative">
+          <ol ref={listRef} className="relative">
             <span className="absolute bottom-2 left-[5px] top-2 w-px bg-line" aria-hidden="true" />
+            <m.span
+              style={{ scaleY: progress }}
+              className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-gradient-to-b from-accent via-accent to-accent/0"
+              aria-hidden="true"
+            />
             {experience.map((job, i) => (
-              <li key={`${job.org}-${job.role}`} className="relative pb-14 pl-10 last:pb-0 sm:pl-12">
+              <Reveal as="li" key={`${job.org}-${job.role}`} className="relative pb-14 pl-10 last:pb-0 sm:pl-12">
                 <span
                   className={`absolute left-0 top-[0.4rem] h-[11px] w-[11px] rounded-full border ${
                     i === 0 ? "border-accent bg-accent shadow-[0_0_14px_rgb(var(--accent)/0.6)]" : "border-line-strong bg-canvas"
@@ -38,7 +50,7 @@ const Experience = () => {
                     </li>
                   ))}
                 </ul>
-              </li>
+              </Reveal>
             ))}
           </ol>
 
@@ -47,23 +59,23 @@ const Experience = () => {
               <h3 className="eyebrow">{t("timeline.educationTitle")}</h3>
             </div>
             {education.map((item) => (
-              <article key={item.degree} className="card p-6">
+              <Reveal as="article" key={item.degree} className="card p-6">
                 <h4 className="text-[1.05rem] leading-snug tracking-[-0.01em]">{item.degree}</h4>
                 <p className="mt-1 text-sm text-fg/70">{item.org}</p>
                 <p className="mt-3 text-[0.95rem] leading-[1.6] text-muted">{item.note}</p>
-              </article>
+              </Reveal>
             ))}
 
             <div className="mt-8 md:col-span-2">
               <h3 className="eyebrow">{t("timeline.certificationTitle")}</h3>
             </div>
-            <article className="card p-6 md:col-span-2">
+            <Reveal as="article" className="card p-6 md:col-span-2">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <h4 className="text-[1.05rem] leading-snug tracking-[-0.01em]">{certification.name}</h4>
                 <span className="chip border-accent/30 text-accent">{certification.status}</span>
               </div>
               <p className="mt-3 text-[0.95rem] leading-[1.6] text-muted">{certification.note}</p>
-            </article>
+            </Reveal>
           </div>
         </div>
       </div>

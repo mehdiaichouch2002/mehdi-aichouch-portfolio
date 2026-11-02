@@ -44,6 +44,7 @@ const Portfolio = () => {
               project={project}
               onOpen={open}
               featured={i === 0}
+              index={i}
               className={i === 0 ? "md:col-span-2 lg:row-span-2" : ""}
             />
           ))}
@@ -53,8 +54,8 @@ const Portfolio = () => {
           <h3 className="text-[1.6rem] leading-tight tracking-[-0.03em]">{t("portfolio.otherTitle")}</h3>
           <p className="mt-2 max-w-[36rem] text-muted">{t("portfolio.otherDescription")}</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {visible.map((project) => (
-              <ProjectCard key={project.id} project={project} onOpen={open} />
+            {visible.map((project, i) => (
+              <ProjectCard key={project.id} project={project} onOpen={open} index={i} />
             ))}
           </div>
           {otherWork.length > INITIAL_VISIBLE && (

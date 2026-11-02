@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
+import Reveal from "./motion/Reveal";
+import usePointerCard from "../hooks/usePointerCard";
 
 // Mirrors the Skills section of the resume PDFs in public/. "also" holds what I've
 // studied or used outside production, kept apart so it doesn't read as daily stack.
@@ -53,6 +55,7 @@ const useIdleIcons = () => {
 const Skills = () => {
   const { t } = useLanguage();
   const icons = useIdleIcons();
+  const { handlers } = usePointerCard();
   const groups = { ...SKILL_GROUPS, languages: t("skills.spoken") };
 
   return (
@@ -62,7 +65,12 @@ const Skills = () => {
 
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {Object.entries(LAYOUT).map(([group, span], i) => (
-            <li key={group} className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
+            <Reveal
+              as="li"
+              key={group}
+              delay={(i % 4) * 0.06}
+              {...handlers}
+              className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
               {group === "backend" && icons && <icons.BackendMark />}
               <div className="relative flex items-baseline justify-between gap-3">
                 <h3 className="text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
@@ -91,7 +99,7 @@ const Skills = () => {
                   );
                 })}
               </ul>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>
