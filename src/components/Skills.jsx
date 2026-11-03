@@ -7,24 +7,25 @@ import usePointerCard from "../hooks/usePointerCard";
 // Mirrors the Skills section of the resume PDFs in public/. "also" holds what I've
 // studied or used outside production, kept apart so it doesn't read as daily stack.
 const SKILL_GROUPS = {
-  backend: ["PHP 8", "Magento 2.4.x / Adobe Commerce", "Laravel", "Bagisto"],
-  frontend: ["Hyvä", "Alpine.js", "Tailwind CSS", "React", "JavaScript (ES6+)", "Knockout.js"],
-  apis: ["REST API design", "JWT / OAuth2", "Microsoft Entra ID SSO", "RBAC", "Amplience", "Adyen", "PayPal"],
-  data: ["MySQL", "Elasticsearch / OpenSearch", "Redis", "Varnish"],
-  tools: ["Docker", "Git / GitHub", "CI/CD (GitHub Actions)", "Nginx", "Linux (Ubuntu)", "Composer", "Claude Code / MCP"],
-  quality: ["PHPStan", "Xdebug", "Pest", "Playwright"],
-  also: ["Java / Java EE", "Spring Boot", "C# / .NET", "Python"],
+  magento: [
+    "Magento 2.4.x", "PHP 8", "Custom modules", "Plugins & observers", "Dependency injection", "Service Contracts",
+    "UI Components", "adminhtml", "Indexers", "Cron", "Composer patches",
+  ],
+  b2b: ["Company accounts", "Tiered & customer-group pricing", "Catalogue permissions", "Inventory sync"],
+  apis: ["REST APIs", "webapi.xml & ACL", "OAuth2 / JWT", "Microsoft Entra ID SSO", "Amplience DAM & CDN", "Adyen / Apple Pay"],
+  frontend: ["Hyvä Theme", "Alpine.js", "Tailwind CSS", "React", "Knockout.js", "JavaScript (ES6+)"],
+  performance: ["Elasticsearch / OpenSearch", "Redis", "Varnish FPC", "MySQL tuning", "Nginx", "Docker", "CI/CD", "Linux"],
+  also: ["Laravel", "Java / Spring Boot", "C# / .NET", "Python", "Git", "Xdebug", "Agile / Scrum", "Code review"],
 };
 
 // Bento placement on large screens (4 columns, 3 rows)
 const LAYOUT = {
-  backend: "lg:col-span-2",
-  frontend: "lg:col-span-2",
+  magento: "lg:col-span-2",
   apis: "lg:col-span-2",
-  data: "",
-  quality: "",
-  tools: "lg:col-span-2",
-  also: "",
+  frontend: "lg:col-span-2",
+  performance: "lg:col-span-2",
+  b2b: "",
+  also: "lg:col-span-2",
   languages: "",
 };
 
@@ -32,10 +33,9 @@ const LAYOUT = {
 // page is idle. Until then each chip keeps an icon-sized gap (no layout shift).
 const loadIcons = () => import("./skills/skillIcons");
 const HAS_ICON = new Set([
-  "PHP 8", "Magento 2.4.x / Adobe Commerce", "Laravel", "Alpine.js", "Tailwind CSS", "React",
-  "JavaScript (ES6+)", "JWT / OAuth2", "Adyen", "PayPal", "MySQL", "Elasticsearch / OpenSearch",
-  "Redis", "Docker", "Git / GitHub", "CI/CD (GitHub Actions)", "Nginx", "Linux (Ubuntu)", "Composer",
-  "Claude Code / MCP", "Java / Java EE", "Spring Boot", "C# / .NET", "Python",
+  "Magento 2.4.x", "PHP 8", "Composer patches", "OAuth2 / JWT", "Adyen / Apple Pay", "Alpine.js", "Tailwind CSS",
+  "React", "JavaScript (ES6+)", "Elasticsearch / OpenSearch", "Redis", "MySQL tuning", "Nginx", "Docker", "CI/CD",
+  "Linux", "Laravel", "Java / Spring Boot", "C# / .NET", "Python", "Git",
 ]);
 
 const useIdleIcons = () => {
@@ -57,6 +57,9 @@ const Skills = () => {
   const icons = useIdleIcons();
   const { handlers } = usePointerCard();
   const groups = { ...SKILL_GROUPS, languages: t("skills.spoken") };
+  // Skill names stay in English except the plain-word ones listed in skills.terms
+  const terms = t("skills.terms");
+  const label = (skill) => terms?.[skill] ?? skill;
 
   return (
     <section id="skills" aria-labelledby="skills-title" className="section">
@@ -71,7 +74,7 @@ const Skills = () => {
               delay={(i % 4) * 0.06}
               {...handlers}
               className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
-              {group === "backend" && icons && <icons.BackendMark />}
+              {group === "magento" && icons && <icons.BackendMark />}
               <div className="relative flex items-baseline justify-between gap-3">
                 <h3 className="text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
                 <span className="font-mono text-[0.7rem] text-muted" aria-hidden="true">
@@ -94,7 +97,7 @@ const Skills = () => {
                         ) : (
                           <span className="h-[1em] w-[1em] shrink-0" aria-hidden="true" />
                         ))}
-                      {skill}
+                      {label(skill)}
                     </li>
                   );
                 })}

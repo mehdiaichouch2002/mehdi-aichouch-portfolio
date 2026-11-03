@@ -37,7 +37,7 @@ describe("Experience and education", () => {
   test("shows the ENSA diploma with honours and no dates on diplomas", () => {
     render(<App />);
 
-    const diploma = screen.getByText(/university licence \(bac\+3\)/i).closest("article");
+    const diploma = screen.getByText(/university diploma \(d\.u\., bac\+3\)/i).closest("article");
     expect(within(diploma).getByText(/mention très bien/i)).toBeInTheDocument();
     expect(within(diploma).queryByText(/20\d\d/)).not.toBeInTheDocument();
   });

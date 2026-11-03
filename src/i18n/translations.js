@@ -24,10 +24,10 @@ const translations = {
     about: {
       title: "About",
       lead:
-        "Full-stack developer with three years on the Magento 2 platforms of Carhartt WIP, Anita and Edwin Europe. I work in PHP, Laravel and React, from REST APIs and integrations to fast Hyvä storefronts.",
+        "Magento 2 / Adobe Commerce backend developer with 2.5+ years on the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe, serving 50,000+ monthly users across Europe. Custom modules on Service Contracts, REST integrations and fast Hyvä storefronts, plus full-stack PHP work in Laravel and React.",
       photoAlt: "Portrait of Mehdi Aichouch",
       intro:
-        "Three years on Magento 2 / Adobe Commerce and Laravel: at Cartware / Morocommerce in Fès until the company closed, then freelance since August 2026. Backed by a Bac+3 university licence in web frameworks and Java EE.",
+        "At Cartware / Morocommerce in Fès from 2024 to 2026, freelance since August 2026. Backed by a Bac+3 university diploma in web development frameworks and Java EE, and preparing the Adobe Commerce Developer Professional certification (AD0-E724).",
     },
     timeline: {
       title: "Experience",
@@ -61,7 +61,7 @@ const translations = {
           "European online store for the Japanese denim brand, on Magento 2.4. I built features end to end and set up Apple Pay on Adyen.",
         freespace: "Application for managing spaces, written in PHP.",
         requestify: "Request management system built with Laravel.",
-        portfolio: "This site: React, Tailwind CSS, Motion, a three.js hero object and an AI assistant that answers questions about my work.",
+        portfolio: "This site: React, Tailwind CSS, Motion, a CSS 3D hero and an AI assistant that answers questions about my work.",
         slackbot:
           "Python Slack bot that automatically hosts and manages daily stand-up meetings.",
         library:
@@ -86,15 +86,15 @@ const translations = {
       title: "Skills",
       description: "What I use day to day, grouped by area.",
       groups: {
-        backend: "Backend",
-        frontend: "Frontend",
+        magento: "Magento / Adobe Commerce",
+        b2b: "B2B commerce",
         apis: "APIs and integrations",
-        data: "Data and performance",
-        tools: "Tools and DevOps",
-        quality: "Testing and quality",
-        also: "Also worked with",
+        frontend: "Frontend",
+        performance: "Performance and infrastructure",
+        also: "Also",
         languages: "Spoken languages",
       },
+      terms: {},
       spoken: ["Arabic, native", "English, professional (B2)", "French, intermediate (B1)"],
     },
     contact: {
@@ -120,7 +120,7 @@ const translations = {
     },
     resumeModal: {
       title: "Download my resume",
-      subtitle: "Magento 2 / Adobe Commerce and full-stack PHP, in one PDF.",
+      subtitle: "Magento 2 / Adobe Commerce developer, one PDF per language.",
       english: "English (PDF)",
       french: "French (PDF)",
       cancel: "Close",
@@ -128,7 +128,7 @@ const translations = {
     footer: {
       location: "Fès, Morocco.",
       backToTop: "Back to top",
-      builtWith: "Built with React, Tailwind CSS and three.js.",
+      builtWith: "Built with React and Tailwind CSS.",
     },
     chat: {
       open: "Ask AI",
@@ -149,24 +149,24 @@ const translations = {
         org: "Self-employed · Remote",
         role: "Full-stack developer (freelance)",
         date: "Aug 2026 – Present",
-        note: "Client projects through agencies, plus a Magento 2 bug-fix service on Fiverr.",
+        note: "Client projects through agencies.",
         points: [
-          "Building the online store of a Moroccan home-appliance retailer (via the agency J2HB) on Laravel 12 / Bagisto, PHP 8.3, MySQL 8 and Redis: stock management, guest checkout, cash on delivery, prices in dirhams.",
-          "Shipped the storefront in French, Arabic (RTL), English and Spanish, with PayPal and EUR conversion wired in and ready to switch on.",
-          "Migrated the old site's full catalogue (categories, products, prices, images, stock) into seeders, with a one-command Docker setup and Pest and Playwright tests in all four languages.",
+          "Through the J2HB agency, built the online store of Mercato TNG, a Moroccan home-appliance retailer, on Laravel 12 / Bagisto, PHP 8.3, MySQL and Redis: 4 languages (French, Arabic RTL, English, Spanish), stock management, cash on delivery and PayPal, the old site's full catalogue migrated, Docker setup, Pest and Playwright tests.",
         ],
       },
       {
         org: "Cartware / Morocommerce, Fès",
-        role: "Magento 2 / Adobe Commerce developer",
+        role: "Magento 2 developer",
         date: "Jan 2024 – Jul 2026",
-        note: "Full-time permanent contract, ended when the company closed.",
         points: [
-          "Built and maintained features on three Magento 2.4.x stores (Carhartt WIP B2B, Anita, Edwin Europe) serving 50,000+ monthly users, including tiered pricing, catalogue permissions and REST stock sync.",
-          "Designed the REST API of Carhartt WIP's digital asset management app (service contracts, webapi.xml): image data, Amplience CDN URLs and JWT auth. Added Microsoft Entra ID single sign-on with JWKS validation.",
-          "Cut product listing load time from 3.2s to 0.8s through Elasticsearch mapping, MySQL indexes, Redis and Varnish, and delivered Hyvä storefronts scoring 95+ on Google PageSpeed.",
-          "Created Cartware_Translation, an admin module with CSV import and bulk upsert; patched a MySQL collation error caused by invalid UTF-8 in URL paths; set up Apple Pay on Adyen for Edwin.",
-          "Built the Docker environments for Carhartt B2B and Edwin and rolled out Claude Code with MCP servers (Playwright, MySQL) to the team. Legacy refactoring cut production bugs by 45%.",
+          "Built the REST API layer for the Carhartt WIP DAM integration: repository interfaces, service contracts, di.xml / webapi.xml wiring and Amplience CDN asset resolution, exposing customer verification, credential and catalogue-image endpoints to partner systems.",
+          "Integrated Microsoft Entra ID (Azure AD) single sign-on (app registration, JWKS-based JWT validation, callbacks) and set up Apple Pay domain verification on Adyen for Edwin Europe.",
+          "Cut product listing load time from 3.2s to 0.8s by reworking Elasticsearch field mapping, MySQL queries and indexes, Redis caching and Varnish full-page cache.",
+          "Delivered Hyvä storefronts (Alpine.js, Tailwind CSS), scoring consistently above 95 on Google PageSpeed.",
+          "Built B2B workflows: tiered and customer-group pricing, catalogue permissions, inventory sync over REST.",
+          "Replaced third-party extensions with in-house plugins and observers (Service Contracts).",
+          "Shipped a translation-management admin module (CSV import, bulk upsert through UI components) and fixed a core UTF-8 collation bug with a Composer patch.",
+          "Refactored 50,000+ lines of legacy code and stabilised Docker and CI/CD pipelines, cutting production bugs by 45%.",
         ],
       },
       {
@@ -174,7 +174,9 @@ const translations = {
         role: "Laravel developer (internship)",
         date: "Aug – Dec 2023",
         points: [
-          "Built an internal management platform used daily by 25+ employees (Laravel 10, Tailwind CSS): 15+ REST endpoints and role-based access control, with query tuning that halved response times.",
+          "Built an internal management platform on Laravel 10 and Tailwind CSS, used daily by 25+ employees.",
+          "Designed 15+ REST endpoints with proper HTTP semantics, request validation and Eloquent relationships.",
+          "Implemented role-based access control and optimised the underlying queries, halving response times.",
         ],
       },
       {
@@ -189,11 +191,11 @@ const translations = {
     education: [
       {
         org: "ENSA Fès, Sidi Mohamed Ben Abdellah University",
-        degree: "University licence (Bac+3) in Web Frameworks & Java EE",
-        note: "Graduated with highest honours (mention Très Bien). Java EE, Spring Boot, C# / .NET, software architecture.",
+        degree: "University Diploma (D.U., Bac+3) in Web Development Frameworks & Java EE",
+        note: "Highest honours (mention Très Bien). Java EE, Spring Boot, C# / .NET, software architecture.",
       },
       {
-        org: "ISTA Adarissa (OFPPT), Fès",
+        org: "OFPPT, Fès",
         degree: "Specialised technician diploma in digital development",
         note: "Full-stack web development: PHP, MySQL, JavaScript, OOP.",
       },
@@ -201,7 +203,7 @@ const translations = {
     certification: {
       name: "Adobe Commerce Developer Professional (AD0-E724)",
       status: "In preparation",
-      note: "Magento 2.4.7 backend development, Adobe Commerce Cloud, checkout and sales flow.",
+      note: "Magento 2.4.7 backend development, Adobe Commerce Cloud, checkout and sales flow, adminhtml UI components.",
     },
   },
 
@@ -229,10 +231,10 @@ const translations = {
     about: {
       title: "À propos",
       lead:
-        "Développeur full-stack avec trois ans d'expérience sur les plateformes Magento 2 de Carhartt WIP, Anita et Edwin Europe. Je travaille en PHP, Laravel et React, des API REST et intégrations jusqu'aux vitrines Hyvä rapides.",
+        "Développeur backend Magento 2 / Adobe Commerce, plus de 2 ans et demi d'expérience sur les plateformes B2B et B2C de Carhartt WIP, Anita et Edwin Europe (50 000+ utilisateurs mensuels en Europe). Modules sur mesure basés sur les Service Contracts, intégrations REST et vitrines Hyvä rapides, ainsi que du full-stack PHP en Laravel et React.",
       photoAlt: "Portrait de Mehdi Aichouch",
       intro:
-        "Trois ans sur Magento 2 / Adobe Commerce et Laravel : chez Cartware / Morocommerce à Fès jusqu'à la fermeture de l'entreprise, puis en freelance depuis août 2026. Avec une licence d'université Bac+3 en frameworks web et Java EE.",
+        "Chez Cartware / Morocommerce à Fès de 2024 à 2026, en freelance depuis août 2026. Titulaire d'un Diplôme d'Université Bac+3 en frameworks de développement web et Java EE, et en préparation de la certification Adobe Commerce Developer Professional (AD0-E724).",
     },
     timeline: {
       title: "Parcours",
@@ -266,7 +268,7 @@ const translations = {
           "Boutique en ligne européenne de la marque de denim japonaise, sous Magento 2.4. J'ai développé des fonctionnalités de bout en bout et mis en place Apple Pay sur Adyen.",
         freespace: "Application de gestion d'espaces, écrite en PHP.",
         requestify: "Système de gestion des demandes développé avec Laravel.",
-        portfolio: "Ce site : React, Tailwind CSS, Motion, un objet 3D three.js et un assistant IA qui répond aux questions sur mon travail.",
+        portfolio: "Ce site : React, Tailwind CSS, Motion, un visuel 3D en CSS et un assistant IA qui répond aux questions sur mon travail.",
         slackbot:
           "Bot Slack Python qui anime et gère automatiquement les réunions daily stand-up.",
         library:
@@ -291,14 +293,30 @@ const translations = {
       title: "Compétences",
       description: "Ce que j'utilise au quotidien, par domaine.",
       groups: {
-        backend: "Backend",
-        frontend: "Frontend",
+        magento: "Magento / Adobe Commerce",
+        b2b: "Commerce B2B",
         apis: "API et intégrations",
-        data: "Données et performance",
-        tools: "Outils et DevOps",
-        quality: "Tests et qualité",
-        also: "Également",
+        frontend: "Frontend",
+        performance: "Performance et infrastructure",
+        also: "Aussi",
         languages: "Langues",
+      },
+      // French names for the skills that are words rather than product names (Skills.jsx)
+      terms: {
+        "Custom modules": "Modules personnalisés",
+        "Dependency injection": "Injection de dépendances",
+        Indexers: "Indexeurs",
+        "Composer patches": "Patches Composer",
+        "Company accounts": "Comptes société",
+        "Tiered & customer-group pricing": "Prix par palier et par groupe client",
+        "Catalogue permissions": "Permissions catalogue",
+        "Inventory sync": "Synchronisation des stocks",
+        "REST APIs": "API REST",
+        "Microsoft Entra ID SSO": "SSO Microsoft Entra ID",
+        "Amplience DAM & CDN": "DAM & CDN Amplience",
+        "Hyvä Theme": "Thème Hyvä",
+        "MySQL tuning": "Tuning MySQL",
+        "Code review": "Revue de code",
       },
       spoken: ["Arabe, langue maternelle", "Anglais, professionnel (B2)", "Français, intermédiaire (B1)"],
     },
@@ -325,7 +343,7 @@ const translations = {
     },
     resumeModal: {
       title: "Télécharger mon CV",
-      subtitle: "Magento 2 / Adobe Commerce et full-stack PHP, en un seul PDF.",
+      subtitle: "Développeur Magento 2 / Adobe Commerce, un PDF par langue.",
       english: "Anglais (PDF)",
       french: "Français (PDF)",
       cancel: "Fermer",
@@ -333,7 +351,7 @@ const translations = {
     footer: {
       location: "Fès, Maroc.",
       backToTop: "Haut de page",
-      builtWith: "Réalisé avec React, Tailwind CSS et three.js.",
+      builtWith: "Réalisé avec React et Tailwind CSS.",
     },
     chat: {
       open: "Demander à l'IA",
@@ -354,24 +372,24 @@ const translations = {
         org: "Indépendant · À distance",
         role: "Développeur full-stack freelance",
         date: "Depuis août 2026",
-        note: "Projets clients via des agences, et une offre de correction de bugs Magento 2 sur Fiverr.",
+        note: "Projets clients via des agences.",
         points: [
-          "Développement de la boutique en ligne d'un revendeur marocain d'électroménager (via l'agence J2HB) sous Laravel 12 / Bagisto, PHP 8.3, MySQL 8 et Redis : stocks, commande sans compte, paiement à la livraison, prix en dirhams.",
-          "Site livré en français, arabe (RTL), anglais et espagnol, avec PayPal et conversion en euros intégrés, prêts à activer.",
-          "Reprise de tout le catalogue de l'ancien site (catégories, produits, prix, images, stocks) en seeders, avec installation Docker en une commande et tests Pest et Playwright dans les 4 langues.",
+          "Via l'agence J2HB, développement de la boutique en ligne de Mercato TNG, distributeur marocain d'électroménager, sous Laravel 12 / Bagisto, PHP 8.3, MySQL et Redis : 4 langues (français, arabe RTL, anglais, espagnol), gestion des stocks, paiement à la livraison et PayPal, migration complète du catalogue de l'ancien site, environnement Docker, tests Pest et Playwright.",
         ],
       },
       {
         org: "Cartware / Morocommerce, Fès",
-        role: "Développeur Magento 2 / Adobe Commerce",
+        role: "Développeur Magento 2",
         date: "Janv. 2024 – Juil. 2026",
-        note: "CDI, terminé à la fermeture de l'entreprise.",
         points: [
-          "Développement et maintenance de trois boutiques Magento 2.4.x (Carhartt WIP B2B, Anita, Edwin Europe ; 50 000+ utilisateurs par mois), dont prix par palier, permissions catalogue et synchro des stocks en REST.",
-          "Conception de l'API REST de l'application DAM de Carhartt WIP (service contracts, webapi.xml) : données images, URL CDN Amplience, authentification JWT. Ajout du SSO Microsoft Entra ID avec validation JWKS.",
-          "Chargement des pages catalogue réduit de 3,2 s à 0,8 s (mapping Elasticsearch, index MySQL, Redis, Varnish) et vitrines Hyvä notées 95+ sur Google PageSpeed.",
-          "Création du module admin Cartware_Translation (import CSV, upsert en masse) ; correctif d'une erreur de collation MySQL due à de l'UTF-8 invalide dans les URL ; mise en place d'Apple Pay sur Adyen pour Edwin.",
-          "Mise en place des environnements Docker de Carhartt B2B et Edwin, et déploiement de Claude Code avec serveurs MCP (Playwright, MySQL) pour l'équipe. La refonte du code legacy a réduit de 45 % les bugs en production.",
+          "Conception de la couche API REST de l'intégration DAM Carhartt WIP : interfaces de repository, service contracts, configuration di.xml / webapi.xml et résolution des assets via le CDN Amplience, exposant aux systèmes externes les endpoints de vérification client, de gestion des accès et d'images catalogue.",
+          "Intégration du SSO Microsoft Entra ID (Azure AD) : enregistrement d'application, validation JWT via JWKS, callbacks ; vérification de domaine Apple Pay sur Adyen pour Edwin Europe.",
+          "Pages catalogue passées de 3,2 s à 0,8 s : mapping Elasticsearch, requêtes et index MySQL, cache Redis, Varnish FPC.",
+          "Vitrines Hyvä (Alpine.js, Tailwind CSS), Google PageSpeed constamment au-dessus de 95.",
+          "Workflows B2B : prix par palier et par groupe client, permissions catalogue, synchronisation des stocks via REST.",
+          "Plugins et observers internes (Service Contracts) en remplacement d'extensions tierces.",
+          "Livraison d'un module admin de gestion des traductions (import CSV, upsert en masse via UI Components) et correction d'une anomalie de collation UTF-8 du core par patch Composer.",
+          "Refactorisation de 50 000+ lignes de code legacy, fiabilisation de Docker et des pipelines CI/CD : -45 % de bugs en production.",
         ],
       },
       {
@@ -379,7 +397,9 @@ const translations = {
         role: "Développeur Laravel (stage)",
         date: "Août – Déc. 2023",
         points: [
-          "Développement d'une plateforme de gestion interne utilisée chaque jour par 25+ collaborateurs (Laravel 10, Tailwind CSS) : 15+ endpoints REST, contrôle d'accès par rôles, requêtes optimisées (temps de réponse divisé par deux).",
+          "Plateforme de gestion interne sous Laravel 10 et Tailwind CSS, utilisée chaque jour par 25+ collaborateurs.",
+          "Conception de 15+ endpoints REST avec une sémantique HTTP correcte, validation des requêtes et relations Eloquent.",
+          "Mise en place d'un contrôle d'accès par rôles (RBAC) et optimisation des requêtes : temps de réponse divisé par deux.",
         ],
       },
       {
@@ -387,18 +407,18 @@ const translations = {
         role: "Développeur web (stage)",
         date: "Mars – Avr. 2023",
         points: [
-          "Développement d'une application RH en PHP / MySQL automatisant les demandes de congé et le suivi de la paie, supprimant 70 % du travail RH manuel.",
+          "Application RH en PHP / MySQL automatisant congés et suivi de paie : -70 % d'opérations manuelles.",
         ],
       },
     ],
     education: [
       {
         org: "ENSA Fès, Université Sidi Mohamed Ben Abdellah",
-        degree: "Licence d'université (Bac+3) Frameworks Web & Java EE",
-        note: "Obtenu avec la mention Très Bien. Java EE, Spring Boot, C# / .NET, architecture logicielle.",
+        degree: "Diplôme d'Université (D.U.) Bac+3 en Frameworks de développement web & Java EE",
+        note: "Mention Très Bien. Java EE, Spring Boot, C# / .NET, architecture logicielle.",
       },
       {
-        org: "ISTA Adarissa (OFPPT), Fès",
+        org: "OFPPT, Fès",
         degree: "Diplôme de technicien spécialisé en développement digital",
         note: "Développement web full-stack : PHP, MySQL, JavaScript, POO.",
       },
@@ -406,7 +426,7 @@ const translations = {
     certification: {
       name: "Adobe Commerce Developer Professional (AD0-E724)",
       status: "En préparation",
-      note: "Développement backend Magento 2.4.7, Adobe Commerce Cloud, tunnel de commande et ventes.",
+      note: "Développement backend Magento 2.4.7, Adobe Commerce Cloud, tunnel de commande, composants UI adminhtml.",
     },
   },
 };

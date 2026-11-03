@@ -123,7 +123,7 @@ const projects = [
     hosted: false,
     category: "personal",
     descriptionKey: "portfolio",
-    tech: ["React", "Tailwind", "Motion", "three.js"],
+    tech: ["React", "Tailwind", "Motion", "CSS 3D"],
   },
   {
     id: 7,
