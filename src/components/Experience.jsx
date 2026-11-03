@@ -3,6 +3,7 @@ import { m, useScroll, useSpring } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
 import Reveal from "./motion/Reveal";
+import { DUR, EASE } from "../lib/motion";
 
 const Experience = () => {
   const { t } = useLanguage();
@@ -30,12 +31,16 @@ const Experience = () => {
               className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-gradient-to-b from-accent via-accent to-accent/0"
               aria-hidden="true"
             />
-            {experience.map((job, i) => (
+            {experience.map((job) => (
               <Reveal as="li" key={`${job.org}-${job.role}`} className="relative pb-14 pl-10 last:pb-0 sm:pl-12">
-                <span
-                  className={`absolute left-0 top-[0.4rem] h-[11px] w-[11px] rounded-full border ${
-                    i === 0 ? "border-accent bg-accent shadow-[0_0_14px_rgb(var(--accent)/0.6)]" : "border-line-strong bg-canvas"
-                  }`}
+                <span className="absolute left-0 top-[0.4rem] h-[11px] w-[11px] rounded-full border border-line-strong bg-canvas" aria-hidden="true" />
+                {/* Lights up as the accent line reaches it (the line runs at 60% of the viewport) */}
+                <m.span
+                  className="absolute left-0 top-[0.4rem] h-[11px] w-[11px] rounded-full border border-accent bg-accent shadow-[0_0_14px_rgb(var(--accent)/0.6)]"
+                  initial={{ opacity: 0, scale: 0.3 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "0px 0px -40% 0px" }}
+                  transition={{ duration: DUR.base, ease: EASE }}
                   aria-hidden="true"
                 />
                 <p className="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-muted tabular-nums">{job.date}</p>

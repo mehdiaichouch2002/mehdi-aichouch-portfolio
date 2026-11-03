@@ -5,6 +5,7 @@ import Notification from "./common/Notification";
 import SectionHeader from "./common/SectionHeader";
 import Magnetic from "./motion/Magnetic";
 import Reveal from "./motion/Reveal";
+import RollText from "./motion/RollText";
 import { useLanguage } from "../context/LanguageContext";
 import { useResumeModal } from "../context/ResumeModalContext";
 import { contactLinks, EMAIL } from "../data/contactLinks";
@@ -134,8 +135,8 @@ const Contact = () => {
           })}
 
           <Magnetic className="self-start">
-            <button type="submit" disabled={isLoading} className="btn-primary disabled:cursor-not-allowed disabled:opacity-60">
-              {isLoading ? t("contact.sending") : t("contact.cta")}
+            <button type="submit" disabled={isLoading} className="btn-primary group disabled:cursor-not-allowed disabled:opacity-60">
+              <RollText>{isLoading ? t("contact.sending") : t("contact.cta")}</RollText>
             </button>
           </Magnetic>
         </form>

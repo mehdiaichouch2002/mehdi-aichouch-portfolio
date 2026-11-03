@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import navLinks, { sectionNumber } from "../data/navLinks";
 import useScrolled from "../hooks/useScrolled";
+import useHideOnScroll from "../hooks/useHideOnScroll";
 import { useLanguage } from "../context/LanguageContext";
 import ScrollProgress from "./common/ScrollProgress";
 
@@ -84,6 +85,8 @@ const NavBar = () => {
   const [nav, setNav] = useState(false);
   const activeSection = useActiveSection();
   const scrolled = useScrolled(20);
+  // Out of the way while reading down, back on the first scroll up
+  const hidden = useHideOnScroll() && !nav;
   const { t } = useLanguage();
 
   const closeNav = useCallback(() => setNav(false), []);
@@ -104,9 +107,9 @@ const NavBar = () => {
     <>
       <nav
         aria-label="Main"
-        className={`fixed inset-x-0 top-0 z-50 h-nav border-b transition-colors duration-base ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 h-nav border-b transition-[transform,background-color,border-color] duration-base ease-out has-[:focus-visible]:translate-y-0 ${
           scrolled ? "border-line bg-canvas/75 backdrop-blur-xl" : "border-transparent bg-transparent"
-        }`}
+        } ${hidden ? "-translate-y-full" : "translate-y-0"}`}
       >
         <ScrollProgress />
         <div className="page flex h-full items-center justify-between">
@@ -178,8 +181,13 @@ const NavBar = () => {
           </button>
         </div>
         <ul className="px-3 py-4">
-          {navLinks.map(({ id, link }) => (
-            <li key={id}>
+          {navLinks.map(({ id, link }, i) => (
+            <li
+              key={id}
+              // Links slide in one after another as the panel opens
+              className={`transition-[opacity,transform] duration-slow ease-out ${nav ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"}`}
+              style={{ transitionDelay: nav ? `${120 + i * 45}ms` : "0ms" }}
+            >
               <a
                 href={`#${link}`}
                 onClick={closeNav}

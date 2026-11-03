@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
 import ProjectCard from "./work/ProjectCard";
 import ProjectDetail from "./work/ProjectDetail";
+import CursorPill from "./work/CursorPill";
 
 const clientWork = projects.filter((p) => p.category === "commercial");
 // Magento modules first: they're closest to the client work above
@@ -22,9 +23,12 @@ const Portfolio = () => {
   const visible = expanded ? otherWork : otherWork.slice(0, INITIAL_VISIBLE);
 
   const open = useCallback((project, trigger) => {
+    pill.current?.show(null);
     triggerRef.current = trigger;
     setSelected(project);
   }, []);
+  const pill = useRef(null);
+  const onHover = useCallback((label, e) => pill.current?.show(label, e), []);
   const close = useCallback(() => {
     setSelected(null);
     // Return focus to the card that opened the dialog
@@ -43,6 +47,7 @@ const Portfolio = () => {
               key={project.id}
               project={project}
               onOpen={open}
+              onHover={onHover}
               featured={i === 0}
               index={i}
               className={i === 0 ? "md:col-span-2 lg:row-span-2" : ""}
@@ -55,7 +60,7 @@ const Portfolio = () => {
           <p className="mt-2 max-w-[36rem] text-muted">{t("portfolio.otherDescription")}</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((project, i) => (
-              <ProjectCard key={project.id} project={project} onOpen={open} index={i} />
+              <ProjectCard key={project.id} project={project} onOpen={open} onHover={onHover} index={i} />
             ))}
           </div>
           {otherWork.length > INITIAL_VISIBLE && (
@@ -66,6 +71,7 @@ const Portfolio = () => {
         </div>
       </div>
 
+      <CursorPill ref={pill} />
       <AnimatePresence>{selected && <ProjectDetail key={selected.id} project={selected} onClose={close} />}</AnimatePresence>
     </section>
   );

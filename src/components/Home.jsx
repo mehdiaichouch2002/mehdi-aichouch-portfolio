@@ -4,6 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { useResumeModal } from "../context/ResumeModalContext";
 import HeroVisual from "./hero/HeroVisual";
 import Magnetic from "./motion/Magnetic";
+import RollText from "./motion/RollText";
 
 const liveStores = projects.filter((p) => p.category === "commercial");
 const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
@@ -34,7 +35,7 @@ const Home = () => {
         <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
 
         <div className="my-auto">
-          <p className="eyebrow">{t("home.eyebrow")}</p>
+          <p className="eyebrow hero-in">{t("home.eyebrow")}</p>
 
           <h1
             id="hero-title"
@@ -51,15 +52,15 @@ const Home = () => {
             {t("home.subline")}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="hero-in mt-8 flex flex-wrap items-center gap-3" style={{ "--d": "380ms" }}>
             <Magnetic>
               <a href="#portfolio" className="btn-primary group">
-                {t("home.cta")}
+                <RollText>{t("home.cta")}</RollText>
                 <FiArrowRight className="transition-transform duration-fast ease-out group-hover:translate-x-0.5" aria-hidden="true" />
               </a>
             </Magnetic>
-            <a href="#contact" className="btn-secondary">
-              {t("home.contactCta")}
+            <a href="#contact" className="btn-secondary group">
+              <RollText>{t("home.contactCta")}</RollText>
             </a>
             <button onClick={openResume} className="inline-flex min-h-[44px] items-center gap-2 px-3 text-[0.95rem] text-muted transition-colors duration-fast hover:text-fg">
               <FiDownload aria-hidden="true" />
@@ -67,12 +68,12 @@ const Home = () => {
             </button>
           </div>
 
-          <p className="mt-8 max-w-[44rem] font-mono text-[0.74rem] leading-relaxed text-muted">
+          <p className="hero-in mt-8 max-w-[44rem] font-mono text-[0.74rem] leading-relaxed text-muted" style={{ "--d": "480ms" }}>
             {t("home.availability")}
           </p>
         </div>
 
-        <div className="mt-14 border-t border-line pt-5">
+        <div className="hero-in mt-14 border-t border-line pt-5" style={{ "--d": "560ms" }}>
           <p className="eyebrow">{t("home.liveStores")}</p>
           <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-2">
             {liveStores.map((store) => (

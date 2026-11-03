@@ -128,6 +128,7 @@ const translations = {
     footer: {
       location: "Fès, Morocco.",
       backToTop: "Back to top",
+      localTime: "Local time in Fès",
       builtWith: "Built with React and Tailwind CSS.",
     },
     chat: {
@@ -351,6 +352,7 @@ const translations = {
     footer: {
       location: "Fès, Maroc.",
       backToTop: "Haut de page",
+      localTime: "Heure locale à Fès",
       builtWith: "Réalisé avec React et Tailwind CSS.",
     },
     chat: {

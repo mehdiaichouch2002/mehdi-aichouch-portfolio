@@ -159,6 +159,63 @@
   }
 }
 
+/* Hero entrance: after the headline rises, the rest of the hero arrives in order.
+   The subline is left out on purpose: it can be the LCP element on phones. */
+.hero-in {
+  animation: hero-in var(--dur-slow) var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+/* RollText (components/motion/RollText.jsx): label rolls up on hover */
+.roll {
+  display: inline-grid;
+  overflow: hidden;
+  line-height: 1.25;
+}
+.roll > span {
+  grid-area: 1 / 1;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.roll-b {
+  transform: translateY(110%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .roll-a { transform: translateY(-110%); }
+  .group:hover .roll-b { transform: none; }
+}
+
+/* Footer wordmark: the name at full width, fading from text color into the page */
+.footer-mark {
+  font-size: clamp(2.2rem, 12.6vw, 9.4rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+  margin-bottom: -0.12em;
+}
+.footer-mark-word {
+  background: linear-gradient(to bottom, rgb(var(--text)) 25%, rgb(var(--text) / 0.08));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.04em;
+}
+
+/* Lenis (lib/smoothScroll.js) animates the scroll itself, so CSS smoothing must step aside */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+html.lenis.lenis-stopped {
+  overflow: clip;
+}
+
 /* Hero headline: each line slides up once from behind a mask (transform only,
    so the text is painted immediately and LCP isn't delayed) */
 .rise-line {

@@ -12,6 +12,7 @@ import { ResumeModalProvider } from "./context/ResumeModalContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import ResumeLanguageModal from "./components/common/ResumeLanguageModal";
 import AIChatAssistant from "./components/chat/AIChatAssistant";
+import { startSmoothScroll } from "./lib/smoothScroll";
 
 // The hero renders in the first pass. Everything below the fold renders right after,
 // inside a transition, so React time-slices that rendering instead of running it
@@ -35,6 +36,8 @@ const useBelowFold = () => {
 
 function App() {
   const belowFold = useBelowFold();
+  // Desktop inertial scrolling, loaded when the page is idle (see lib/smoothScroll.js)
+  useEffect(() => startSmoothScroll(), []);
 
   return (
     // Features are passed synchronously on purpose: they're already in the main bundle
