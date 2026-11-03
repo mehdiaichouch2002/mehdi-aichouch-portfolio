@@ -31,7 +31,7 @@ const Home = () => {
 
       <div className="page relative flex min-h-[100svh] flex-col pb-10 pt-[calc(var(--nav-h)+3rem)] md:pt-[calc(var(--nav-h)+3.5rem)]">
         {/* Decorative behind the copy on small screens, its own column on large ones */}
-        <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-60 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
+        <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
 
         <div className="my-auto">
           <p className="eyebrow">{t("home.eyebrow")}</p>

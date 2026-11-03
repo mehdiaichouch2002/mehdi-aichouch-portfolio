@@ -180,6 +180,163 @@
   to   { transform: none; }
 }
 
+/* Hero visual, "the stack" (components/hero/HeroVisual.jsx). Pure CSS 3D:
+   four glass layers (data → api → commerce → interface) and a request
+   travelling down through them. Only transform/opacity are animated. */
+@property --gap {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+.hs-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  container-type: inline-size;
+  perspective: 240cqw;
+}
+.hs-halo {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(157 140 255 / 0.1), rgb(76 201 255 / 0.05) 55%, transparent);
+}
+.hs-scene {
+  --gap: 11cqw;
+  --rx: calc(56deg - var(--py, 0) * 6deg);
+  --rz: calc(-42deg + var(--px, 0) * 8deg);
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateX(-9cqw) rotateX(var(--rx)) rotateZ(var(--rz)) translateZ(calc(var(--gap) * -1.5));
+  transition: transform var(--dur-slow) var(--ease-out), --gap var(--dur-base) var(--ease-out);
+}
+.hs-root.is-open .hs-scene {
+  --gap: 14cqw;
+}
+.hs-ground {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  transform: translateZ(calc(var(--gap) * -0.7));
+  background: radial-gradient(closest-side, rgb(76 201 255 / 0.12), rgb(76 201 255 / 0.03) 60%, transparent);
+}
+.hs-layer {
+  position: absolute;
+  inset: 24%;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--i) * var(--gap)));
+}
+.hs-plate {
+  position: absolute;
+  inset: 0;
+  border-radius: 2.8cqw;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(150deg, rgb(30 32 40 / 0.82), rgb(13 14 18 / 0.78)) padding-box,
+    conic-gradient(from 210deg, rgb(76 201 255 / 0.6), rgb(157 140 255 / 0.35), rgb(255 184 230 / 0.3), rgb(159 245 220 / 0.4), rgb(76 201 255 / 0.6)) border-box;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  animation: hs-in var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(120ms + var(--i) * 110ms);
+}
+.hs-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hs-line { fill: none; stroke: rgb(237 237 239 / 0.3); stroke-width: 0.9; }
+.hs-fill { fill: rgb(237 237 239 / 0.07); }
+.hs-bar { fill: rgb(237 237 239 / 0.36); }
+.hs-accent { fill: rgb(var(--accent)); }
+.hs-text {
+  font: 400 5.4px "Geist Mono", ui-monospace, monospace;
+  fill: rgb(237 237 239 / 0.55);
+}
+.hs-ping {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgb(var(--accent) / 0.9);
+  box-shadow: 0 0 5cqw rgb(var(--accent) / 0.22), inset 0 0 4cqw rgb(var(--accent) / 0.12);
+  opacity: 0;
+  animation: hs-ping 6s linear infinite;
+  animation-delay: calc(1.3s + (3 - var(--i)) * 0.9s);
+}
+.hs-label {
+  position: absolute;
+  left: 100%;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  transform-origin: 0 50%;
+  transform: rotateZ(calc(var(--rz) * -1)) rotateX(calc(var(--rx) * -1)) translate(1.5cqw, -50%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  font: 400 11px/1 "Geist Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  color: rgb(var(--muted));
+  white-space: nowrap;
+  animation: hs-fade var(--dur-base) var(--ease-out) both;
+  animation-delay: calc(700ms + var(--i) * 110ms);
+}
+.hs-label::before {
+  content: "";
+  width: 3.5cqw;
+  height: 1px;
+  background: rgb(var(--border-strong));
+}
+.hs-beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  margin-left: -1px;
+  height: calc(var(--gap) * 3);
+  transform-origin: 50% 0;
+  transform: translateZ(calc(var(--gap) * 3)) rotateZ(calc(var(--rz) * -1)) rotateX(-90deg);
+  transition: transform var(--dur-slow) var(--ease-out);
+  background: linear-gradient(rgb(var(--accent) / 0), rgb(var(--accent) / 0.3) 15%, rgb(var(--accent) / 0.3) 85%, rgb(var(--accent) / 0));
+  animation: hs-fade var(--dur-base) var(--ease-out) 900ms both;
+}
+.hs-packet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1.8cqw;
+  height: 1.8cqw;
+  margin: -0.9cqw 0 0 -0.9cqw;
+  border-radius: 50%;
+  background: rgb(var(--accent));
+  box-shadow: 0 0 2.5cqw 0.5cqw rgb(var(--accent) / 0.5);
+  opacity: 0;
+  animation: hs-packet 6s linear 1.4s infinite;
+}
+/* From xl only: at lg the labels would run past the viewport edge */
+@media (max-width: 1279px) {
+  .hs-label { display: none; }
+}
+
+@keyframes hs-in {
+  from { transform: translateZ(calc(var(--i) * var(--gap) * -1)); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+@keyframes hs-fade {
+  from { opacity: 0; }
+}
+@keyframes hs-ping {
+  0%, 100% { opacity: 0; }
+  4%       { opacity: 1; }
+  22%      { opacity: 0; }
+}
+@keyframes hs-packet {
+  0%       { transform: translateY(0); opacity: 0; }
+  4%       { opacity: 1; }
+  45%      { transform: translateY(calc(var(--gap) * 3)); opacity: 1; }
+  50%, 100% { transform: translateY(calc(var(--gap) * 3)); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -27,6 +27,7 @@ class MockIntersectionObserver {
 }
 window.IntersectionObserver =
   window.IntersectionObserver || MockIntersectionObserver;
+window.ResizeObserver = window.ResizeObserver || MockIntersectionObserver;
 
 window.scrollTo = window.scrollTo || (() => {});
 Element.prototype.scrollIntoView = Element.prototype.scrollIntoView || (() => {});

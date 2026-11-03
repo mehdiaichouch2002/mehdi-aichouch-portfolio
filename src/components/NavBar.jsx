@@ -65,9 +65,14 @@ const useActiveSection = () => {
       if (frame === null) frame = requestAnimationFrame(update);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    // Re-read when the page grows: on the first frame only the hero exists, so the
+    // page counts as "scrolled to the bottom" until the other sections mount
+    const ro = new ResizeObserver(onScroll);
+    ro.observe(document.body);
     onScroll(); // first read in a frame, not during mount (avoids a forced reflow)
     return () => {
       window.removeEventListener("scroll", onScroll);
+      ro.disconnect();
       if (frame !== null) cancelAnimationFrame(frame);
     };
   }, []);

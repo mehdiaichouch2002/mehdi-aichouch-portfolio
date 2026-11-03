@@ -18,7 +18,8 @@ const translations = {
       resume: "Download resume",
       availability: "Available immediately · Based in Fès, Morocco · Open to remote, hybrid or on-site",
       liveStores: "Live stores I've worked on",
-      visualAlt: "Abstract iridescent 3D shape",
+      visualAlt: "The layers of a web app: interface, commerce, API and data",
+      stack: { interface: "interface", commerce: "commerce", api: "api", data: "data" },
     },
     about: {
       title: "About",
@@ -222,7 +223,8 @@ const translations = {
       resume: "Télécharger le CV",
       availability: "Disponible immédiatement · Basé à Fès, Maroc · Télétravail, hybride ou sur site",
       liveStores: "Boutiques en ligne sur lesquelles j'ai travaillé",
-      visualAlt: "Forme 3D abstraite irisée",
+      visualAlt: "Les couches d'une application web : interface, e-commerce, API et données",
+      stack: { interface: "interface", commerce: "e-commerce", api: "api", data: "données" },
     },
     about: {
       title: "À propos",
