@@ -1,18 +1,19 @@
-import AnitaImg from "../assets/projects/anita.svg";
-import CarharttImg from "../assets/projects/carhartt.svg";
-import FreespaceImg from "../assets/projects/freespace.svg";
-import EdwwinImg from "../assets/projects/edwin.svg";
-import PortfolioImg from "../assets/projects/portfolio.svg";
-import RequestifyImg from "../assets/projects/requestify.svg";
-import SlackBotImg from "../assets/projects/slackbot.svg";
-import LibraryImg from "../assets/projects/library.svg";
-import AttributeImportImg from "../assets/projects/attribute-import.svg";
-import MagentoFeaturesImg from "../assets/projects/magento-features.svg";
-import EChallengeImg from "../assets/projects/echallenge.svg";
-import JeeProductsImg from "../assets/projects/jee-products.svg";
-import FreespaceBlogImg from "../assets/projects/freespace-blog.svg";
-import AtelierImg from "../assets/projects/atelier.svg";
-import JobBotImg from "../assets/projects/job-bot.svg";
+import AnitaImg from "../assets/projects/anita.webp";
+import CarharttImg from "../assets/projects/carhartt.webp";
+import CarharttTallImg from "../assets/projects/carhartt-tall.webp";
+import FreespaceImg from "../assets/projects/freespace.webp";
+import EdwwinImg from "../assets/projects/edwin.webp";
+import PortfolioImg from "../assets/projects/portfolio.webp";
+import RequestifyImg from "../assets/projects/requestify.webp";
+import SlackBotImg from "../assets/projects/slackbot.webp";
+import LibraryImg from "../assets/projects/library.webp";
+import AttributeImportImg from "../assets/projects/attribute-import.webp";
+import MagentoFeaturesImg from "../assets/projects/magento-features.webp";
+import EChallengeImg from "../assets/projects/echallenge.webp";
+import JeeProductsImg from "../assets/projects/jee-products.webp";
+import FreespaceBlogImg from "../assets/projects/freespace-blog.webp";
+import AtelierImg from "../assets/projects/atelier.webp";
+import JobBotImg from "../assets/projects/job-bot.webp";
 
 const projects = [
   {
@@ -88,6 +89,7 @@ const projects = [
   {
     id: 3,
     src: CarharttImg,
+    srcTall: CarharttTallImg, // featured bento card (roughly square from lg up)
     href: "https://b2b.carhartt-wip.com",
     title: "B2B Carhartt WIP",
     hosted: true,
