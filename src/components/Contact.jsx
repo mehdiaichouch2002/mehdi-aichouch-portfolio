@@ -1,4 +1,6 @@
-import { FiArrowUpRight, FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { AnimatePresence, m } from "motion/react";
+import { FiArrowUpRight, FiCheck, FiCopy, FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import useContactForm from "../hooks/useContactForm";
 import LoadingOverlay from "./common/LoadingOverlay";
 import Notification from "./common/Notification";
@@ -9,6 +11,62 @@ import RollText from "./motion/RollText";
 import { useLanguage } from "../context/LanguageContext";
 import { useResumeModal } from "../context/ResumeModalContext";
 import { contactLinks, EMAIL } from "../data/contactLinks";
+import { DUR, EASE } from "../lib/motion";
+
+// Copies the address and confirms in place for 2s (icon swap + a polite live region)
+const CopyEmail = ({ label, doneLabel }) => {
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!copied) return;
+    const id = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(id);
+  }, [copied]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+    } catch {
+      window.location.href = `mailto:${EMAIL}`;
+    }
+  };
+
+  const swap = {
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -8 },
+    transition: { duration: DUR.fast * 1.5, ease: EASE },
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label={label}
+      title={label}
+      className={`grid h-11 shrink-0 grid-cols-[auto] place-items-center overflow-hidden rounded-full px-3 font-mono text-[0.72rem] transition-colors duration-fast ${
+        copied ? "text-live" : "text-muted hover:text-accent"
+      }`}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        {copied ? (
+          <m.span key="done" {...swap} className="inline-flex items-center gap-1.5">
+            <FiCheck aria-hidden="true" />
+            {/* Icon only on phones, where the text would squeeze the address */}
+            <span className="hidden sm:inline" aria-hidden="true">{doneLabel}</span>
+          </m.span>
+        ) : (
+          <m.span key="copy" {...swap} className="inline-flex">
+            <FiCopy aria-hidden="true" />
+          </m.span>
+        )}
+      </AnimatePresence>
+      <span className="sr-only" role="status">
+        {copied ? doneLabel : ""}
+      </span>
+    </button>
+  );
+};
 
 const LINK_ICONS = { LinkedIn: FiLinkedin, GitHub: FiGithub };
 
@@ -37,8 +95,8 @@ const Contact = () => {
     </div>
   );
 
-  const rowClass =
-    "group flex min-h-[56px] items-center gap-4 border-b border-line py-3 text-fg transition-colors duration-fast hover:text-accent";
+  const rowBase = "group flex min-h-[56px] items-center gap-4 py-3 text-fg transition-colors duration-fast hover:text-accent";
+  const rowClass = `${rowBase} border-b border-line`;
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="section relative isolate overflow-hidden">
@@ -49,11 +107,12 @@ const Contact = () => {
 
           <p className="eyebrow mt-12">{t("contact.direct")}</p>
           <ul className="mt-3 border-t border-line">
-            <li>
-              <a href={`mailto:${EMAIL}`} className={rowClass}>
+            <li className="flex items-center border-b border-line">
+              <a href={`mailto:${EMAIL}`} className={`${rowBase} min-w-0 flex-1`}>
                 <FiMail className="shrink-0 text-muted group-hover:text-accent" aria-hidden="true" />
                 <span className="break-all">{EMAIL}</span>
               </a>
+              <CopyEmail label={t("contact.copyEmail")} doneLabel={t("contact.copied")} />
             </li>
             {contactLinks.map(({ label, href }) => {
               const Icon = LINK_ICONS[label];

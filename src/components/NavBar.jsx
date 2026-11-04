@@ -1,10 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { m } from "motion/react";
 import navLinks, { sectionNumber } from "../data/navLinks";
 import useScrolled from "../hooks/useScrolled";
 import useHideOnScroll from "../hooks/useHideOnScroll";
 import { useLanguage } from "../context/LanguageContext";
 import ScrollProgress from "./common/ScrollProgress";
+import RollText from "./motion/RollText";
+import { DUR, EASE } from "../lib/motion";
 
 // Section links are plain anchors: CSS scroll-behavior + scroll-padding-top (index.css)
 // handle the smooth scroll and the header offset, and reduced motion turns smoothing off.
@@ -124,10 +127,19 @@ const NavBar = () => {
                     <a
                       href={`#${link}`}
                       aria-current={isActive ? "true" : undefined}
-                      className={`group flex items-baseline gap-1.5 rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast ${
+                      className={`group relative isolate flex items-baseline gap-1.5 rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast ${
                         isActive ? "text-fg" : "text-muted hover:text-fg"
                       }`}
                     >
+                      {/* One pill shared by all links: it glides to whichever section is active */}
+                      {isActive && (
+                        <m.span
+                          layoutId="nav-active"
+                          className="absolute inset-0 -z-10 rounded-full border border-line bg-surface/80"
+                          transition={{ duration: DUR.base, ease: EASE }}
+                          aria-hidden="true"
+                        />
+                      )}
                       <span
                         className={`font-mono text-[0.65rem] transition-colors duration-fast ${
                           isActive ? "text-accent" : "text-muted/60 group-hover:text-muted"
@@ -136,7 +148,7 @@ const NavBar = () => {
                       >
                         {sectionNumber(link)}
                       </span>
-                      {t(`nav.${link}`)}
+                      <RollText>{t(`nav.${link}`)}</RollText>
                     </a>
                   </li>
                 );

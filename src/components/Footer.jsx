@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from "react";
-import { m } from "motion/react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { m, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { FiArrowUp } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext";
 import { contactLinks, socialLinks } from "../data/contactLinks";
@@ -23,18 +23,19 @@ const LocalTime = ({ label }) => {
   );
 };
 
-// Giant name across the bottom of the page: each word rises from its own mask, once
+// Giant name across the bottom of the page: each word rises from its own mask, once.
+// Triggered by the reveal progress, not whileInView: the pinned footer is always
+// "in view" geometrically, just hidden under the page.
 const word = {
   hidden: { y: "110%" },
   show: { y: "0%", transition: { duration: DUR.slow * 1.4, ease: EASE } },
 };
-const Wordmark = () => (
+const Wordmark = ({ shown }) => (
   <m.p
     aria-hidden="true"
     className="footer-mark select-none"
     initial="hidden"
-    whileInView="show"
-    viewport={{ once: true, margin: "0px 0px -5% 0px" }}
+    animate={shown ? "show" : "hidden"}
     transition={{ staggerChildren: 0.08 }}
   >
     {["Mehdi", "Aichouch"].map((w, i) => (
@@ -51,6 +52,49 @@ const Wordmark = () => (
   </m.p>
 );
 
+// Same query as .footer-curtain in index.css
+const CURTAIN = "(min-width: 1024px) and (min-height: 640px)";
+
+// How far the footer is uncovered, 0 → 1, over the last footer-height of scroll.
+// With the curtain on, the content also trails the page a little (it starts 30% up
+// and settles), which reads as a layer sitting underneath.
+const useFooterReveal = (ref) => {
+  const { scrollY } = useScroll();
+  const progress = useMotionValue(0);
+  const [shown, setShown] = useState(false);
+  const [curtain, setCurtain] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    const mq = window.matchMedia(CURTAIN);
+    let start = 0;
+    let len = 1;
+    const update = () => {
+      const p = Math.min(1, Math.max(0, (scrollY.get() - start) / len));
+      progress.set(p);
+      if (p > 0.55) setShown(true);
+    };
+    const measure = () => {
+      len = el.offsetHeight || 1;
+      start = document.documentElement.scrollHeight - window.innerHeight - len;
+      setCurtain(mq.matches);
+      update();
+    };
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    window.addEventListener("resize", measure);
+    const unsubscribe = scrollY.on("change", update);
+    measure();
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+      unsubscribe();
+    };
+  }, [ref, scrollY, progress]);
+
+  return { progress, shown, curtain };
+};
+
 const Footer = () => {
   const { t } = useLanguage();
   const toTop = () => {
@@ -58,10 +102,16 @@ const Footer = () => {
     document.getElementById("main")?.focus({ preventScroll: true });
   };
 
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const { progress, shown, curtain } = useFooterReveal(ref);
+  const y = useTransform(progress, [0, 1], curtain && !reduce ? ["-30%", "0%"] : ["0%", "0%"]);
+
   return (
-    <footer className="overflow-hidden border-t border-line">
+    <footer ref={ref} className="footer-curtain overflow-hidden border-t border-line">
+      <m.div style={{ y }}>
       <div className="page pt-16 md:pt-24">
-        <Wordmark />
+        <Wordmark shown={shown || reduce} />
       </div>
       {/* Bottom padding leaves room for the floating chat button on small screens */}
       <div className="page flex flex-col gap-8 border-t border-line pb-24 pt-10 text-sm text-muted sm:pb-10 md:flex-row md:items-center md:justify-between">
@@ -93,6 +143,7 @@ const Footer = () => {
           {t("footer.backToTop")}
         </button>
       </div>
+      </m.div>
     </footer>
   );
 };

@@ -111,6 +111,8 @@ const translations = {
       cta: "Send message",
       resume: "Resume",
       direct: "Or reach me directly",
+      copyEmail: "Copy email address",
+      copied: "Copied",
       errors: {
         name: "Enter your name",
         email: "Enter a valid email address, like name@company.com",
@@ -338,6 +340,8 @@ const translations = {
       cta: "Envoyer le message",
       resume: "CV",
       direct: "Ou contactez-moi directement",
+      copyEmail: "Copier l'adresse e-mail",
+      copied: "Copié",
       errors: {
         name: "Saisissez votre nom",
         email: "Saisissez une adresse email valide, par exemple nom@entreprise.com",

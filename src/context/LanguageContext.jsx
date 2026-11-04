@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import translations from "../i18n/translations";
 
 const LanguageContext = createContext();
@@ -9,8 +10,15 @@ export const LanguageProvider = ({ children }) => {
   );
 
   const setLang = useCallback((l) => {
-    setLangState(l);
     localStorage.setItem("lang", l);
+    // Crossfade the whole page between languages where the View Transitions API exists
+    // (flushSync so the new text is in the DOM when the "after" snapshot is taken)
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (document.startViewTransition && !reduce) {
+      document.startViewTransition(() => flushSync(() => setLangState(l)));
+    } else {
+      setLangState(l);
+    }
   }, []);
 
   useEffect(() => {

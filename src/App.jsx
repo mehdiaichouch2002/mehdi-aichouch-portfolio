@@ -49,12 +49,13 @@ function App() {
       <MotionConfig reducedMotion="user">
         <LanguageProvider>
           <ResumeModalProvider>
-            <div>
+            {/* isolate: own stacking context for the footer curtain (index.css) */}
+            <div className="isolate">
               <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[90] focus:bg-fg focus:text-canvas focus:px-4 focus:py-2 focus:rounded-sm">
                 Skip to content
               </a>
               <NavBar />
-              <main id="main" tabIndex={-1} className="outline-none">
+              <main id="main" tabIndex={-1} className="page-sheet outline-none">
                 <Home />
                 {belowFold && (
                   <>
@@ -67,9 +68,11 @@ function App() {
                 )}
               </main>
               {belowFold && <Footer />}
+              {/* Inside the isolated wrapper so their z-indexes still rank against the
+                  nav, the menu and the project dialog */}
+              <ResumeLanguageModal />
+              <AIChatAssistant />
             </div>
-            <ResumeLanguageModal />
-            <AIChatAssistant />
           </ResumeModalProvider>
         </LanguageProvider>
       </MotionConfig>

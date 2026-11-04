@@ -34,6 +34,9 @@
   /* Layout */
   --page-max: 1200px;
   --nav-h: 64px;
+
+  /* Fine film grain, tiled SVG (no image request) */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @layer base {
@@ -58,7 +61,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* Fine film grain, tiled SVG (no image request) */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: var(--grain);
   }
 
   h1, h2, h3, h4 {
@@ -202,6 +205,35 @@
   background-clip: text;
   color: transparent;
   padding-right: 0.04em;
+}
+
+/* Footer curtain (Footer.jsx): <main> is an opaque sheet that scrolls up off the
+   footer, which waits pinned underneath (z-index -1 paints below in-flow blocks).
+   The footer's parent (App.jsx) is `isolate`, so the footer stays above that parent's
+   own box and still gets clicks. Only on large screens tall enough to show the whole
+   footer. */
+.page-sheet {
+  background-color: rgb(var(--bg));
+  background-image: var(--grain);
+}
+@media (min-width: 1024px) and (min-height: 640px) {
+  .page-sheet {
+    border-bottom: 1px solid rgb(var(--border));
+    border-radius: 0 0 2.5rem 2.5rem;
+  }
+  .footer-curtain {
+    position: sticky;
+    bottom: 0;
+    z-index: -1;
+    border-top-width: 0; /* the sheet's rounded edge takes over */
+  }
+}
+
+/* Language switch (LanguageContext): a short crossfade of the whole page */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-base);
+  animation-timing-function: var(--ease-out);
 }
 
 /* Lenis (lib/smoothScroll.js) animates the scroll itself, so CSS smoothing must step aside */
