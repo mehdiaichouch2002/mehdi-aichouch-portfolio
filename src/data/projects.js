@@ -132,7 +132,7 @@ const projects = [
   {
     id: 6,
     src: PortfolioImg,
-    href: "https://github.com/mehdiaichouch2002/reart-portfolio",
+    href: "https://github.com/mehdiaichouch2002/mehdi-aichouch-portfolio",
     title: "Portfolio",
     hosted: false,
     category: "personal",
