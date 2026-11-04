@@ -38,7 +38,8 @@ Skills:
 - Also: Laravel, Java / Spring Boot, C# / .NET, Python, Git, Xdebug, Agile / Scrum, code review
 - Languages: Arabic (native), English (professional working proficiency, B2), French (intermediate, B1)
 
-Open-source and personal projects (code on GitHub):
+Open-source and personal projects (code on GitHub unless noted):
+0. CAFEA Espresso – concept one-page site for a Moroccan coffee importer (41 producing countries), live at https://cafea-espresso.vercel.app: a 3D coffee bean, a WebGL globe with routes to Casablanca, 16,000 particles morphing from coffee branch to ship to espresso (Next.js 16, three.js + custom GLSL, GSAP, Lenis). Private repo, so the live site is the link
 1. Attribute Import – Magento 2 module for bulk importing product attribute options from CSV
 2. Magento 2 Innovation Lab – Dockerized Magento 2 sandbox (Varnish, Redis, RabbitMQ, Robo)
 3. Atelier – Management app for a Moroccan handicraft workshop: weekly pay, cash advances, orders, cash ledger, reports; FR/AR (RTL)/EN/ES (Next.js 16 + TypeScript + PostgreSQL with row-level security)

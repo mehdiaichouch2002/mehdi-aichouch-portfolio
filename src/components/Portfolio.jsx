@@ -8,11 +8,12 @@ import ProjectDetail from "./work/ProjectDetail";
 import CursorPill from "./work/CursorPill";
 
 const clientWork = projects.filter((p) => p.category === "commercial");
-// Magento modules first: they're closest to the client work above
+// Live sites first (they can be opened, not just read), then Magento modules:
+// they're closest to the client work above
 const isMagento = (p) => p.tech.includes("Magento 2");
 const otherWork = projects
   .filter((p) => p.category !== "commercial")
-  .sort((a, b) => isMagento(b) - isMagento(a));
+  .sort((a, b) => b.hosted - a.hosted || isMagento(b) - isMagento(a));
 const INITIAL_VISIBLE = 6;
 
 const Portfolio = () => {

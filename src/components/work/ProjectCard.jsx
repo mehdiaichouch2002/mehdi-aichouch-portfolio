@@ -70,6 +70,8 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
   const { t } = useLanguage();
   const { handlers, style } = usePointerCard({ tilt: featured ? 2 : 4 });
   const isClient = project.category === "commercial";
+  // Client stores and other hosted projects link to the live site, the rest to GitHub
+  const isLive = isClient || project.hosted;
   const cta = isClient ? t("portfolio.caseStudy") : t("portfolio.details");
 
   // Cursor pill (Portfolio's CursorPill): shown over the card, hidden over its own link
@@ -101,7 +103,7 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
 
       <div className={`flex flex-col ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>
         <div className="flex items-center justify-between gap-4">
-          {isClient ? (
+          {isLive ? (
             <p className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-live">
               <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden="true" />
               {t("portfolio.live")}
@@ -115,8 +117,8 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
             rel="noreferrer"
             className="relative z-10 inline-flex min-h-[44px] items-center gap-1.5 font-mono text-[0.75rem] text-muted transition-colors duration-fast hover:text-accent"
           >
-            {isClient ? hostname(project.href) : <><FiGithub aria-hidden="true" /> {t("portfolio.viewCode")}</>}
-            {isClient && <FiArrowUpRight aria-hidden="true" />}
+            {isLive ? hostname(project.href) : <><FiGithub aria-hidden="true" /> {t("portfolio.viewCode")}</>}
+            {isLive && <FiArrowUpRight aria-hidden="true" />}
             <span className="sr-only">
               : {project.title} ({t("portfolio.opensNewTab")})
             </span>

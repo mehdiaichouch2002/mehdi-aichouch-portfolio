@@ -14,8 +14,20 @@ import JeeProductsImg from "../assets/projects/jee-products.webp";
 import FreespaceBlogImg from "../assets/projects/freespace-blog.webp";
 import AtelierImg from "../assets/projects/atelier.webp";
 import JobBotImg from "../assets/projects/job-bot.webp";
+import CafeaImg from "../assets/projects/cafea.webp";
 
 const projects = [
+  {
+    id: 16,
+    src: CafeaImg,
+    // Concept site for a client pitch; the repo is private, so the card links to the live site
+    href: "https://cafea-espresso.vercel.app",
+    title: "CAFEA Espresso",
+    hosted: true,
+    category: "personal",
+    descriptionKey: "cafea",
+    tech: ["Next.js 16", "Three.js", "GLSL", "GSAP", "Tailwind"],
+  },
   {
     id: 14,
     src: AtelierImg,

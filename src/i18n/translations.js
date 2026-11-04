@@ -43,7 +43,7 @@ const translations = {
       clientRole: "Magento 2 developer (full-stack) at Cartware / Morocommerce",
       opensNewTab: "opens in a new tab",
       otherTitle: "Open-source and personal projects",
-      otherDescription: "Magento modules, web apps and tools, with the source code on GitHub.",
+      otherDescription: "Magento modules, web apps and tools, most with the source code on GitHub.",
       viewCode: "View code",
       showAll: "Show all {count} projects",
       showLess: "Show fewer",
@@ -52,6 +52,7 @@ const translations = {
       caseStudy: "Case study",
       close: "Close",
       visitStore: "Visit the store",
+      visitSite: "Visit the site",
       projects: {
         carhartt:
           "B2B wholesale store for Carhartt WIP's retail partners. I designed the REST API layer for the digital asset integration (Amplience CDN), integrated Microsoft Entra ID single sign-on, and built B2B features: tiered pricing, catalogue permissions and inventory sync over REST.",
@@ -59,6 +60,8 @@ const translations = {
           "Online store for the German lingerie and swimwear brand, on Magento 2.4. I built and maintained features end to end, from backend modules to the storefront.",
         edwin:
           "European online store for the Japanese denim brand, on Magento 2.4. I built features end to end and set up Apple Pay on Adyen.",
+        cafea:
+          "Concept one-page site for CAFEA Espresso, a Moroccan importer of coffee from 41 countries, told as one scroll story from the farm to the cup: a 3D coffee bean, a WebGL globe with routes to Casablanca, and 16,000 particles that morph from a coffee branch into a ship, a roaster and an espresso. Next.js 16, three.js with custom GLSL, GSAP and Lenis.",
         freespace: "Application for managing spaces, written in PHP.",
         requestify: "Request management system built with Laravel.",
         portfolio: "This site: React, Tailwind CSS, Motion, a CSS 3D hero and an AI assistant that answers questions about my work.",
@@ -251,7 +254,7 @@ const translations = {
       clientRole: "Développeur Magento 2 (full-stack) chez Cartware / Morocommerce",
       opensNewTab: "s'ouvre dans un nouvel onglet",
       otherTitle: "Projets open source et personnels",
-      otherDescription: "Modules Magento, applications web et outils, avec le code source sur GitHub.",
+      otherDescription: "Modules Magento, applications web et outils, pour la plupart avec le code source sur GitHub.",
       viewCode: "Voir le code",
       showAll: "Afficher les {count} projets",
       showLess: "Afficher moins",
@@ -260,6 +263,7 @@ const translations = {
       caseStudy: "Étude de cas",
       close: "Fermer",
       visitStore: "Voir la boutique",
+      visitSite: "Voir le site",
       projects: {
         carhartt:
           "Boutique B2B de vente en gros pour les revendeurs de Carhartt WIP. J'ai conçu la couche API REST pour l'intégration des ressources numériques (CDN Amplience), intégré le SSO Microsoft Entra ID et développé des fonctionnalités B2B : prix par paliers, droits sur le catalogue et synchronisation des stocks via REST.",
@@ -267,6 +271,8 @@ const translations = {
           "Boutique en ligne de la marque allemande de lingerie et de maillots de bain, sous Magento 2.4. J'ai développé et maintenu des fonctionnalités de bout en bout, des modules backend à la vitrine.",
         edwin:
           "Boutique en ligne européenne de la marque de denim japonaise, sous Magento 2.4. J'ai développé des fonctionnalités de bout en bout et mis en place Apple Pay sur Adyen.",
+        cafea:
+          "Site one-page conceptuel pour CAFEA Espresso, importateur marocain de café de 41 pays, raconté en un seul défilement, de la ferme à la tasse : un grain de café en 3D, un globe WebGL avec les routes vers Casablanca et 16 000 particules qui passent d'une branche de caféier à un navire, un torréfacteur puis un espresso. Next.js 16, three.js avec GLSL sur mesure, GSAP et Lenis.",
         freespace: "Application de gestion d'espaces, écrite en PHP.",
         requestify: "Système de gestion des demandes développé avec Laravel.",
         portfolio: "Ce site : React, Tailwind CSS, Motion, un visuel 3D en CSS et un assistant IA qui répond aux questions sur mon travail.",

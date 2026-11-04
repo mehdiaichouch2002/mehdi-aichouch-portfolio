@@ -20,6 +20,7 @@ const SITES = {
   // The home hero is a video headless Chrome can't decode: the category page shows the products instead
   edwin: { url: "https://edwin-europe.com/gb-en/men" },
   carhartt: { url: "https://b2b.carhartt-wip.com/" },
+  cafea: { url: "https://cafea-espresso.vercel.app/" },
   portfolio: { url: "http://127.0.0.1:5232/" },
 };
 
@@ -63,7 +64,7 @@ const closeModals = (page) =>
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const only = process.argv[2];
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: "new", args: ["--hide-scrollbars", "--lang=en-US"] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: "new", args: ["--hide-scrollbars", "--lang=en-US", "--enable-unsafe-swiftshader", "--use-angle=swiftshader"] });
 
   for (const [name, { url, closeModals: close, click }] of Object.entries(SITES)) {
     if (only && only !== name) continue;

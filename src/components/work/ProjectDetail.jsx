@@ -103,9 +103,9 @@ const ProjectDetail = ({ project, onClose }) => {
             <TechList tech={project.tech} className="mt-6" />
 
             <a href={project.href} target="_blank" rel="noreferrer" className="btn-primary mt-8">
-              {isClient ? (
+              {isClient || project.hosted ? (
                 <>
-                  {t("portfolio.visitStore")} · {hostname(project.href)}
+                  {t(isClient ? "portfolio.visitStore" : "portfolio.visitSite")} · {hostname(project.href)}
                   <FiArrowUpRight aria-hidden="true" />
                 </>
               ) : (

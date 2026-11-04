@@ -119,6 +119,7 @@ ${frame(`<img src="${shot("carhartt", "desktop")}">`, { addr: "b2b.carhartt-wip.
   anita: () => device("anita", "www.anita.com"),
   edwin: () => device("edwin", "edwin-europe.com"),
   portfolio: () => device("portfolio", "mehdi-aichouch.vercel.app"),
+  cafea: () => device("cafea", "cafea-espresso.vercel.app"),
 
   atelier: () => `
 ${app(`
