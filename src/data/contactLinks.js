@@ -6,6 +6,12 @@ export const contactLinks = [
   { label: "GitHub", href: "https://github.com/mehdiaichouch2002" },
 ];
 
+// Other profiles that are his but are not shown on the page. They go into the
+// Person schema (sameAs) so search engines tie them to this site, not to a namesake.
+export const identityLinks = [
+  { label: "Packagist", href: "https://packagist.org/users/mehdiaichouch2002/" },
+];
+
 // Personal profiles, shown only in the footer
 export const socialLinks = [
   { label: "X", href: "https://x.com/AICHOUCHME97081" },

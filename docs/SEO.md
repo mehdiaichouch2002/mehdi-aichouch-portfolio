@@ -36,6 +36,27 @@ Goal: someone searches for **Mehdi Aichouch** and finds this site first.
 - **Bing, "Bing Index" tab for the home page** lists "H1 tag missing" and "Meta Description too long or too short". That copy was crawled on 9 November 2026, before the prerendered version went live on the 11th: the old page had an empty `<div id="root">` and a longer description. The live page has one `<h1>` and a 156-character description, and Bing's own Live URL test finds no issues. The warnings should go when Bing recrawls. Do not change the code to silence them.
 - **LinkedIn Featured** still has the older link to the Vercel address next to the new one. LinkedIn cannot edit a featured link's URL; the old one redirects correctly and can be deleted whenever convenient. The two featured CV documents there are the PDFs from before the domain change.
 
+## The namesake, and the ranking baseline
+
+Another Mehdi Aichouch (a cloud / DevOps engineer with a PhD, based in France) has long-established pages for the same name: Google Scholar, ResearchGate, Academia.edu, HAL, Malt, a LinkedIn profile at `/in/mehdiaichouch` and the GitHub account `macdi`. Those are not ours and must never be linked from this site or listed in `sameAs`. There are also student LinkedIn profiles and social accounts under the same name.
+
+So the job is not only "be indexed" but "be told apart". What does that on the site: the `<h1>` and title name the profession and the city, and the `Person` schema carries `disambiguatingDescription`, `nationality`, `homeLocation`, `hasOccupation` and a `sameAs` list limited to accounts that are really Mehdi's (LinkedIn `/in/aichouch-mehdi`, GitHub `mehdiaichouch2002`, Packagist `mehdiaichouch2002`). New profiles go into `contactLinks` or `identityLinks` in `src/data/contactLinks.js`.
+
+Baseline, measured on 11 November 2026 from Fès, Morocco, in a signed-in Chrome with `pws=0`, organic results only (ads, AI Overviews and panels not counted). One browser in one country: positions differ by place, device and person, and Google blocked the signed-out headless check.
+
+| Query | Google, 04:15 UTC | Google, 08:41 UTC | Bing, 08:44 UTC |
+| --- | --- | --- | --- |
+| Mehdi Aichouch | not in first 27 | 1 | 4 |
+| "Mehdi Aichouch" | not in first 18 | 1 | 3 |
+| Mehdi Aichouch Developer | AI Overview citation only | 2 (LinkedIn first) | 2 |
+| Mehdi Aichouch Full Stack Developer | not measured | 1 | not measured |
+| Mehdi Aichouch Morocco | not on page 1 | 1 | 2 |
+| Mehdi Aichouch Magento | not on page 1 | 2 (LinkedIn first) | 2 |
+| Mehdi Aichouch PHP | not on page 1 | 1 | not measured |
+| Mehdi Aichouch Portfolio | not on page 1 | not on page 1 | not measured |
+
+The jump between the two Google columns is the page entering the index (it was verified and submitted that night), not a trend. Positions for a page this new move around for weeks. Bing was still showing the title from its 9 November crawl. Re-measure the same queries the same way before drawing conclusions, and treat Search Console's average position as the better long-run number once it has data.
+
 ## What to watch
 
 Weekly for the first month, then monthly:

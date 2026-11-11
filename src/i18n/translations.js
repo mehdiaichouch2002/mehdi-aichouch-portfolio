@@ -6,6 +6,8 @@ const translations = {
       description:
         "Official portfolio of Mehdi Aichouch, full-stack developer in Fès, Morocco. Magento 2 / Adobe Commerce, PHP, Laravel and React for international e-commerce.",
       jobTitle: "Full-Stack Developer",
+      // One line that tells this Mehdi Aichouch apart from namesakes (Person schema)
+      disambiguation: "Full-stack developer in Fès, Morocco, specialised in Magento 2 / Adobe Commerce, PHP, Laravel and React.",
     },
     nav: {
       home: "Home",
@@ -229,6 +231,7 @@ const translations = {
       description:
         "Portfolio officiel de Mehdi Aichouch, développeur full-stack à Fès, Maroc. Magento 2 / Adobe Commerce, PHP, Laravel et React pour l'e-commerce international.",
       jobTitle: "Développeur Full-Stack",
+      disambiguation: "Développeur full-stack à Fès, au Maroc, spécialisé en Magento 2 / Adobe Commerce, PHP, Laravel et React.",
     },
     nav: {
       home: "Accueil",

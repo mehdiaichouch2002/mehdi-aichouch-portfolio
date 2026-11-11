@@ -73,7 +73,7 @@ const { renderToString } = require("react-dom/server");
 const App = require(path.join(SRC, "App.jsx")).default;
 const translations = require(path.join(SRC, "i18n/translations.js")).default;
 const projects = require(path.join(SRC, "data/projects.js")).default;
-const { contactLinks, EMAIL } = require(path.join(SRC, "data/contactLinks.js"));
+const { contactLinks, identityLinks, EMAIL } = require(path.join(SRC, "data/contactLinks.js"));
 const { SITE_URL, PERSON_NAME, LANGS, DEFAULT_LANG, langPath } = require(path.join(SRC, "data/site.js"));
 
 // ── Head ───────────────────────────────────────────────────────────────────────
@@ -167,12 +167,22 @@ const jsonLd = (lang) => {
         },
         jobTitle: t.seo.jobTitle,
         description: t.about.lead,
+        // Other people share this name: say which one this is, in one line and in data
+        disambiguatingDescription: t.seo.disambiguation,
+        nationality: { "@type": "Country", name: "Morocco" },
+        homeLocation: { "@type": "City", name: "Fès", containedInPlace: { "@type": "Country", name: "Morocco" } },
+        hasOccupation: {
+          "@type": "Occupation",
+          name: t.seo.jobTitle,
+          occupationLocation: { "@type": "City", name: "Fès" },
+          skills: "Magento 2, Adobe Commerce, PHP, Laravel, React, JavaScript, MySQL, REST APIs, Hyvä",
+        },
         email: `mailto:${EMAIL}`,
         address: { "@type": "PostalAddress", addressLocality: "Fès", addressRegion: "Fès-Meknès", addressCountry: "MA" },
         alumniOf: t.education.map((school, i) => ({ "@type": SCHOOL_TYPES[i] || "EducationalOrganization", name: school.org })),
         knowsAbout: KNOWS_ABOUT,
         knowsLanguage: ["ar", "en", "fr"],
-        sameAs: contactLinks.map((link) => link.href),
+        sameAs: [...contactLinks, ...identityLinks].map((link) => link.href),
       },
       ...ownWork,
     ],
@@ -292,7 +302,7 @@ for (const lang of LANGS) {
   try {
     const graph = JSON.parse(tag(/<script type="application\/ld\+json">(.*?)<\/script>/s))["@graph"];
     const person = graph.find((node) => node["@type"] === "Person");
-    check(person?.name === PERSON_NAME && person.sameAs.length >= 2, `${lang}: Person schema is incomplete`);
+    check(person?.name === PERSON_NAME && person.sameAs.length >= 2 && person.disambiguatingDescription, `${lang}: Person schema is incomplete`);
     check(graph.some((node) => node["@type"] === "ProfilePage" && node.mainEntity["@id"] === person["@id"]), `${lang}: ProfilePage doesn't point at the Person`);
   } catch (e) {
     problems.push(`${lang}: JSON-LD doesn't parse (${e.message})`);
