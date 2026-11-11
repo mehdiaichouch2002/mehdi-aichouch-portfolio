@@ -1,4 +1,4 @@
-# SEO: how it works and what is left to do by hand
+# SEO: how it works, what is set up, what to watch
 
 Goal: someone searches for **Mehdi Aichouch** and finds this site first.
 
@@ -16,10 +16,37 @@ Goal: someone searches for **Mehdi Aichouch** and finds this site first.
 - `www` is canonical because that is the host Vercel answers on: `mehdiaichouch.com` redirects to it with a 308. To make the bare domain the main one instead, switch the primary domain in Vercel (Project → Settings → Domains) **and** change `SITE_URL` in `src/data/site.js`. Never change one without the other.
 - JSON-LD is one graph: `WebSite`, `ProfilePage` and `Person` (name, portrait, job title, city, schools, skills, LinkedIn and GitHub as `sameAs`), plus the open-source and personal projects with Mehdi as author. Client stores are deliberately left out: they belong to their brands.
 - The build fails if the generated pages are wrong (missing `<h1>`, wrong canonical, duplicate titles, an image without alt text, invalid JSON-LD, the name misspelt).
+- `vercel.json` uses the `routes` array so that unknown URLs return a real 404 (`public/404.html`) instead of the home page, and so the old `mehdi-aichouch.vercel.app` host redirects (308) to the canonical one. It also sets the build command (`CI=false npm run build`) and output directory (`build/`), which override the Vercel dashboard values.
+- `sitemap.xml` lists `/` and `/fr` with their `hreflang` alternates. Its `lastmod` is the date of the deployed commit, so every push to `main` moves it, including documentation-only ones.
 
-## To do once, after the next deploy
+## Status on 11 November 2026
 
-### 1. Check the deploy
+| Area | State |
+| --- | --- |
+| Live site | `/` and `/fr` return 200 with full prerendered HTML; bare domain and old Vercel host redirect with 308; unknown URLs return 404 |
+| Google Search Console | Domain property `mehdiaichouch.com`, verified by a DNS TXT record at Porkbun (keep that record). Sitemap read: Success, 2 pages. `/` and `/fr` both "URL is on Google", with "Profile page: 1 valid item" |
+| Rich Results Test | Home page: Profile page detected, valid |
+| Bing Webmaster Tools | Site `https://www.mehdiaichouch.com/` added. Sitemap: Success, 2 URLs. Live URL test of the home page: can be indexed, no SEO/GEO issues |
+| Resume PDFs | Both show `www.mehdiaichouch.com` (as a link) and have Author "Mehdi Aichouch". Rebuilt from `condidature/applications/build_cvs.py`, whose contact line now uses the new domain |
+| GitHub | Profile name, bio, website, location and LinkedIn link set; profile README in `mehdiaichouch2002/mehdiaichouch2002`; this repository's website field points at the canonical domain |
+| LinkedIn | Website field and About link to the site; a Featured link to `https://www.mehdiaichouch.com/` was added; public profile is on |
+
+### Known stale data, not bugs
+
+- **Bing, "Bing Index" tab for the home page** lists "H1 tag missing" and "Meta Description too long or too short". That copy was crawled on 9 November 2026, before the prerendered version went live on the 11th: the old page had an empty `<div id="root">` and a longer description. The live page has one `<h1>` and a 156-character description, and Bing's own Live URL test finds no issues. The warnings should go when Bing recrawls. Do not change the code to silence them.
+- **LinkedIn Featured** still has the older link to the Vercel address next to the new one. LinkedIn cannot edit a featured link's URL; the old one redirects correctly and can be deleted whenever convenient. The two featured CV documents there are the PDFs from before the domain change.
+
+## What to watch
+
+Weekly for the first month, then monthly:
+
+- **Search Console → Pages:** both URLs stay under "Indexed". "Duplicate, Google chose different canonical" would mean some signal points at another host.
+- **Search Console → Performance**, filter Query contains `aichouch`: impressions, clicks and average position for the name. This is the number the whole project is about.
+- **Search Console → Enhancements → Profile page** and **Core Web Vitals**, once Google has data.
+- **Bing → URL Inspection** for the home page: the two stale warnings above should be gone once "Last crawl attempted" is after 11 November 2026. If they are still there on a fresh crawl, compare with the Live URL tab before touching anything.
+- **Mobile Lighthouse:** the performance score was 98 before prerendering and 90 to 96 in five runs after (LCP 1.2 to 1.9 s, still under the 2.5 s target; accessibility, best practices and SEO at 100). Not investigated. Worth a look if real-user Core Web Vitals come back worse than "Good".
+
+## After any deploy that touches SEO
 
 ```bash
 curl -sI https://www.mehdiaichouch.com/ | head -1                 # 200
@@ -29,88 +56,31 @@ curl -sI https://www.mehdiaichouch.com/nope | head -1             # 404
 curl -s  https://www.mehdiaichouch.com/fr | grep -o '<link rel="canonical"[^>]*>'
 ```
 
-`vercel.json` uses the `routes` array so that unknown URLs return a real 404 (`public/404.html`) instead of the home page. It also sets the build command (`CI=false npm run build`) and output directory (`build/`), which override the Vercel dashboard values.
+Then, if the head tags or JSON-LD changed:
 
-Then paste `https://www.mehdiaichouch.com/` into:
-
-- Rich Results Test: https://search.google.com/test/rich-results (expect "Profile page" detected, no errors)
+- Rich Results Test: https://search.google.com/test/rich-results (expect "Profile page", no errors)
 - Schema validator: https://validator.schema.org/
-- Link preview: https://www.opengraph.xyz/ and the LinkedIn Post Inspector, https://www.linkedin.com/post-inspector/ (this also refreshes LinkedIn's cached preview)
+- LinkedIn Post Inspector, https://www.linkedin.com/post-inspector/ (also refreshes LinkedIn's cached preview)
+- Search Console → URL inspection → Request indexing, once per changed URL
 
-### 2. Google Search Console
+Vercel preview deployments are behind Vercel login, so routing changes in `vercel.json` can only be checked on production. Check right after pushing.
 
-1. https://search.google.com/search-console → **Add property** → **Domain** → `mehdiaichouch.com`. A domain property covers `www`, the bare domain, http and https in one.
-2. Google shows a TXT record like `google-site-verification=…`. The DNS is at **Porkbun**: Domain Management → `mehdiaichouch.com` → DNS → add a record with Type `TXT`, Host empty, Answer = the whole string. Keep the existing records. Back in Search Console, click **Verify** (it can take a few minutes; retry after an hour if it fails).
-3. **Sitemaps** → submit `https://www.mehdiaichouch.com/sitemap.xml`.
-4. **URL inspection** → `https://www.mehdiaichouch.com/` → **Request indexing**. Do the same for `https://www.mehdiaichouch.com/fr`.
-5. Also inspect `https://mehdi-aichouch.vercel.app/`. If Google had indexed it, the redirect moves it over within a few weeks. To speed it up, add that URL as its own "URL prefix" property (verify with the HTML tag: set `REACT_APP_GOOGLE_SITE_VERIFICATION` in Vercel and redeploy), then use Settings → **Change of address**.
-6. Each week for the first month, look at:
-   - **Pages**: both URLs under "Indexed". "Duplicate, Google chose different canonical" means a signal still points at another host.
-   - **Performance** → filter Query contains `aichouch`: impressions, clicks and average position for the name.
-   - **Core Web Vitals** and **Enhancements → Profile page** once there is data.
-
-### 3. Bing Webmaster Tools
-
-https://www.bing.com/webmasters → **Import from Google Search Console** (one click once step 2 is done). Otherwise add the site by hand and verify with a CNAME record at Porkbun, or with the meta tag (`REACT_APP_BING_SITE_VERIFICATION`). Submit the same sitemap. Bing also feeds DuckDuckGo, Yahoo and ChatGPT search.
-
-### 4. Analytics (optional)
+## Analytics (optional, not enabled)
 
 Search Console already answers "do people find me by name". If visit statistics are wanted too:
 
 - **Vercel Web Analytics** (dashboard → Analytics → Enable) needs no cookie banner, or
 - **Google Analytics 4**: create a property, copy the `G-…` ID into `REACT_APP_GA_MEASUREMENT_ID` in Vercel's environment variables and redeploy. It loads when the page is idle, cookieless (Consent Mode, everything denied), and not at all for visitors with Do Not Track or Global Privacy Control. See `src/lib/analytics.js`.
 
-### 5. Resume PDFs
-
-Both PDFs in `public/` still print `mehdi-aichouch.vercel.app` in the header. Change it to `mehdiaichouch.com` in the source document, re-export both, and set the PDF's Author field to "Mehdi Aichouch" while there (it is empty today). Google indexes these files and shows them for the name.
-
-## Profiles: make every one say the same thing
+## Profiles: keep every one saying the same thing
 
 Search engines connect a name to a site when the same name, the same job title and the same link appear everywhere. Use exactly **Mehdi Aichouch** (no final "e"), and link to `https://www.mehdiaichouch.com`.
 
-### GitHub (`github.com/mehdiaichouch2002`), currently the weakest link
+Still open on the existing profiles:
 
-Today the profile name is just "Mehdi", there is no bio, no website, no location and no profile README.
-
-- Settings → Public profile:
-  - Name: `Mehdi Aichouch`
-  - Bio: `Full-stack developer · Magento 2 / Adobe Commerce, PHP, Laravel, React · Fès, Morocco`
-  - URL: `https://www.mehdiaichouch.com`
-  - Location: `Fès, Morocco`
-  - Social accounts: the LinkedIn URL
-- Repository `mehdi-aichouch-portfolio` → About (gear icon): Website `https://www.mehdiaichouch.com` (it still points at vercel.app), and remove "Live at mehdi-aichouch.vercel.app" from the description.
-- Create a public repository named exactly `mehdiaichouch2002` with this `README.md` (GitHub shows it on the profile):
-
-```markdown
-# Mehdi Aichouch
-
-Full-stack developer in Fès, Morocco. I work mostly on Magento 2 / Adobe Commerce: custom modules, REST integrations and fast Hyvä storefronts. Also PHP with Laravel, and React.
-
-From 2024 to 2026 at Cartware / Morocommerce, on the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe. Freelance since August 2026.
-
-- Portfolio: **[mehdiaichouch.com](https://www.mehdiaichouch.com)**
-- LinkedIn: [linkedin.com/in/aichouch-mehdi](https://www.linkedin.com/in/aichouch-mehdi/)
-- Email: mehdi2002aichouch@gmail.com
-
-Open source: [Attribute Import](https://github.com/mehdiaichouch2002/Aichouchm-AttributeImport) (Magento 2 module) · [Magento 2 Innovation Lab](https://github.com/mehdiaichouch2002/magento-features) · [Atelier](https://github.com/mehdiaichouch2002/atelier-artisanat)
-```
-
-- Pin the six best repositories, and give each a description and topics (`magento2`, `adobe-commerce`, `php`, `laravel`, `react`).
-
-### LinkedIn (`linkedin.com/in/aichouch-mehdi`)
-
-- Name: `Mehdi Aichouch`.
-- Headline: `Full-Stack Developer · Magento 2 / Adobe Commerce, PHP, Laravel, React · Fès, Morocco`
-- Contact info → Website: `https://www.mehdiaichouch.com`, type "Portfolio".
-- Featured: add the site as a link (the preview image comes from the site).
-- About, first lines:
-
-  > I'm Mehdi Aichouch, a full-stack developer based in Fès, Morocco. For the past years I've worked mostly on Magento 2 / Adobe Commerce: custom modules, REST integrations and Hyvä storefronts for the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe, at Cartware / Morocommerce. I also build with Laravel and React.
-  >
-  > Portfolio and projects: https://www.mehdiaichouch.com
-
-- Settings → Visibility → Edit your public profile: on, with headline, summary and experience visible to everyone (search engines only see the public version).
-- The profile URL is `aichouch-mehdi`. It works and is already referenced everywhere, so leave it.
+- **GitHub:** pin the six best repositories, and give each a description and topics (`magento2`, `adobe-commerce`, `php`, `laravel`, `react`).
+- **LinkedIn:** replace the two featured CV documents with the current PDFs; delete the old featured portfolio link.
+- **X (`x.com/AICHOUCHME97081`)**, linked in the footer: set the display name to Mehdi Aichouch and the site in the bio, or drop the link.
 
 ### Other profiles worth having
 
@@ -123,7 +93,6 @@ Only the ones you will keep accurate. Same name, same one-line description, same
 | Adobe Experience League / Adobe Commerce community | Relevant to the certification in preparation |
 | Magento Stack Exchange | Answers there are read by exactly the people who hire Magento developers |
 | Packagist | Publish `Aichouchm_AttributeImport` as a Composer package; the package page links to the author |
-| X (`x.com/AICHOUCHME97081`) | Already linked in the footer: set the display name to Mehdi Aichouch and the site in the bio, or drop the link |
 | Malt, Upwork, Contra | Only if freelance leads from them are wanted; they rank well for "freelance Magento developer Morocco" |
 | GDG Fès, Morocco PHP / Laravel communities, DevC Morocco | Speaker and member pages are real, local links |
 
@@ -137,16 +106,13 @@ And in French:
 
 Do not buy links, trade them in bulk, or post the URL in comment sections. For a personal name, three or four real profiles that agree with each other do more than a hundred junk links, and junk links can get a small site ignored.
 
-## Plan
+## Plan from here
 
-### First 30 days: get indexed under the right address
+### Until mid-December 2026: let it settle
 
-1. Deploy, run the checks above, verify in Search Console and Bing, submit the sitemap, request indexing.
-2. Fix GitHub (name, bio, website, profile README, repo homepage) and LinkedIn (website, headline, featured link).
-3. Update and re-export the two resume PDFs.
-4. Week 2 to 4: watch Search Console. The name query should show impressions within days of indexing. A new domain usually takes two to six weeks to settle at the top for a rare name.
+Nothing to build. Watch the items above. Both pages were indexed the day the property was verified; position for the name query is what still has to move, and for a rare name on a matching domain that usually takes a few weeks.
 
-### Days 30 to 90: give Google more than one page to trust
+### Next two to three months: give search engines more than one page to trust
 
 1. Write two or three technical articles from work already done, each signed "Mehdi Aichouch" with a link to the site. Good candidates, all from the experience section:
    - Cutting a Magento 2 category page from 3.2 s to 0.8 s (Elasticsearch mapping, MySQL indexes, Redis, Varnish)
