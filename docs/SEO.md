@@ -29,7 +29,7 @@ curl -sI https://www.mehdiaichouch.com/nope | head -1             # 404
 curl -s  https://www.mehdiaichouch.com/fr | grep -o '<link rel="canonical"[^>]*>'
 ```
 
-`vercel.json` turns the framework preset off (`"framework": null`) so that unknown URLs return a real 404 instead of the home page. If the build command or output directory were customised in the Vercel dashboard, `vercel.json` now overrides them (`CI=false npm run build`, `build/`).
+`vercel.json` uses the `routes` array so that unknown URLs return a real 404 (`public/404.html`) instead of the home page. It also sets the build command (`CI=false npm run build`) and output directory (`build/`), which override the Vercel dashboard values.
 
 Then paste `https://www.mehdiaichouch.com/` into:
 
