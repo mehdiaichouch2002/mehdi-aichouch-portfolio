@@ -3,7 +3,7 @@ import { m, useIsPresent } from "motion/react";
 import { FiArrowUpRight, FiGithub, FiX } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext";
 import { DUR, EASE } from "../../lib/motion";
-import { hostname, TechList } from "./ProjectCard";
+import { coverAlt, hostname, TechList } from "./ProjectCard";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -68,7 +68,7 @@ const ProjectDetail = ({ project, onClose }) => {
         className="relative max-h-[92dvh] w-full max-w-[880px] overflow-y-auto rounded-t-lg border border-line-strong bg-surface-2 shadow-panel sm:rounded-lg"
       >
         <m.div layoutId={`media-${project.id}`} className="relative aspect-[1200/630] overflow-hidden border-b border-line bg-surface">
-          <img src={project.src} alt="" width="1200" height="630" className="h-full w-full object-cover" />
+          <img src={project.src} alt={coverAlt(project, t)} width="1200" height="630" className="h-full w-full object-cover" />
         </m.div>
 
         <button

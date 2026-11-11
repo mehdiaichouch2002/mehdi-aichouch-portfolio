@@ -35,17 +35,16 @@ const Home = () => {
         <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
 
         <div className="my-auto">
-          <p className="eyebrow hero-in">{t("home.eyebrow")}</p>
-
-          <h1
-            id="hero-title"
-            className="mt-6 max-w-[15ch] text-[clamp(2.6rem,6.4vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] lg:max-w-[14.5ch]"
-          >
-            {headline.map((line) => (
-              <span key={line} className="rise-line">
-                <span>{withAccent(line)}</span>{" "}
-              </span>
-            ))}
+          {/* The name is part of the h1 (it is what people search for), styled as the eyebrow */}
+          <h1 id="hero-title">
+            <span className="eyebrow hero-in block font-normal">{t("home.eyebrow")}</span>{" "}
+            <span className="mt-6 block max-w-[15ch] text-[clamp(2.6rem,6.4vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] lg:max-w-[14.5ch]">
+              {headline.map((line) => (
+                <span key={line} className="rise-line">
+                  <span>{withAccent(line)}</span>{" "}
+                </span>
+              ))}
+            </span>
           </h1>
 
           <p className="mt-6 max-w-[30rem] text-[1.15rem] leading-relaxed text-muted md:text-[1.25rem]">

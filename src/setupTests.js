@@ -32,8 +32,9 @@ window.ResizeObserver = window.ResizeObserver || MockIntersectionObserver;
 window.scrollTo = window.scrollTo || (() => {});
 Element.prototype.scrollIntoView = Element.prototype.scrollIntoView || (() => {});
 
-// App state (e.g. selected language) persists in localStorage;
+// The selected language persists in localStorage and in the URL (/fr);
 // isolate tests from each other
 afterEach(() => {
   localStorage.clear();
+  window.history.replaceState(null, "", "/");
 });

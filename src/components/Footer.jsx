@@ -10,9 +10,11 @@ const fesTime = () =>
   new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Casablanca", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
 
 // "Local time 18:24" in Fès, refreshed twice a minute (text only, no animation)
+// Empty until mounted: the prerendered HTML can't know what time it is.
 const LocalTime = ({ label }) => {
-  const [time, setTime] = useState(fesTime);
+  const [time, setTime] = useState("");
   useEffect(() => {
+    setTime(fesTime());
     const id = setInterval(() => setTime(fesTime()), 30000);
     return () => clearInterval(id);
   }, []);
@@ -126,7 +128,7 @@ const Footer = () => {
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
           {[...contactLinks, ...socialLinks].map(({ label, href }) => (
             <li key={label}>
-              <a href={href} target="_blank" rel="noreferrer" className="inline-block py-1 transition-colors duration-fast hover:text-fg">
+              <a href={href} target="_blank" rel="me noreferrer" className="inline-block py-1 transition-colors duration-fast hover:text-fg">
                 {label}
               </a>
             </li>

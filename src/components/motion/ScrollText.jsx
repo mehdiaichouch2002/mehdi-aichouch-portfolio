@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { m, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 // One word whose opacity follows the scroll position. Opacity only, driven by a
@@ -16,7 +16,11 @@ const Word = ({ progress, range, children }) => {
 // from dim to full. Split by word, never by letter. Plain text with reduced motion.
 const ScrollText = ({ text, className = "" }) => {
   const ref = useRef(null);
-  const reduce = useReducedMotion();
+  // Applied after mount: the first render has to match the prerendered HTML,
+  // which is always the word-by-word version
+  const prefersReduced = useReducedMotion();
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => setReduce(!!prefersReduced), [prefersReduced]);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 50%"] });
 
   if (reduce) {

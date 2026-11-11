@@ -8,7 +8,9 @@ const SPRING = { stiffness: 500, damping: 40, mass: 0.6 };
 // The cards call show(label, event) / show(null) through a ref; position lives in
 // motion values, so following the pointer never re-renders React.
 const CursorPill = forwardRef((_, ref) => {
-  const [enabled] = useState(hasFinePointer);
+  // Decided after mount: the prerendered HTML has no pill, and the first render must match it
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => setEnabled(hasFinePointer()), []);
   const [label, setLabel] = useState(null);
   const reduce = useReducedMotion();
   const rawX = useMotionValue(-200);

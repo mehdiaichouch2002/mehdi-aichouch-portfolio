@@ -7,6 +7,10 @@ import { DUR, EASE, fadeUp } from "../../lib/motion";
 
 export const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
 
+// Live sites have real screenshots as covers, the other projects a drawn cover
+export const coverAlt = (project, t) =>
+  t(project.category === "commercial" || project.hosted ? "portfolio.screenshotAlt" : "portfolio.coverAlt").replace("{title}", project.title);
+
 export const TechList = ({ tech, className = "" }) => (
   <ul className={`flex flex-wrap gap-1.5 ${className}`}>
     {tech.map((name) => (
@@ -23,7 +27,7 @@ const inView = { once: true, margin: "0px 0px -12% 0px" };
 // Client cards also drift a little with the scroll (parallax); the extra scale gives
 // the drift room so no edge ever shows. Transform only.
 // srcTall: a taller cover for the featured card, whose box is roughly square from lg up
-const MediaImage = ({ src, srcTall, parallax }) => {
+const MediaImage = ({ src, srcTall, alt, parallax }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], parallax ? ["-5%", "5%"] : ["0%", "0%"]);
@@ -43,7 +47,7 @@ const MediaImage = ({ src, srcTall, parallax }) => {
           {srcTall && <source media="(min-width: 1024px)" srcSet={srcTall} width="1200" height="1050" />}
           <img
             src={src}
-            alt=""
+            alt={alt}
             width="1200"
             height="630"
             loading="lazy"
@@ -98,7 +102,7 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
         layoutId={`media-${project.id}`}
         className={`relative overflow-hidden border-b border-line bg-surface-2 ${featured ? "aspect-[1200/630] lg:aspect-auto lg:flex-1" : "aspect-[1200/630]"}`}
       >
-        <MediaImage src={project.src} srcTall={featured ? project.srcTall : undefined} parallax={isClient} />
+        <MediaImage src={project.src} srcTall={featured ? project.srcTall : undefined} alt={coverAlt(project, t)} parallax={isClient} />
       </m.div>
 
       <div className={`flex flex-col ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>

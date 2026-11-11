@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, Suspense, useEffect, useState } from "react";
 import { domMax, LazyMotion, MotionConfig } from "motion/react";
 import About from "./components/About";
 import Skills from "./components/Skills";
@@ -17,8 +17,11 @@ import { startSmoothScroll } from "./lib/smoothScroll";
 // The hero renders in the first pass. Everything below the fold renders right after,
 // inside a transition, so React time-slices that rendering instead of running it
 // inside the initial long task. This keeps Total Blocking Time and INP down.
-const useBelowFold = () => {
-  const [ready, setReady] = useState(false);
+// When the HTML was prerendered (production build), the sections are already in the
+// page, so they render at once to match it; the Suspense boundaries below then let
+// React hydrate them one by one, after the hero, instead of in one long task.
+const useBelowFold = (prerendered) => {
+  const [ready, setReady] = useState(prerendered);
 
   useEffect(() => {
     startTransition(() => setReady(true));
@@ -34,8 +37,13 @@ const useBelowFold = () => {
   return ready;
 };
 
-function App() {
-  const belowFold = useBelowFold();
+// One hydration unit per section
+const Section = ({ children }) => <Suspense fallback={null}>{children}</Suspense>;
+
+// prerendered: the page's HTML already exists (build-time prerender, then hydration)
+// initialLang: only set by the prerender, which has no URL to read the language from
+function App({ prerendered = false, initialLang }) {
+  const belowFold = useBelowFold(prerendered);
   // Desktop inertial scrolling, loaded when the page is idle (see lib/smoothScroll.js)
   useEffect(() => startSmoothScroll(), []);
 
@@ -47,7 +55,7 @@ function App() {
     <LazyMotion features={domMax} strict>
       {/* With prefers-reduced-motion, motion drops transforms and keeps opacity fades */}
       <MotionConfig reducedMotion="user">
-        <LanguageProvider>
+        <LanguageProvider initialLang={initialLang}>
           <ResumeModalProvider>
             {/* isolate: own stacking context for the footer curtain (index.css) */}
             <div className="isolate">
@@ -59,15 +67,15 @@ function App() {
                 <Home />
                 {belowFold && (
                   <>
-                    <About />
-                    <Portfolio />
-                    <Skills />
-                    <Experience />
-                    <Contact />
+                    <Section><About /></Section>
+                    <Section><Portfolio /></Section>
+                    <Section><Skills /></Section>
+                    <Section><Experience /></Section>
+                    <Section><Contact /></Section>
                   </>
                 )}
               </main>
-              {belowFold && <Footer />}
+              {belowFold && <Section><Footer /></Section>}
               {/* Inside the isolated wrapper so their z-indexes still rank against the
                   nav, the menu and the project dialog */}
               <ResumeLanguageModal />

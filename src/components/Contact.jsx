@@ -118,7 +118,7 @@ const Contact = () => {
               const Icon = LINK_ICONS[label];
               return (
                 <li key={label}>
-                  <a href={href} target="_blank" rel="noreferrer" className={rowClass}>
+                  <a href={href} target="_blank" rel="me noreferrer" className={rowClass}>
                     {Icon && <Icon className="shrink-0 text-muted group-hover:text-accent" aria-hidden="true" />}
                     <span className="flex-1">{label}</span>
                     <FiArrowUpRight className="text-muted transition-transform duration-fast ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden="true" />

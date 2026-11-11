@@ -35,7 +35,7 @@ export default function AIChatAssistant() {
         onPointerEnter={loadPanel}
         onFocus={loadPanel}
         className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 h-12 w-12 sm:w-auto justify-center sm:pl-4 sm:pr-5 rounded-full bg-surface-2/90 backdrop-blur text-fg border border-line-strong shadow-panel flex items-center gap-2 text-[0.9rem] font-semibold transition-[border-color,transform] duration-fast ease-out hover:border-accent/60 active:scale-95"
-        aria-label="Toggle AI Assistant"
+        aria-label={isOpen ? t("chat.close") : t("chat.open")}
         aria-expanded={isOpen}
       >
         {isOpen ? <BsX size={22} aria-hidden="true" /> : <FiMessageSquare size={18} aria-hidden="true" />}

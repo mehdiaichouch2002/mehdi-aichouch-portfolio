@@ -1,7 +1,7 @@
-import portrait320Avif from "../assets/portfolio/portrait-320.avif";
-import portrait640Avif from "../assets/portfolio/portrait-640.avif";
-import portrait320Webp from "../assets/portfolio/portrait-320.webp";
-import portrait640Webp from "../assets/portfolio/portrait-640.webp";
+import portrait320Avif from "../assets/portfolio/mehdi-aichouch-portrait-320.avif";
+import portrait640Avif from "../assets/portfolio/mehdi-aichouch-portrait-640.avif";
+import portrait320Webp from "../assets/portfolio/mehdi-aichouch-portrait-320.webp";
+import portrait640Webp from "../assets/portfolio/mehdi-aichouch-portrait-640.webp";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
 import Reveal from "./motion/Reveal";

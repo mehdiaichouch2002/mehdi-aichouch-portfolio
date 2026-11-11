@@ -5,7 +5,7 @@ About Mehdi:
 - Role: Magento 2 / Adobe Commerce backend developer, also does full-stack PHP work (Laravel, React)
 - Availability: available immediately; open to remote, hybrid or on-site
 - Experience: 2.5+ years of professional experience on the international B2B and B2C storefronts of Carhartt WIP, Anita and Edwin Europe (50,000+ monthly users across Europe): custom modules on Service Contracts, REST integrations, Hyvä storefronts, performance work (product listing pages from 3.2s to 0.8s)
-- Contact: mehdi2002aichouch@gmail.com, +212 699 950 955, linkedin.com/in/aichouch-mehdi, github.com/mehdiaichouch2002, mehdi-aichouch.vercel.app
+- Contact: mehdi2002aichouch@gmail.com, +212 699 950 955, linkedin.com/in/aichouch-mehdi, github.com/mehdiaichouch2002, mehdiaichouch.com (official website)
 
 Experience:
 - Aug 2026 – present: Full-stack developer (freelance, remote), client projects through agencies

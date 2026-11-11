@@ -62,6 +62,43 @@ describe("Language switcher", () => {
   });
 });
 
+describe("SEO", () => {
+  test("has a single h1 that carries the name", () => {
+    render(<App />);
+
+    const headings = screen.getAllByRole("heading", { level: 1 });
+    expect(headings).toHaveLength(1);
+    expect(headings[0]).toHaveTextContent(/mehdi aichouch/i);
+  });
+
+  test("each language has its own URL and title", () => {
+    render(<App />);
+    expect(window.location.pathname).toBe("/");
+    expect(document.title).toMatch(/^Mehdi Aichouch \| Full-Stack Developer/);
+
+    fireEvent.click(screen.getAllByRole("button", { name: "FR" })[0]);
+
+    expect(window.location.pathname).toBe("/fr");
+    expect(document.documentElement.lang).toBe("fr");
+    expect(document.title).toMatch(/^Mehdi Aichouch \| Développeur Full-Stack/);
+  });
+
+  test("opens in French at /fr", () => {
+    window.history.replaceState(null, "", "/fr");
+    render(<App />);
+
+    expect(screen.getByRole("heading", { level: 2, name: /^à propos$/i })).toBeInTheDocument();
+  });
+
+  test("describes every image", () => {
+    render(<App />);
+
+    expect(screen.getByAltText("Portrait of Mehdi Aichouch")).toBeInTheDocument();
+    expect(screen.getByAltText("Screenshot of the B2B Carhartt WIP website")).toBeInTheDocument();
+    for (const img of document.querySelectorAll("img")) expect(img).toHaveAttribute("alt", expect.stringMatching(/\S/));
+  });
+});
+
 describe("Projects", () => {
   test("shows all other projects on demand", () => {
     render(<App />);

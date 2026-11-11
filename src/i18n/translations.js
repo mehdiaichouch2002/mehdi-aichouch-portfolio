@@ -1,5 +1,12 @@
 const translations = {
   en: {
+    // <title> and meta description (scripts/seo/prerender.js writes them into the HTML)
+    seo: {
+      title: "Mehdi Aichouch | Full-Stack Developer & Magento 2 Specialist",
+      description:
+        "Official portfolio of Mehdi Aichouch, full-stack developer in Fès, Morocco. Magento 2 / Adobe Commerce, PHP, Laravel and React for international e-commerce.",
+      jobTitle: "Full-Stack Developer",
+    },
     nav: {
       home: "Home",
       about: "About",
@@ -24,7 +31,7 @@ const translations = {
     about: {
       title: "About",
       lead:
-        "Magento 2 / Adobe Commerce backend developer with 2.5+ years on the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe, serving 50,000+ monthly users across Europe. Custom modules on Service Contracts, REST integrations and fast Hyvä storefronts, plus full-stack PHP work in Laravel and React.",
+        "I'm Mehdi Aichouch, a Magento 2 / Adobe Commerce backend developer with 2.5+ years on the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe, serving 50,000+ monthly users across Europe. Custom modules on Service Contracts, REST integrations and fast Hyvä storefronts, plus full-stack PHP work in Laravel and React.",
       photoAlt: "Portrait of Mehdi Aichouch",
       intro:
         "At Cartware / Morocommerce in Fès from 2024 to 2026, freelance since August 2026. Backed by a Bac+3 university diploma in web development frameworks and Java EE, and preparing the Adobe Commerce Developer Professional certification (AD0-E724).",
@@ -53,6 +60,9 @@ const translations = {
       close: "Close",
       visitStore: "Visit the store",
       visitSite: "Visit the site",
+      // Cover image alt text: real screenshots for live sites, drawn covers for the rest
+      screenshotAlt: "Screenshot of the {title} website",
+      coverAlt: "{title} project cover",
       projects: {
         carhartt:
           "B2B wholesale store for Carhartt WIP's retail partners. I designed the REST API layer for the digital asset integration (Amplience CDN), integrated Microsoft Entra ID single sign-on, and built B2B features: tiered pricing, catalogue permissions and inventory sync over REST.",
@@ -214,6 +224,12 @@ const translations = {
   },
 
   fr: {
+    seo: {
+      title: "Mehdi Aichouch | Développeur Full-Stack & Magento 2",
+      description:
+        "Portfolio officiel de Mehdi Aichouch, développeur full-stack à Fès, Maroc. Magento 2 / Adobe Commerce, PHP, Laravel et React pour l'e-commerce international.",
+      jobTitle: "Développeur Full-Stack",
+    },
     nav: {
       home: "Accueil",
       about: "À propos",
@@ -237,7 +253,7 @@ const translations = {
     about: {
       title: "À propos",
       lead:
-        "Développeur backend Magento 2 / Adobe Commerce, plus de 2 ans et demi d'expérience sur les plateformes B2B et B2C de Carhartt WIP, Anita et Edwin Europe (50 000+ utilisateurs mensuels en Europe). Modules sur mesure basés sur les Service Contracts, intégrations REST et vitrines Hyvä rapides, ainsi que du full-stack PHP en Laravel et React.",
+        "Je suis Mehdi Aichouch, développeur backend Magento 2 / Adobe Commerce, plus de 2 ans et demi d'expérience sur les plateformes B2B et B2C de Carhartt WIP, Anita et Edwin Europe (50 000+ utilisateurs mensuels en Europe). Modules sur mesure basés sur les Service Contracts, intégrations REST et vitrines Hyvä rapides, ainsi que du full-stack PHP en Laravel et React.",
       photoAlt: "Portrait de Mehdi Aichouch",
       intro:
         "Chez Cartware / Morocommerce à Fès de 2024 à 2026, en freelance depuis août 2026. Titulaire d'un Diplôme d'Université Bac+3 en frameworks de développement web et Java EE, et en préparation de la certification Adobe Commerce Developer Professional (AD0-E724).",
@@ -266,6 +282,8 @@ const translations = {
       close: "Fermer",
       visitStore: "Voir la boutique",
       visitSite: "Voir le site",
+      screenshotAlt: "Capture d'écran du site {title}",
+      coverAlt: "Visuel du projet {title}",
       projects: {
         carhartt:
           "Boutique B2B de vente en gros pour les revendeurs de Carhartt WIP. J'ai conçu la couche API REST pour l'intégration des ressources numériques (CDN Amplience), intégré le SSO Microsoft Entra ID et développé des fonctionnalités B2B : prix par paliers, droits sur le catalogue et synchronisation des stocks via REST.",
