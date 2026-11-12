@@ -111,6 +111,18 @@ describe("Projects", () => {
   });
 });
 
+describe("Freelance client sites", () => {
+  test("are labelled as client sites and link to their code", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /details.*tm drive/i }));
+
+    const dialog = screen.getByRole("dialog", { name: /tm drive/i });
+    expect(within(dialog).getByText("Client site")).toBeInTheDocument();
+    expect(within(dialog).getByRole("link", { name: /view code/i })).toHaveAttribute("href", "https://github.com/mehdiaichouch2002/tm-drive");
+  });
+});
+
 describe("Project case study", () => {
   test("opens a dialog with the project details and closes on Escape", async () => {
     render(<App />);

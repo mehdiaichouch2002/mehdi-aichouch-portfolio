@@ -21,6 +21,10 @@ const SITES = {
   edwin: { url: "https://edwin-europe.com/gb-en/men" },
   carhartt: { url: "https://b2b.carhartt-wip.com/" },
   cafea: { url: "https://cafea-espresso.vercel.app/" },
+  // Client sites (Next.js). Point these at the live URLs once deployed; until then,
+  // run each project's production build with \`npx next start -p <port>\`.
+  bismilah: { url: process.env.BISMILAH_URL || "http://127.0.0.1:3101/" },
+  tmdrive: { url: process.env.TMDRIVE_URL || "http://127.0.0.1:3102/" },
   portfolio: { url: "http://127.0.0.1:5232/" },
 };
 

@@ -15,8 +15,31 @@ import FreespaceBlogImg from "../assets/projects/freespace-blog.webp";
 import AtelierImg from "../assets/projects/atelier.webp";
 import JobBotImg from "../assets/projects/job-bot.webp";
 import CafeaImg from "../assets/projects/cafea.webp";
+import BismilahImg from "../assets/projects/bismilah.webp";
+import TmDriveImg from "../assets/projects/tmdrive.webp";
 
 const projects = [
+  // Freelance client sites; not deployed yet, so the cards link to the (public) code
+  {
+    id: 17,
+    src: BismilahImg,
+    href: "https://github.com/mehdiaichouch2002/agence-bismilah",
+    title: "Agence Immobilière Bismilah",
+    hosted: false,
+    category: "freelance",
+    descriptionKey: "bismilah",
+    tech: ["Next.js 16", "TypeScript", "Tailwind", "FR / AR (RTL)"],
+  },
+  {
+    id: 18,
+    src: TmDriveImg,
+    href: "https://github.com/mehdiaichouch2002/tm-drive",
+    title: "TM Drive",
+    hosted: false,
+    category: "freelance",
+    descriptionKey: "tmdrive",
+    tech: ["Next.js 16", "TypeScript", "Tailwind", "FR / AR (RTL)"],
+  },
   {
     id: 16,
     src: CafeaImg,

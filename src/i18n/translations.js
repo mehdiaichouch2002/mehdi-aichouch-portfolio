@@ -51,8 +51,10 @@ const translations = {
       role: "My role",
       clientRole: "Magento 2 developer (full-stack) at Cartware / Morocommerce",
       opensNewTab: "opens in a new tab",
-      otherTitle: "Open-source and personal projects",
-      otherDescription: "Magento modules, web apps and tools, most with the source code on GitHub.",
+      otherTitle: "Freelance, open-source and personal projects",
+      otherDescription: "Client sites, Magento modules, web apps and tools, most with the source code on GitHub.",
+      // Label in the project dialog, by category (client stores use caseStudy)
+      kind: { freelance: "Client site", opensource: "Open source", personal: "Personal project" },
       viewCode: "View code",
       showAll: "Show all {count} projects",
       showLess: "Show fewer",
@@ -66,6 +68,10 @@ const translations = {
       screenshotAlt: "Screenshot of the {title} website",
       coverAlt: "{title} project cover",
       projects: {
+        bismilah:
+          "Website for a real estate agency in Meknès, in French and Arabic (right-to-left). Visitors filter properties for sale or rent by type, neighbourhood, budget and bedrooms, open a listing with its photo gallery, and send the agency a pre-written WhatsApp message. Owners can submit a property the same way. No server or database: the agency edits listings, hours and reviews in one data file. Next.js 16, TypeScript, Tailwind CSS, RealEstateAgent structured data.",
+        tmdrive:
+          "Website for a car rental company in Meknès, open 24/7, in French and Arabic (right-to-left). Visitors filter cars by category, gearbox, fuel and daily budget, check a car's details, and book by sending their dates in a pre-written WhatsApp message. No server or database: the owner edits the fleet, prices and hours in one data file. Next.js 16, TypeScript, Tailwind CSS, AutoRental structured data.",
         carhartt:
           "B2B wholesale store for Carhartt WIP's retail partners. I designed the REST API layer for the digital asset integration (Amplience CDN), integrated Microsoft Entra ID single sign-on, and built B2B features: tiered pricing, catalogue permissions and inventory sync over REST.",
         anita:
@@ -274,8 +280,9 @@ const translations = {
       role: "Mon rôle",
       clientRole: "Développeur Magento 2 (full-stack) chez Cartware / Morocommerce",
       opensNewTab: "s'ouvre dans un nouvel onglet",
-      otherTitle: "Projets open source et personnels",
-      otherDescription: "Modules Magento, applications web et outils, pour la plupart avec le code source sur GitHub.",
+      otherTitle: "Projets freelance, open source et personnels",
+      otherDescription: "Sites clients, modules Magento, applications web et outils, pour la plupart avec le code source sur GitHub.",
+      kind: { freelance: "Site client", opensource: "Open source", personal: "Projet personnel" },
       viewCode: "Voir le code",
       showAll: "Afficher les {count} projets",
       showLess: "Afficher moins",
@@ -288,6 +295,10 @@ const translations = {
       screenshotAlt: "Capture d'écran du site {title}",
       coverAlt: "Visuel du projet {title}",
       projects: {
+        bismilah:
+          "Site d'une agence immobilière de Meknès, en français et en arabe (de droite à gauche). Les visiteurs filtrent les biens à vendre ou à louer par type, quartier, budget et nombre de chambres, ouvrent une annonce avec sa galerie photo et contactent l'agence par un message WhatsApp déjà rédigé. Les propriétaires peuvent proposer leur bien de la même façon. Sans serveur ni base de données : l'agence modifie les annonces, les horaires et les avis dans un seul fichier. Next.js 16, TypeScript, Tailwind CSS, données structurées RealEstateAgent.",
+        tmdrive:
+          "Site d'un loueur de voitures de Meknès, ouvert 24h/24, en français et en arabe (de droite à gauche). Les visiteurs filtrent les voitures par catégorie, boîte de vitesses, carburant et budget journalier, consultent la fiche d'une voiture et réservent en envoyant leurs dates par un message WhatsApp déjà rédigé. Sans serveur ni base de données : le gérant modifie la flotte, les tarifs et les horaires dans un seul fichier. Next.js 16, TypeScript, Tailwind CSS, données structurées AutoRental.",
         carhartt:
           "Boutique B2B de vente en gros pour les revendeurs de Carhartt WIP. J'ai conçu la couche API REST pour l'intégration des ressources numériques (CDN Amplience), intégré le SSO Microsoft Entra ID et développé des fonctionnalités B2B : prix par paliers, droits sur le catalogue et synchronisation des stocks via REST.",
         anita:

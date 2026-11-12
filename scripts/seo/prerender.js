@@ -109,7 +109,8 @@ const jsonLd = (lang) => {
 
   // Only work Mehdi authored. Client stores belong to their brands and stay out of the schema.
   const ownWork = projects
-    .filter((p) => p.category !== "commercial")
+    // Client work (stores and freelance sites) belongs to the clients: not listed as his own work
+    .filter((p) => p.category !== "commercial" && p.category !== "freelance")
     .map((p) => {
       const onGitHub = p.href.startsWith("https://github.com/");
       return {

@@ -9,7 +9,7 @@ export const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
 
 // Live sites have real screenshots as covers, the other projects a drawn cover
 export const coverAlt = (project, t) =>
-  t(project.category === "commercial" || project.hosted ? "portfolio.screenshotAlt" : "portfolio.coverAlt").replace("{title}", project.title);
+  t(project.category === "commercial" || project.category === "freelance" || project.hosted ? "portfolio.screenshotAlt" : "portfolio.coverAlt").replace("{title}", project.title);
 
 export const TechList = ({ tech, className = "" }) => (
   <ul className={`flex flex-wrap gap-1.5 ${className}`}>

@@ -38,6 +38,10 @@ Skills:
 - Also: Laravel, Java / Spring Boot, C# / .NET, Python, Git, Xdebug, Agile / Scrum, code review
 - Languages: Arabic (native), English (professional working proficiency, B2), French (intermediate, B1)
 
+Freelance client sites (built in November 2026, code on GitHub, not deployed yet):
+- Agence Immobilière Bismilah – website for a real estate agency in Meknès, French and Arabic (RTL): property search by type, neighbourhood, budget and bedrooms, listing pages with photo galleries, contact and "sell my property" through pre-written WhatsApp messages; no server or database, the agency edits one data file (Next.js 16, TypeScript, Tailwind CSS, RealEstateAgent structured data). Code: https://github.com/mehdiaichouch2002/agence-bismilah
+- TM Drive – website for a 24/7 car rental company in Meknès, French and Arabic (RTL): fleet search by category, gearbox, fuel and daily budget, car pages, booking through a pre-written WhatsApp message with the dates; no server or database (Next.js 16, TypeScript, Tailwind CSS, AutoRental structured data). Code: https://github.com/mehdiaichouch2002/tm-drive
+
 Open-source and personal projects (code on GitHub unless noted):
 0. CAFEA Espresso – concept one-page site for a Moroccan coffee importer (41 producing countries), live at https://cafea-espresso.vercel.app: a 3D coffee bean, a WebGL globe with routes to Casablanca, 16,000 particles morphing from coffee branch to ship to espresso (Next.js 16, three.js + custom GLSL, GSAP, Lenis). Private repo, so the live site is the link
 1. Attribute Import – Magento 2 module for bulk importing product attribute options from CSV

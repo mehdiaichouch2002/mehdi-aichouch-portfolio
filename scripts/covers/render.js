@@ -120,6 +120,9 @@ ${frame(`<img src="${shot("carhartt", "desktop")}">`, { addr: "b2b.carhartt-wip.
   edwin: () => device("edwin", "edwin-europe.com"),
   portfolio: () => device("portfolio", "mehdiaichouch.com"),
   cafea: () => device("cafea", "cafea-espresso.vercel.app"),
+  // Not deployed yet: no address in the window bar until they have one (set BISMILAH_HOST / TMDRIVE_HOST)
+  bismilah: () => device("bismilah", process.env.BISMILAH_HOST || ""),
+  tmdrive: () => device("tmdrive", process.env.TMDRIVE_HOST || ""),
 
   atelier: () => `
 ${app(`

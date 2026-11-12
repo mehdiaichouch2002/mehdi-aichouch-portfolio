@@ -81,7 +81,7 @@ const ProjectDetail = ({ project, onClose }) => {
         </button>
 
         <div className="p-6 md:p-10">
-          <p className="eyebrow">{isClient ? t("portfolio.caseStudy") : "Open source"}</p>
+          <p className="eyebrow">{isClient ? t("portfolio.caseStudy") : t(`portfolio.kind.${project.category}`)}</p>
           <m.h2
             layoutId={`title-${project.id}`}
             id={`project-${project.id}-title`}
