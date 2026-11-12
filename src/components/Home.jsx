@@ -32,11 +32,7 @@ const Home = () => {
 
       <div className="page relative flex min-h-[100svh] flex-col pb-10 pt-[calc(var(--nav-h)+3rem)] md:pt-[calc(var(--nav-h)+3.5rem)]">
         {/* Decorative behind the copy on small screens, its own column on large ones */}
-        {/* The request console sits in the free corner above the stack, from xl up (below that it would sit on the copy) */}
-        <HeroVisual
-          className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100"
-          hudClassName="absolute right-8 top-[calc(var(--nav-h)+1.5rem)] z-10 hidden xl:block"
-        />
+        <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
 
         <div className="my-auto">
           {/* The name is part of the h1 (it is what people search for), styled as the eyebrow */}

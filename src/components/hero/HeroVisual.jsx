@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 
 // "The stack": the layers of what I build, from the interface down to the data,
@@ -83,23 +83,10 @@ const LAYERS = [
   { key: "interface", Art: InterfaceArt },
 ];
 
-// The one measured result this site can show instead of tell: the same product listing
-// request before and after the performance work (3.2 s → 0.8 s, from the resume).
-// The packet really takes that long to cross the stack.
-const RUNS = { before: 3200, after: 800 };
-const seconds = (ms) => (ms / 1000).toFixed(2);
-
-// Fixed-ratio box, so nothing shifts around it.
-// hudClassName places the request console; without it the visual is decoration only.
-const HeroVisual = ({ className = "", hudClassName }) => {
+// Fixed-ratio box, so nothing shifts around it
+const HeroVisual = ({ className = "" }) => {
   const { t } = useLanguage();
   const root = useRef(null);
-  const counter = useRef(null);
-  const run = useRef({ raf: 0, timer: 0 });
-  // null until the visitor sends a request: the first render must match the prerendered HTML
-  const [mode, setMode] = useState(null);
-  const [done, setDone] = useState(false);
-
   // Pointer tilt, "open the stack" on hover and on scroll, desktop only:
   // CSS variables written once per frame, no React re-render
   useEffect(() => {
@@ -140,51 +127,8 @@ const HeroVisual = ({ className = "", hudClassName }) => {
     };
   }, []);
 
-  useEffect(
-    () => () => {
-      cancelAnimationFrame(run.current.raf);
-      clearTimeout(run.current.timer);
-    },
-    []
-  );
-
-  // Send one request through the stack. The CSS animation and the counter both run for
-  // the real duration; the counter is written straight to the DOM, not through state.
-  const send = (next) => {
-    const el = root.current;
-    const total = RUNS[next];
-    cancelAnimationFrame(run.current.raf);
-    clearTimeout(run.current.timer);
-    setMode(next);
-    setDone(false);
-
-    const finish = () => {
-      if (counter.current) counter.current.textContent = seconds(total);
-      setDone(true);
-    };
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return finish();
-
-    // Restart the trace even when one is already running
-    el.classList.remove("is-trace");
-    void el.offsetWidth;
-    el.style.setProperty("--t", `${total}ms`);
-    el.classList.add("is-trace");
-
-    const start = performance.now();
-    const tick = (now) => {
-      const elapsed = Math.min(now - start, total);
-      if (counter.current) counter.current.textContent = (elapsed / 1000).toFixed(2);
-      if (elapsed < total) run.current.raf = requestAnimationFrame(tick);
-      else finish();
-    };
-    run.current.raf = requestAnimationFrame(tick);
-    // Hand back to the idle loop once the last layer has flashed
-    run.current.timer = setTimeout(() => el.classList.remove("is-trace"), total + 900);
-  };
-
   return (
-    <>
-      <div className={`aspect-square ${className}`} aria-hidden="true">
+    <div className={`aspect-square ${className}`} aria-hidden="true">
         <div ref={root} className="hs-root">
           <div className="hs-halo" />
           <div className="hs-scene">
@@ -211,40 +155,6 @@ const HeroVisual = ({ className = "", hudClassName }) => {
         </div>
       </div>
 
-      {hudClassName && (
-        <div className={`hs-hud hero-in w-[16rem] rounded-lg border border-line bg-surface/70 p-3.5 backdrop-blur-md ${hudClassName}`} style={{ "--d": "900ms" }}>
-            <p className="text-[0.8rem] leading-snug text-muted">{t("home.stack.hudTitle")}</p>
-
-            <div className="mt-2.5 flex items-center gap-3">
-              <div className="grid flex-1 grid-cols-2 gap-1 rounded-full border border-line p-0.5" role="group" aria-label={t("home.stack.hudTitle")}>
-                {Object.keys(RUNS).map((key) => (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => send(key)}
-                    aria-pressed={mode === key}
-                    className={`min-h-[34px] rounded-full px-2 text-[0.8rem] transition-colors duration-fast ${
-                      mode === key ? "bg-fg font-semibold text-canvas" : "text-muted hover:text-fg"
-                    }`}
-                  >
-                    {t(`home.stack.${key}`)}
-                  </button>
-                ))}
-              </div>
-              <p className="flex w-[4.9rem] items-baseline justify-end gap-1 font-mono tabular-nums">
-                <span ref={counter} className={`text-[1.45rem] leading-none tracking-[-0.04em] ${mode === "after" && done ? "text-accent" : "text-fg"}`}>
-                  {mode ? "0.00" : "–.––"}
-                </span>
-                <span className="text-[0.75rem] text-muted">s</span>
-              </p>
-            </div>
-            <p className="mt-2.5 text-[0.76rem] leading-snug text-muted">{t(`home.stack.${mode ? `${mode}Note` : "hudHint"}`)}</p>
-            <span className="sr-only" role="status">
-              {mode && done ? t("home.stack.hudResult").replace("{time}", seconds(RUNS[mode])) : ""}
-            </span>
-        </div>
-      )}
-    </>
   );
 };
 

@@ -33,22 +33,6 @@ describe("App smoke test", () => {
   });
 });
 
-describe("Hero request console", () => {
-  test("sends the request before or after the performance work", () => {
-    render(<App />);
-
-    const before = screen.getByRole("button", { name: "Before" });
-    const after = screen.getByRole("button", { name: "After" });
-    expect(before).toHaveAttribute("aria-pressed", "false");
-
-    fireEvent.click(after);
-
-    expect(after).toHaveAttribute("aria-pressed", "true");
-    expect(before).toHaveAttribute("aria-pressed", "false");
-    expect(screen.getByText(/elasticsearch, mysql indexes, redis, varnish/i)).toBeInTheDocument();
-  });
-});
-
 describe("Experience and education", () => {
   test("shows the ENSA diploma with honours and no dates on diplomas", () => {
     render(<App />);

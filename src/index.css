@@ -425,19 +425,6 @@ html.lenis.lenis-stopped {
   opacity: 0;
   animation: hs-packet 6s linear 1.4s infinite;
 }
-/* A request sent from the console (HeroVisual.jsx): the packet crosses the stack in
-   --t, the real duration, and each layer flashes as it is reached. Replaces the idle
-   loop while it runs. */
-.hs-root.is-trace .hs-packet {
-  animation: hs-trace var(--t) linear both;
-}
-.hs-root.is-trace .hs-ping {
-  animation: hs-flash 800ms var(--ease-out) both;
-  animation-delay: calc((3 - var(--i)) / 3 * var(--t));
-}
-.hs-root.is-trace .hs-beam {
-  background: linear-gradient(rgb(var(--accent) / 0), rgb(var(--accent) / 0.6) 15%, rgb(var(--accent) / 0.6) 85%, rgb(var(--accent) / 0));
-}
 /* From xl only: at lg the labels would run past the viewport edge */
 @media (max-width: 1279px) {
   .hs-label { display: none; }
@@ -454,16 +441,6 @@ html.lenis.lenis-stopped {
   0%, 100% { opacity: 0; }
   4%       { opacity: 1; }
   22%      { opacity: 0; }
-}
-@keyframes hs-trace {
-  0%   { transform: translateY(0); opacity: 1; }
-  96%  { transform: translateY(calc(var(--gap) * 3)); opacity: 1; }
-  100% { transform: translateY(calc(var(--gap) * 3)); opacity: 0; }
-}
-@keyframes hs-flash {
-  0%   { opacity: 0; }
-  12%  { opacity: 1; }
-  100% { opacity: 0; }
 }
 @keyframes hs-packet {
   0%       { transform: translateY(0); opacity: 0; }
