@@ -236,6 +236,11 @@
   animation-timing-function: var(--ease-out);
 }
 
+/* NavWave.jsx draws the nav's bottom line itself while it runs */
+nav[data-liquid] {
+  border-bottom-color: transparent;
+}
+
 /* Lenis (lib/smoothScroll.js) animates the scroll itself, so CSS smoothing must step aside */
 html.lenis,
 html.lenis body {

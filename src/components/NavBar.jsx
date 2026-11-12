@@ -1,12 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { m } from "motion/react";
 import navLinks, { sectionNumber } from "../data/navLinks";
 import useScrolled from "../hooks/useScrolled";
-import useHideOnScroll from "../hooks/useHideOnScroll";
 import { useLanguage } from "../context/LanguageContext";
 import ScrollProgress from "./common/ScrollProgress";
-import RollText from "./motion/RollText";
+import NavWave from "./NavWave";
 import { DUR, EASE } from "../lib/motion";
 
 // Section links are plain anchors: CSS scroll-behavior + scroll-padding-top (index.css)
@@ -88,8 +87,7 @@ const NavBar = () => {
   const [nav, setNav] = useState(false);
   const activeSection = useActiveSection();
   const scrolled = useScrolled(20);
-  // Out of the way while reading down, back on the first scroll up
-  const hidden = useHideOnScroll() && !nav;
+  const linksRef = useRef(null);
   const { t } = useLanguage();
 
   const closeNav = useCallback(() => setNav(false), []);
@@ -110,25 +108,26 @@ const NavBar = () => {
     <>
       <nav
         aria-label="Main"
-        className={`fixed inset-x-0 top-0 z-50 h-nav border-b transition-[transform,background-color,border-color] duration-base ease-out has-[:focus-visible]:translate-y-0 ${
+        className={`fixed inset-x-0 top-0 z-50 h-nav border-b transition-[background-color,border-color] duration-base ease-out ${
           scrolled ? "border-line bg-canvas/75 backdrop-blur-xl" : "border-transparent bg-transparent"
-        } ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+        }`}
       >
         <ScrollProgress />
         <div className="page flex h-full items-center justify-between">
           <Wordmark />
 
           <div className="hidden items-center gap-6 lg:flex">
-            <ul className="flex items-center gap-1">
+            <ul ref={linksRef} className="flex items-center gap-1">
               {sectionLinks.map(({ id, link }) => {
                 const isActive = activeSection === link;
                 return (
                   <li key={id}>
                     <a
                       href={`#${link}`}
+                      data-wave={link}
                       aria-current={isActive ? "true" : undefined}
-                      className={`group relative isolate flex items-baseline gap-1.5 rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast ${
-                        isActive ? "text-fg" : "text-muted hover:text-fg"
+                      className={`group relative isolate flex items-baseline gap-1.5 rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast hover:bg-fg/[0.05] hover:text-accent ${
+                        isActive ? "text-fg" : "text-muted"
                       }`}
                     >
                       {/* One pill shared by all links: it glides to whichever section is active */}
@@ -142,13 +141,13 @@ const NavBar = () => {
                       )}
                       <span
                         className={`font-mono text-[0.65rem] transition-colors duration-fast ${
-                          isActive ? "text-accent" : "text-muted/60 group-hover:text-muted"
+                          isActive ? "text-accent" : "text-muted/60 group-hover:text-accent/70"
                         }`}
                         aria-hidden="true"
                       >
                         {sectionNumber(link)}
                       </span>
-                      <RollText>{t(`nav.${link}`)}</RollText>
+                      <span>{t(`nav.${link}`)}</span>
                     </a>
                   </li>
                 );
@@ -169,6 +168,7 @@ const NavBar = () => {
             </button>
           </div>
         </div>
+        <NavWave listRef={linksRef} active={activeSection} visible={scrolled} />
       </nav>
 
       {/* Mobile menu */}
