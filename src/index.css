@@ -277,6 +277,9 @@
    rest, full colour on hover. Touch screens keep the colour and a lighter screen. */
 .halftone {
   position: relative;
+  /* Own compositor layer: the card's cursor spotlight repaints the card on every
+     pointer move, and the filtered image must not be repainted with it */
+  will-change: transform;
 }
 .halftone::after {
   content: "";
@@ -596,6 +599,12 @@ html.lenis.lenis-stopped {
   opacity: 0;
   animation: hs-packet 6s linear 1.4s infinite;
 }
+/* Off screen (HeroVisual adds .is-paused): nothing in the stack ticks */
+.hs-root.is-paused,
+.hs-root.is-paused * {
+  animation-play-state: paused !important;
+}
+
 /* From xl only: at lg the labels would run past the viewport edge */
 @media (max-width: 1279px) {
   .hs-label { display: none; }

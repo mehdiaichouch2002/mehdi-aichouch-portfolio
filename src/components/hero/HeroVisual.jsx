@@ -87,6 +87,15 @@ const LAYERS = [
 const HeroVisual = ({ className = "" }) => {
   const { t } = useLanguage();
   const root = useRef(null);
+  // The request loop runs forever; off screen it would still restyle the stack every
+  // frame, so pause every animation in it while the hero is out of view (all devices)
+  useEffect(() => {
+    const el = root.current;
+    const io = new IntersectionObserver(([entry]) => el.classList.toggle("is-paused", !entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   // Pointer tilt, "open the stack" on hover and on scroll, desktop only:
   // CSS variables written once per frame, no React re-render
   useEffect(() => {
@@ -98,18 +107,38 @@ const HeroVisual = ({ className = "" }) => {
     let y = 0;
     let cx = -1;
     let cy = -1;
+    // Every write below restyles the whole 3D subtree, so do nothing while the hero
+    // is off screen, and skip writes that wouldn't change anything.
+    let visible = false;
+    let box = null; // the visual's rect in page coordinates, measured once per resize
+    const last = { px: "", py: "", s: "" };
+    const set = (k, v) => {
+      if (last[k] !== v) {
+        last[k] = v;
+        el.style.setProperty(`--${k}`, v);
+      }
+    };
     const apply = () => {
       raf = 0;
-      el.style.setProperty("--px", x.toFixed(3));
-      el.style.setProperty("--py", y.toFixed(3));
+      if (!visible) return;
+      const sy = window.scrollY;
+      if (!box) {
+        const r = el.getBoundingClientRect();
+        box = { left: r.left, top: r.top + sy, width: r.width, height: r.height };
+      }
+      set("px", x.toFixed(2));
+      set("py", y.toFixed(2));
       // How far the hero has scrolled away, 0 → 1: the stack spreads as it leaves
-      el.style.setProperty("--s", Math.min(1, Math.max(0, window.scrollY / window.innerHeight)).toFixed(3));
+      set("s", Math.min(1, Math.max(0, sy / window.innerHeight)).toFixed(2));
       // The copy column sits on top of the visual, so :hover never fires: hit-test by hand
-      const r = el.getBoundingClientRect();
-      el.classList.toggle("is-open", cx > r.left + r.width * 0.15 && cx < r.right && cy > r.top + r.height * 0.15 && cy < r.bottom - r.height * 0.15);
+      const top = box.top - sy;
+      el.classList.toggle(
+        "is-open",
+        cx > box.left + box.width * 0.15 && cx < box.left + box.width && cy > top + box.height * 0.15 && cy < top + box.height * 0.85
+      );
     };
     const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(apply);
+      if (visible && !raf) raf = requestAnimationFrame(apply);
     };
     const onMove = (e) => {
       cx = e.clientX;
@@ -118,11 +147,24 @@ const HeroVisual = ({ className = "" }) => {
       y = (cy / window.innerHeight) * 2 - 1;
       schedule();
     };
+    const onResize = () => {
+      box = null;
+      schedule();
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      box = null;
+      schedule();
+    });
+    io.observe(el);
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", onResize);
     return () => {
+      io.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(raf);
     };
   }, []);

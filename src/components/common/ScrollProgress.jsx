@@ -1,30 +1,43 @@
 import { useEffect, useRef } from "react";
+import { cancelFrame, frame } from "motion/react";
 
 // Thin line at the top of the header showing how far down the page the visitor is.
-// Writes the transform directly (once per frame) instead of re-rendering on scroll.
+// Writes the transform directly instead of re-rendering on scroll. The read and the
+// write go through Motion's frame loop (all reads, then all writes), so this doesn't
+// force an extra style/layout pass after Motion's own scroll-linked writes.
 const ScrollProgress = () => {
   const barRef = useRef(null);
 
   useEffect(() => {
-    let frame = null;
+    let progress = 0;
+    // The scrollable length only changes when the page or the window resizes
+    let max = -1;
 
-    const update = () => {
-      frame = null;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    const write = () => {
       if (barRef.current) barRef.current.style.transform = `scaleX(${progress})`;
     };
-    const onScroll = () => {
-      if (frame === null) frame = requestAnimationFrame(update);
+    const read = () => {
+      if (max < 0) max = document.documentElement.scrollHeight - window.innerHeight;
+      progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      frame.render(write);
+    };
+    const onScroll = () => frame.read(read);
+    const onResize = () => {
+      max = -1;
+      onScroll();
     };
 
+    const ro = new ResizeObserver(onResize);
+    ro.observe(document.body);
     onScroll(); // first read in a frame, not during mount (avoids a forced reflow)
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
+      ro.disconnect();
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame !== null) cancelAnimationFrame(frame);
+      window.removeEventListener("resize", onResize);
+      cancelFrame(read);
+      cancelFrame(write);
     };
   }, []);
 

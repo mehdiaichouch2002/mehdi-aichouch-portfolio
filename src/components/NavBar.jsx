@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { m } from "motion/react";
+import { cancelFrame, frame, m } from "motion/react";
 import navLinks, { sectionNumber } from "../data/navLinks";
 import useScrolled from "../hooks/useScrolled";
 import { useLanguage } from "../context/LanguageContext";
@@ -50,33 +50,39 @@ const useActiveSection = () => {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    let frame = null;
+    // Section offsets and the page height only change when the page resizes: measure
+    // them then, and on scroll only compare numbers. The scroll read happens in the
+    // read phase of Motion's frame loop, so it never forces a style/layout pass.
+    let tops = null;
+    let height = 0;
+    const measure = () => {
+      tops = navLinks.map(({ link }) => [link, document.getElementById(link)?.offsetTop ?? Infinity]);
+      height = document.documentElement.scrollHeight;
+    };
     const update = () => {
-      frame = null;
+      if (!tops) measure();
       const scrollY = window.scrollY;
-      const atBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 50;
+      const atBottom = window.innerHeight + scrollY >= height - 50;
       if (atBottom) return setActive(navLinks[navLinks.length - 1].link);
 
       let current = "home";
-      for (const { link } of navLinks) {
-        const el = document.getElementById(link);
-        if (el && el.offsetTop - NAV_HEIGHT - 120 <= scrollY) current = link;
-      }
+      for (const [link, top] of tops) if (top - NAV_HEIGHT - 120 <= scrollY) current = link;
       setActive(current); // React skips the render when the value is unchanged
     };
-    const onScroll = () => {
-      if (frame === null) frame = requestAnimationFrame(update);
-    };
+    const onScroll = () => frame.read(update);
     window.addEventListener("scroll", onScroll, { passive: true });
-    // Re-read when the page grows: on the first frame only the hero exists, so the
+    // Re-measure when the page grows: on the first frame only the hero exists, so the
     // page counts as "scrolled to the bottom" until the other sections mount
-    const ro = new ResizeObserver(onScroll);
+    const ro = new ResizeObserver(() => {
+      tops = null;
+      onScroll();
+    });
     ro.observe(document.body);
     onScroll(); // first read in a frame, not during mount (avoids a forced reflow)
     return () => {
       window.removeEventListener("scroll", onScroll);
       ro.disconnect();
-      if (frame !== null) cancelAnimationFrame(frame);
+      cancelFrame(update);
     };
   }, []);
 

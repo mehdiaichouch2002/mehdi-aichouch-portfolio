@@ -1,3 +1,4 @@
+import { cancelFrame, frame } from "motion/react";
 import { hasFinePointer } from "./motion";
 
 // Inertial smooth scrolling (Lenis), desktop only: touch devices keep native
@@ -23,11 +24,16 @@ export const startSmoothScroll = () => {
 
   let cancelled = false;
   let observer;
+  // Lenis is stepped from Motion's frame loop (its "update" phase, before Motion's
+  // reads and writes) rather than its own requestAnimationFrame: the scroll write then
+  // lands before the frame's style writes instead of after them, which would force
+  // an extra style/layout pass every frame.
+  const step = ({ timestamp }) => lenis?.raf(timestamp);
   const run = () =>
     import("lenis").then(({ default: Lenis }) => {
       if (cancelled) return;
       lenis = new Lenis({
-        autoRaf: true,
+        autoRaf: false,
         lerp: 0.1,
         wheelMultiplier: 1,
         // In-page <a href="#id"> links: smooth. Lenis honours the page's
@@ -42,12 +48,14 @@ export const startSmoothScroll = () => {
       observer = new MutationObserver(sync);
       observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
       sync();
+      frame.update(step, true);
     });
 
   const id = window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 2000 }) : setTimeout(run, 600);
   return () => {
     cancelled = true;
     (window.cancelIdleCallback || clearTimeout)(id);
+    cancelFrame(step);
     observer?.disconnect();
     lenis?.destroy();
     lenis = null;
