@@ -62,7 +62,8 @@ const Skills = () => {
   const label = (skill) => terms?.[skill] ?? skill;
 
   return (
-    <section id="skills" aria-labelledby="skills-title" className="section">
+    <section id="skills" aria-labelledby="skills-title" className="section isolate overflow-x-clip">
+      <div className="topo-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
       <div className="page">
         <SectionHeader id="skills-title" section="skills" title={t("skills.title")} intro={t("skills.description")} />
 

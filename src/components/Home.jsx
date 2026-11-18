@@ -9,11 +9,11 @@ import RollText from "./motion/RollText";
 const liveStores = projects.filter((p) => p.category === "commercial");
 const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
 
-// "I build *anything* for the web." -> the starred word in the accent color
+// "I build *anything* for the web." -> the starred word in the holographic spectrum
 const withAccent = (line) =>
   line.split("*").map((part, i) =>
     i % 2 ? (
-      <span key={i} className="text-accent">
+      <span key={i} className="iris-text">
         {part}
       </span>
     ) : (
@@ -31,6 +31,12 @@ const Home = () => {
       <div className="grid-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
 
       <div className="page relative flex min-h-[100svh] flex-col pb-10 pt-[calc(var(--nav-h)+3rem)] md:pt-[calc(var(--nav-h)+3.5rem)]">
+        {/* Grainy iridescent field seen through a pane of fluted glass, behind the stack */}
+        <div className="pointer-events-none absolute -z-10 inset-0" aria-hidden="true">
+          <div className="hero-aura -right-32 top-6 h-[420px] w-[460px] opacity-60 lg:right-[2%] lg:top-[16%] lg:h-[68%] lg:w-[44%] lg:opacity-100" />
+          <div className="fluted -right-10 top-24 hidden h-[300px] w-[150px] opacity-70 sm:block lg:right-[9%] lg:top-[20%] lg:h-[58%] lg:w-[15%] lg:opacity-100" />
+        </div>
+
         {/* Decorative behind the copy on small screens, its own column on large ones */}
         <HeroVisual className="pointer-events-none absolute -right-24 top-16 -z-10 w-[min(110vw,520px)] opacity-40 lg:pointer-events-auto lg:-right-6 lg:top-1/2 lg:w-[46%] lg:max-w-[620px] lg:-translate-y-1/2 lg:opacity-100" />
 

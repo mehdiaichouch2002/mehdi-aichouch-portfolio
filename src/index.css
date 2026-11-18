@@ -35,6 +35,13 @@
   --page-max: 1200px;
   --nav-h: 64px;
 
+  /* Iridescence: the holographic spectrum used for the hero word, the glass edges
+     and the footer wordmark. Starts and ends on the accent so it reads as "cyan, shifted". */
+  --iris: linear-gradient(100deg, rgb(76 201 255), rgb(157 140 255) 32%, rgb(255 184 230) 58%, rgb(159 245 220) 82%, rgb(76 201 255));
+
+  /* Heavier grain for the gradient fields (grainy gradients) */
+  --grain-strong: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   /* Fine film grain, tiled SVG (no image request) */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -151,15 +158,164 @@
     opacity: 1;
   }
 
-  /* Faint engineering grid, faded out toward the edges */
+  /* Blueprint grid: minor 16px cells, major 80px cells, a faint cyan cast,
+     faded out toward the edges */
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgb(var(--text) / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--text) / 0.045) 1px, transparent 1px);
-    background-size: 64px 64px;
+      linear-gradient(to right, rgb(var(--accent) / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--accent) / 0.07) 1px, transparent 1px),
+      linear-gradient(to right, rgb(var(--text) / 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--text) / 0.028) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    background-position: -1px -1px;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
   }
+
+  /* Holographic text: the spectrum clipped to the glyphs */
+  .iris-text {
+    background-image: var(--iris);
+    background-size: 200% 100%;
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Topographic contour lines (generated: src/assets/textures/topo.svg) */
+  .topo-bg {
+    background: url("./assets/textures/topo.svg") center / cover no-repeat;
+    opacity: 0.09;
+    mask-image: radial-gradient(ellipse 75% 70% at 70% 40%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 70% 40%, #000 20%, transparent 75%);
+  }
+}
+
+/* Blueprint registration marks: a small "+" where each section's top rule meets
+   the edges of the content column */
+.section {
+  position: relative;
+}
+.section::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: min(100% - 1rem, var(--page-max) - 2rem);
+  height: 9px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  --c: rgb(var(--accent) / 0.55);
+  background:
+    linear-gradient(var(--c), var(--c)) 0 4px / 9px 1px,
+    linear-gradient(var(--c), var(--c)) 4px 0 / 1px 9px,
+    linear-gradient(var(--c), var(--c)) 100% 4px / 9px 1px,
+    linear-gradient(var(--c), var(--c)) calc(100% - 4px) 0 / 1px 9px;
+  background-repeat: no-repeat;
+}
+
+/* Hero aura: a grainy iridescent gradient field behind the stack */
+.hero-aura {
+  position: absolute;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side at 38% 40%, rgb(76 201 255 / 0.32), transparent),
+    radial-gradient(closest-side at 66% 56%, rgb(157 140 255 / 0.3), transparent),
+    radial-gradient(closest-side at 48% 76%, rgb(255 184 230 / 0.16), transparent),
+    radial-gradient(closest-side at 72% 26%, rgb(159 245 220 / 0.14), transparent);
+  /* Soft edge for the colour and its grain alike */
+  -webkit-mask-image: radial-gradient(closest-side, #000 25%, transparent);
+  mask-image: radial-gradient(closest-side, #000 25%, transparent);
+}
+.hero-aura::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain-strong);
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+}
+
+/* Fluted glass: vertical ribs over the aura. Each 18px rib blurs what is behind it
+   and carries its own highlight and shadow, like reeded glass. */
+.fluted {
+  position: absolute;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  background:
+    repeating-linear-gradient(90deg,
+      rgb(255 255 255 / 0.07) 0,
+      rgb(255 255 255 / 0.015) 3px,
+      rgb(0 0 0 / 0) 9px,
+      rgb(0 0 0 / 0.22) 16px,
+      rgb(255 255 255 / 0.1) 18px);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06), var(--shadow-panel);
+}
+/* Iridescent top edge, as if light catches the pane */
+.fluted::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background-image: var(--iris);
+  opacity: 0.7;
+}
+.fluted::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.8;
+}
+
+/* Halftone screen over project covers and the portrait: monochrome and dotted at
+   rest, full colour on hover. Touch screens keep the colour and a lighter screen. */
+.halftone {
+  position: relative;
+}
+.halftone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at center, transparent 1.05px, rgb(var(--bg) / 0.38) 1.6px);
+  background-size: 4px 4px;
+  opacity: 0.22;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.halftone img {
+  transition: filter var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .halftone::after { opacity: 1; }
+  .halftone img { filter: grayscale(1) contrast(1.05) brightness(0.88); }
+  .group:hover .halftone::after,
+  .group:focus-within .halftone::after,
+  .halftone:hover::after { opacity: 0; }
+  .group:hover .halftone img,
+  .group:focus-within .halftone img,
+  .halftone:hover img { filter: none; }
+}
+
+/* ASCII landscape (components/common/AsciiField.jsx) */
+.ascii-field {
+  margin: 0;
+  font: 400 11px/1.15 "Geist Mono", ui-monospace, monospace;
+  letter-spacing: 0;
+  white-space: pre;
+  color: rgb(var(--muted) / 0.38);
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%);
+}
+.ascii-wrap {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
 }
 
 /* Hero entrance: after the headline rises, the rest of the hero arrives in order.
@@ -200,11 +356,16 @@
   margin-bottom: -0.12em;
 }
 .footer-mark-word {
-  background: linear-gradient(to bottom, rgb(var(--text)) 25%, rgb(var(--text) / 0.08));
+  /* Holographic, fading into the page toward the bottom; the grain sits on the glyphs */
+  background-image: var(--grain-strong), linear-gradient(to bottom, rgb(var(--text)) 10%, transparent 75%), var(--iris);
+  background-size: 180px 180px, 100% 100%, 100% 100%;
+  background-blend-mode: overlay, normal, normal;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   padding-right: 0.04em;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, rgb(0 0 0 / 0.12));
+  mask-image: linear-gradient(to bottom, #000 35%, rgb(0 0 0 / 0.12));
 }
 
 /* Footer curtain (Footer.jsx): <main> is an opaque sheet that scrolls up off the
@@ -315,7 +476,12 @@ html.lenis.lenis-stopped {
   inset: 10%;
   border-radius: 50%;
   transform: translateZ(calc(var(--gap) * -0.7));
-  background: radial-gradient(closest-side, rgb(76 201 255 / 0.12), rgb(76 201 255 / 0.03) 60%, transparent);
+  /* Dot-matrix floor: a halftone disc that thins out toward the rim */
+  background:
+    radial-gradient(circle, rgb(76 201 255 / 0.55) 0.5cqw, transparent 0.65cqw) 0 0 / 2.4cqw 2.4cqw,
+    radial-gradient(closest-side, rgb(76 201 255 / 0.1), transparent);
+  -webkit-mask-image: radial-gradient(closest-side, #000 15%, rgb(0 0 0 / 0.35) 55%, transparent);
+  mask-image: radial-gradient(closest-side, #000 15%, rgb(0 0 0 / 0.35) 55%, transparent);
 }
 .hs-layer {
   position: absolute;

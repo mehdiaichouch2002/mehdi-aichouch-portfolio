@@ -4,6 +4,7 @@ import { FiArrowUpRight, FiCheck, FiCopy, FiDownload, FiGithub, FiLinkedin, FiMa
 import useContactForm from "../hooks/useContactForm";
 import LoadingOverlay from "./common/LoadingOverlay";
 import Notification from "./common/Notification";
+import AsciiField from "./common/AsciiField";
 import SectionHeader from "./common/SectionHeader";
 import Magnetic from "./motion/Magnetic";
 import Reveal from "./motion/Reveal";
@@ -99,7 +100,7 @@ const Contact = () => {
   const rowClass = `${rowBase} border-b border-line`;
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="section relative isolate overflow-hidden">
+    <section id="contact" aria-labelledby="contact-title" className="section relative isolate overflow-x-clip">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(ellipse_50%_60%_at_20%_0%,rgb(var(--accent)/0.08),transparent)]" aria-hidden="true" />
       <div className="page grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
         <div>
@@ -200,6 +201,11 @@ const Contact = () => {
           </Magnetic>
         </form>
         </Reveal>
+      </div>
+
+      {/* ASCII mountains along the bottom of the page */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 flex justify-center overflow-hidden ascii-wrap" aria-hidden="true">
+        <AsciiField />
       </div>
 
       <Notification

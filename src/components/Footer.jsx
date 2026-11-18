@@ -111,7 +111,8 @@ const Footer = () => {
 
   return (
     <footer ref={ref} className="footer-curtain overflow-hidden border-t border-line">
-      <m.div style={{ y }}>
+      <m.div style={{ y }} className="relative isolate">
+      <div className="topo-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
       <div className="page pt-16 md:pt-24">
         <Wordmark shown={shown || reduce} />
       </div>

@@ -36,7 +36,7 @@ const MediaImage = ({ src, srcTall, alt, parallax }) => {
   return (
     <div ref={ref} className="h-full w-full">
       <m.div
-        className="h-full w-full"
+        className="halftone h-full w-full"
         style={{ y }}
         initial={{ scale: rest + 0.14 }}
         whileInView={{ scale: rest }}
