@@ -123,6 +123,8 @@ const NavWave = ({ listRef, active, visible }) => {
     const onOver = (e) => {
       const a = e.target.closest("a[data-wave]");
       if (a && a.dataset.wave !== s.hovered) {
+        // Cheap safety net: read the link positions again before a dip starts moving
+        measure();
         s.hovered = a.dataset.wave;
         s.kick();
       }
@@ -137,12 +139,21 @@ const NavWave = ({ listRef, active, visible }) => {
     s.kick();
     list.addEventListener("pointerover", onOver);
     list.addEventListener("pointerleave", onLeave);
-    const ro = new ResizeObserver(() => {
+    let live = true;
+    const remeasure = () => {
+      if (!live) return;
       measure();
       draw();
-    });
+    };
+    // The links move without the nav resizing: web fonts arriving, the language
+    // switch (French labels are longer), the active pill. Watch each of them.
+    const ro = new ResizeObserver(remeasure);
     ro.observe(nav);
+    ro.observe(list);
+    list.querySelectorAll("a[data-wave]").forEach((a) => ro.observe(a));
+    document.fonts?.ready.then(remeasure);
     return () => {
+      live = false;
       list.removeEventListener("pointerover", onOver);
       list.removeEventListener("pointerleave", onLeave);
       ro.disconnect();
