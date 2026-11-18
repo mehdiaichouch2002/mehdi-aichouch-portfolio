@@ -4,28 +4,26 @@ import SectionHeader from "./common/SectionHeader";
 import Reveal from "./motion/Reveal";
 import usePointerCard from "../hooks/usePointerCard";
 
-// Mirrors the Skills section of the resume PDFs in public/. "also" holds what I've
-// studied or used outside production, kept apart so it doesn't read as daily stack.
+// Mirrors the Skills section of the resume PDFs in public/.
 const SKILL_GROUPS = {
-  magento: [
-    "Magento 2.4.x", "PHP 8", "Custom modules", "Plugins & observers", "Dependency injection", "Service Contracts",
-    "UI Components", "adminhtml", "Indexers", "Cron", "Composer patches",
+  backend: ["PHP 8", "Laravel", "Magento 2 / Adobe Commerce", "Java / Spring Boot", "C# / .NET", "Python", "OOP", "Design patterns"],
+  frontend: [
+    "React", "JavaScript (ES6+)", "Alpine.js", "Tailwind CSS", "Hyvä Theme", "Knockout.js", "HTML5 / CSS3", "Responsive design",
   ],
-  b2b: ["Company accounts", "Tiered & customer-group pricing", "Catalogue permissions", "Inventory sync"],
-  apis: ["REST APIs", "webapi.xml & ACL", "OAuth2 / JWT", "Microsoft Entra ID SSO", "Amplience DAM & CDN", "Adyen / Apple Pay"],
-  frontend: ["Hyvä Theme", "Alpine.js", "Tailwind CSS", "React", "Knockout.js", "JavaScript (ES6+)"],
-  performance: ["Elasticsearch / OpenSearch", "Redis", "Varnish FPC", "MySQL tuning", "Nginx", "Docker", "CI/CD", "Linux"],
-  also: ["Laravel", "Java / Spring Boot", "C# / .NET", "Python", "Git", "Xdebug", "Agile / Scrum", "Code review"],
+  apis: ["REST API design", "OAuth2 / JWT", "Microsoft Entra ID SSO", "RBAC", "Third-party integrations (Amplience, Adyen)"],
+  data: ["MySQL (query and index tuning)", "Elasticsearch / OpenSearch", "Redis", "Varnish", "Caching strategy"],
+  devops: ["Docker", "Git / GitHub", "CI/CD pipelines", "Nginx", "Linux (Ubuntu)", "Composer", "Xdebug"],
+  practices: ["Agile / Scrum", "Code review", "Refactoring legacy code", "Debugging in production"],
 };
 
 // Bento placement on large screens (4 columns, 3 rows)
 const LAYOUT = {
-  magento: "lg:col-span-2",
-  apis: "lg:col-span-2",
+  backend: "lg:col-span-2",
   frontend: "lg:col-span-2",
-  performance: "lg:col-span-2",
-  b2b: "",
-  also: "lg:col-span-2",
+  apis: "lg:col-span-2",
+  data: "lg:col-span-2",
+  devops: "lg:col-span-2",
+  practices: "",
   languages: "",
 };
 
@@ -33,9 +31,9 @@ const LAYOUT = {
 // page is idle. Until then each chip keeps an icon-sized gap (no layout shift).
 const loadIcons = () => import("./skills/skillIcons");
 const HAS_ICON = new Set([
-  "Magento 2.4.x", "PHP 8", "Composer patches", "OAuth2 / JWT", "Adyen / Apple Pay", "Alpine.js", "Tailwind CSS",
-  "React", "JavaScript (ES6+)", "Elasticsearch / OpenSearch", "Redis", "MySQL tuning", "Nginx", "Docker", "CI/CD",
-  "Linux", "Laravel", "Java / Spring Boot", "C# / .NET", "Python", "Git",
+  "PHP 8", "Laravel", "Magento 2 / Adobe Commerce", "Java / Spring Boot", "C# / .NET", "Python", "React",
+  "JavaScript (ES6+)", "Alpine.js", "Tailwind CSS", "HTML5 / CSS3", "OAuth2 / JWT", "MySQL (query and index tuning)",
+  "Elasticsearch / OpenSearch", "Redis", "Docker", "Git / GitHub", "CI/CD pipelines", "Nginx", "Linux (Ubuntu)", "Composer",
 ]);
 
 const useIdleIcons = () => {
@@ -75,7 +73,7 @@ const Skills = () => {
               delay={(i % 4) * 0.06}
               {...handlers}
               className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
-              {group === "magento" && icons && <icons.BackendMark />}
+              {group === "backend" && icons && <icons.BackendMark />}
               <div className="relative flex items-baseline justify-between gap-3">
                 <h3 className="text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
                 <span className="font-mono text-[0.7rem] text-muted" aria-hidden="true">
@@ -89,7 +87,7 @@ const Skills = () => {
                     <li
                       key={skill}
                       className={`inline-flex items-center gap-2 rounded-full border border-line bg-canvas/60 px-3 py-1.5 text-[0.88rem] ${
-                        group === "also" || group === "languages" ? "text-muted" : "text-fg/90"
+                        group === "practices" || group === "languages" ? "text-muted" : "text-fg/90"
                       }`}
                     >
                       {HAS_ICON.has(skill) &&

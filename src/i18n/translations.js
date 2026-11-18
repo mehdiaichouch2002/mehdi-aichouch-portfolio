@@ -21,7 +21,7 @@ const translations = {
       // Two lines; the word between asterisks is set in the accent color
       headline: ["Full-stack developer.", "I build *anything* for the web."],
       eyebrow: "Mehdi Aichouch · Fès, Morocco",
-      subline: "Most recently: Magento 2 / Adobe Commerce stores for European brands.",
+      subline: "PHP, Laravel, React and Magento 2, on e-commerce platforms for European brands.",
       cta: "See my work",
       contactCta: "Get in touch",
       resume: "Download resume",
@@ -33,7 +33,7 @@ const translations = {
     about: {
       title: "About",
       lead:
-        "I'm Mehdi Aichouch, a Magento 2 / Adobe Commerce backend developer with 2.5+ years on the B2B and B2C stores of Carhartt WIP, Anita and Edwin Europe, serving 50,000+ monthly users across Europe. Custom modules on Service Contracts, REST integrations and fast Hyvä storefronts, plus full-stack PHP work in Laravel and React.",
+        "I'm Mehdi Aichouch, a full-stack web developer with 3 years on the backend and frontend of international e-commerce platforms for Carhartt WIP, Anita and Edwin Europe, serving 50,000+ monthly users across Europe. Backend in PHP 8 with Magento 2 and Laravel, frontend with React, Alpine.js and Tailwind CSS, with a strong focus on performance.",
       photoAlt: "Portrait of Mehdi Aichouch",
       intro:
         "At Cartware / Morocommerce in Fès from 2024 to 2026, freelance since August 2026. Backed by a Bac+3 university diploma in web development frameworks and Java EE, and preparing the Adobe Commerce Developer Professional certification (AD0-E724).",
@@ -107,12 +107,12 @@ const translations = {
       title: "Skills",
       description: "What I use day to day, grouped by area.",
       groups: {
-        magento: "Magento / Adobe Commerce",
-        b2b: "B2B commerce",
-        apis: "APIs and integrations",
+        backend: "Backend",
         frontend: "Frontend",
-        performance: "Performance and infrastructure",
-        also: "Also",
+        apis: "APIs and auth",
+        data: "Data and performance",
+        devops: "DevOps",
+        practices: "Practices",
         languages: "Spoken languages",
       },
       terms: {},
@@ -121,7 +121,7 @@ const translations = {
     contact: {
       title: "Contact",
       subtitle:
-        "Hiring for a Magento or full-stack role, or need help with a store? Send me a message here or by email.",
+        "Hiring for a full-stack, Laravel or Magento role, or need help with a store? Send me a message here or by email.",
       nameLabel: "Name",
       emailLabel: "Email",
       messageLabel: "Message",
@@ -143,7 +143,7 @@ const translations = {
     },
     resumeModal: {
       title: "Download my resume",
-      subtitle: "Magento 2 / Adobe Commerce developer, one PDF per language.",
+      subtitle: "Full-stack developer, one PDF per language.",
       english: "English (PDF)",
       french: "French (PDF)",
       cancel: "Close",
@@ -180,16 +180,16 @@ const translations = {
       },
       {
         org: "Cartware / Morocommerce, Fès",
-        role: "Magento 2 developer",
+        role: "Magento 2 developer (full-stack)",
         date: "Jan 2024 – Jul 2026",
         points: [
-          "Built the REST API layer for the Carhartt WIP DAM integration: repository interfaces, service contracts, di.xml / webapi.xml wiring and Amplience CDN asset resolution, exposing customer verification, credential and catalogue-image endpoints to partner systems.",
-          "Integrated Microsoft Entra ID (Azure AD) single sign-on (app registration, JWKS-based JWT validation, callbacks) and set up Apple Pay domain verification on Adyen for Edwin Europe.",
-          "Cut product listing load time from 3.2s to 0.8s by reworking Elasticsearch field mapping, MySQL queries and indexes, Redis caching and Varnish full-page cache.",
-          "Delivered Hyvä storefronts (Alpine.js, Tailwind CSS), scoring consistently above 95 on Google PageSpeed.",
-          "Built B2B workflows: tiered and customer-group pricing, catalogue permissions, inventory sync over REST.",
-          "Replaced third-party extensions with in-house plugins and observers (Service Contracts).",
-          "Shipped a translation-management admin module (CSV import, bulk upsert through UI components) and fixed a core UTF-8 collation bug with a Composer patch.",
+          "Built and maintained features end to end on three Magento 2.4.x platforms (Carhartt WIP B2B, Anita, Edwin Europe) serving 50,000+ monthly users.",
+          "Designed the REST API layer for the Carhartt WIP DAM integration (repositories, service contracts, webapi.xml, Amplience CDN), exposing customer, credential and image endpoints to partner systems.",
+          "Integrated Microsoft Entra ID (Azure AD) single sign-on: app registration, JWKS-based JWT validation and callback handling.",
+          "Delivered Hyvä storefronts with Alpine.js and Tailwind CSS, scoring consistently above 95 on Google PageSpeed.",
+          "Sped up product listing pages through Elasticsearch mapping, MySQL query and index tuning, Redis and Varnish caching.",
+          "Built B2B features (tiered pricing, catalogue permissions, inventory sync over REST) and set up Apple Pay on Adyen for Edwin Europe.",
+          "Shipped an admin module for translation management with CSV import and bulk upsert, using UI Components.",
           "Refactored 50,000+ lines of legacy code and stabilised Docker and CI/CD pipelines, cutting production bugs by 45%.",
         ],
       },
@@ -198,7 +198,7 @@ const translations = {
         role: "Laravel developer (internship)",
         date: "Aug – Dec 2023",
         points: [
-          "Built an internal management platform on Laravel 10 and Tailwind CSS, used daily by 25+ employees.",
+          "Built a full-stack internal management platform with Laravel 10 and Tailwind CSS, used daily by 25+ employees.",
           "Designed 15+ REST endpoints with proper HTTP semantics, request validation and Eloquent relationships.",
           "Implemented role-based access control and optimised the underlying queries, halving response times.",
         ],
@@ -227,7 +227,7 @@ const translations = {
     certification: {
       name: "Adobe Commerce Developer Professional (AD0-E724)",
       status: "In preparation",
-      note: "Magento 2.4.7 backend development, Adobe Commerce Cloud, checkout and sales flow, adminhtml UI components.",
+      note: "Magento 2.4.7 backend development, Adobe Commerce Cloud, checkout and sales flow.",
     },
   },
 
@@ -250,7 +250,7 @@ const translations = {
     home: {
       headline: ["Développeur full-stack.", "Sur le web, je construis *tout*."],
       eyebrow: "Mehdi Aichouch · Fès, Maroc",
-      subline: "Ces dernières années : des boutiques Magento 2 / Adobe Commerce pour des marques européennes.",
+      subline: "PHP, Laravel, React et Magento 2, sur des plateformes e-commerce pour des marques européennes.",
       cta: "Voir mes projets",
       contactCta: "Me contacter",
       resume: "Télécharger le CV",
@@ -262,7 +262,7 @@ const translations = {
     about: {
       title: "À propos",
       lead:
-        "Je suis Mehdi Aichouch, développeur backend Magento 2 / Adobe Commerce, plus de 2 ans et demi d'expérience sur les plateformes B2B et B2C de Carhartt WIP, Anita et Edwin Europe (50 000+ utilisateurs mensuels en Europe). Modules sur mesure basés sur les Service Contracts, intégrations REST et vitrines Hyvä rapides, ainsi que du full-stack PHP en Laravel et React.",
+        "Je suis Mehdi Aichouch, développeur web full-stack, 3 ans d'expérience sur le backend et le frontend de plateformes e-commerce internationales pour Carhartt WIP, Anita et Edwin Europe (50 000+ utilisateurs mensuels en Europe). Backend en PHP 8 avec Magento 2 et Laravel, frontend avec React, Alpine.js et Tailwind CSS, avec une attention particulière à la performance.",
       photoAlt: "Portrait de Mehdi Aichouch",
       intro:
         "Chez Cartware / Morocommerce à Fès de 2024 à 2026, en freelance depuis août 2026. Titulaire d'un Diplôme d'Université Bac+3 en frameworks de développement web et Java EE, et en préparation de la certification Adobe Commerce Developer Professional (AD0-E724).",
@@ -334,37 +334,34 @@ const translations = {
       title: "Compétences",
       description: "Ce que j'utilise au quotidien, par domaine.",
       groups: {
-        magento: "Magento / Adobe Commerce",
-        b2b: "Commerce B2B",
-        apis: "API et intégrations",
+        backend: "Backend",
         frontend: "Frontend",
-        performance: "Performance et infrastructure",
-        also: "Aussi",
+        apis: "API et authentification",
+        data: "Données et performance",
+        devops: "DevOps",
+        practices: "Méthodes",
         languages: "Langues",
       },
       // French names for the skills that are words rather than product names (Skills.jsx)
       terms: {
-        "Custom modules": "Modules personnalisés",
-        "Dependency injection": "Injection de dépendances",
-        Indexers: "Indexeurs",
-        "Composer patches": "Patches Composer",
-        "Company accounts": "Comptes société",
-        "Tiered & customer-group pricing": "Prix par palier et par groupe client",
-        "Catalogue permissions": "Permissions catalogue",
-        "Inventory sync": "Synchronisation des stocks",
-        "REST APIs": "API REST",
-        "Microsoft Entra ID SSO": "SSO Microsoft Entra ID",
-        "Amplience DAM & CDN": "DAM & CDN Amplience",
+        OOP: "POO",
         "Hyvä Theme": "Thème Hyvä",
-        "MySQL tuning": "Tuning MySQL",
+        "REST API design": "Conception d'API REST",
+        "Microsoft Entra ID SSO": "SSO Microsoft Entra ID",
+        "Third-party integrations (Amplience, Adyen)": "Intégrations tierces (Amplience, Adyen)",
+        "MySQL (query and index tuning)": "MySQL (optimisation des requêtes et index)",
+        "Caching strategy": "Stratégie de cache",
+        "CI/CD pipelines": "Pipelines CI/CD",
         "Code review": "Revue de code",
+        "Refactoring legacy code": "Refactorisation de code legacy",
+        "Debugging in production": "Débogage en production",
       },
       spoken: ["Arabe, langue maternelle", "Anglais, professionnel (B2)", "Français, intermédiaire (B1)"],
     },
     contact: {
       title: "Contact",
       subtitle:
-        "Vous recrutez pour un poste Magento ou full-stack, ou vous avez besoin d'aide sur une boutique ? Écrivez-moi ici ou par email.",
+        "Vous recrutez pour un poste full-stack, Laravel ou Magento, ou vous avez besoin d'aide sur une boutique ? Écrivez-moi ici ou par email.",
       nameLabel: "Nom",
       emailLabel: "Email",
       messageLabel: "Message",
@@ -386,7 +383,7 @@ const translations = {
     },
     resumeModal: {
       title: "Télécharger mon CV",
-      subtitle: "Développeur Magento 2 / Adobe Commerce, un PDF par langue.",
+      subtitle: "Développeur full-stack, un PDF par langue.",
       english: "Anglais (PDF)",
       french: "Français (PDF)",
       cancel: "Fermer",
@@ -423,16 +420,16 @@ const translations = {
       },
       {
         org: "Cartware / Morocommerce, Fès",
-        role: "Développeur Magento 2",
+        role: "Développeur Magento 2 (full-stack)",
         date: "Janv. 2024 – Juil. 2026",
         points: [
-          "Conception de la couche API REST de l'intégration DAM Carhartt WIP : interfaces de repository, service contracts, configuration di.xml / webapi.xml et résolution des assets via le CDN Amplience, exposant aux systèmes externes les endpoints de vérification client, de gestion des accès et d'images catalogue.",
-          "Intégration du SSO Microsoft Entra ID (Azure AD) : enregistrement d'application, validation JWT via JWKS, callbacks ; vérification de domaine Apple Pay sur Adyen pour Edwin Europe.",
-          "Pages catalogue passées de 3,2 s à 0,8 s : mapping Elasticsearch, requêtes et index MySQL, cache Redis, Varnish FPC.",
+          "Développement de fonctionnalités de bout en bout sur trois plateformes Magento 2.4.x (Carhartt WIP B2B, Anita, Edwin Europe), 50 000+ utilisateurs mensuels.",
+          "Conception de la couche API REST de l'intégration DAM Carhartt WIP (repositories, service contracts, webapi.xml, CDN Amplience), exposant des endpoints client, accès et images aux systèmes partenaires.",
+          "Intégration du SSO Microsoft Entra ID (Azure AD) : enregistrement d'application, validation JWT via JWKS, gestion des callbacks.",
           "Vitrines Hyvä (Alpine.js, Tailwind CSS), Google PageSpeed constamment au-dessus de 95.",
-          "Workflows B2B : prix par palier et par groupe client, permissions catalogue, synchronisation des stocks via REST.",
-          "Plugins et observers internes (Service Contracts) en remplacement d'extensions tierces.",
-          "Livraison d'un module admin de gestion des traductions (import CSV, upsert en masse via UI Components) et correction d'une anomalie de collation UTF-8 du core par patch Composer.",
+          "Accélération des pages catalogue : mapping Elasticsearch, requêtes et index MySQL, cache Redis et Varnish.",
+          "Fonctionnalités B2B (prix par palier, permissions catalogue, synchronisation des stocks via REST) et Apple Pay sur Adyen pour Edwin Europe.",
+          "Livraison d'un module admin de gestion des traductions avec import CSV et upsert en masse via UI Components.",
           "Refactorisation de 50 000+ lignes de code legacy, fiabilisation de Docker et des pipelines CI/CD : -45 % de bugs en production.",
         ],
       },
@@ -441,7 +438,7 @@ const translations = {
         role: "Développeur Laravel (stage)",
         date: "Août – Déc. 2023",
         points: [
-          "Plateforme de gestion interne sous Laravel 10 et Tailwind CSS, utilisée chaque jour par 25+ collaborateurs.",
+          "Plateforme de gestion interne full-stack sous Laravel 10 et Tailwind CSS, utilisée chaque jour par 25+ collaborateurs.",
           "Conception de 15+ endpoints REST avec une sémantique HTTP correcte, validation des requêtes et relations Eloquent.",
           "Mise en place d'un contrôle d'accès par rôles (RBAC) et optimisation des requêtes : temps de réponse divisé par deux.",
         ],
@@ -470,7 +467,7 @@ const translations = {
     certification: {
       name: "Adobe Commerce Developer Professional (AD0-E724)",
       status: "En préparation",
-      note: "Développement backend Magento 2.4.7, Adobe Commerce Cloud, tunnel de commande, composants UI adminhtml.",
+      note: "Développement backend Magento 2.4.7, Adobe Commerce Cloud, tunnel de commande.",
     },
   },
 };
