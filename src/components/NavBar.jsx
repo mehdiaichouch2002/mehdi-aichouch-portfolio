@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { cancelFrame, frame, m } from "motion/react";
-import navLinks, { sectionNumber } from "../data/navLinks";
+import navLinks from "../data/navLinks";
 import useScrolled from "../hooks/useScrolled";
 import { useLanguage } from "../context/LanguageContext";
 import ScrollProgress from "./common/ScrollProgress";
@@ -11,7 +11,12 @@ import { DUR, EASE } from "../lib/motion";
 // Section links are plain anchors: CSS scroll-behavior + scroll-padding-top (index.css)
 // handle the smooth scroll and the header offset, and reduced motion turns smoothing off.
 const NAV_HEIGHT = 64; // keep in sync with --nav-h
-const LANGUAGES = ["en", "fr"];
+// Code shown in the switch, full name for screen readers (in its own language)
+const LANGUAGES = [
+  { code: "en", name: "English" },
+  { code: "fr", name: "Français" },
+];
+const LENS_SPRING = { type: "spring", stiffness: 520, damping: 34, mass: 0.7 };
 // "home" is reached through the wordmark
 const sectionLinks = navLinks.filter(({ link }) => link !== "home");
 
@@ -25,23 +30,31 @@ const Wordmark = ({ onClick }) => (
   </a>
 );
 
-const LanguageSwitch = () => {
+// A glass lens with the holographic edge slides to the current language.
+// `id` keeps the desktop and mobile instances (both mounted) from sharing one lens.
+const LanguageSwitch = ({ id }) => {
   const { lang, setLang } = useLanguage();
   return (
-    <div className="flex items-center rounded-full border border-line p-0.5" role="group" aria-label="Language">
-      {LANGUAGES.map((code) => (
-        <button
-          key={code}
-          onClick={() => setLang(code)}
-          aria-label={code.toUpperCase()}
-          aria-pressed={lang === code}
-          className={`min-w-[36px] rounded-full px-2.5 py-1.5 font-mono text-[0.72rem] transition-colors duration-fast ${
-            lang === code ? "bg-fg text-canvas" : "text-muted hover:text-fg"
-          }`}
-        >
-          {code.toUpperCase()}
-        </button>
-      ))}
+    <div className="lang-switch" role="group" aria-label="Language">
+      {LANGUAGES.map(({ code, name }) => {
+        const active = lang === code;
+        return (
+          <button
+            key={code}
+            type="button"
+            onClick={() => setLang(code)}
+            aria-label={name}
+            lang={code}
+            aria-pressed={active}
+            className={`relative isolate min-h-[32px] min-w-[38px] rounded-full px-2.5 font-mono text-[0.72rem] tracking-[0.04em] transition-colors duration-fast ${
+              active ? "" : "text-muted hover:text-fg"
+            }`}
+          >
+            {active && <m.span layoutId={`lang-lens-${id}`} className="lang-lens" transition={LENS_SPRING} aria-hidden="true" />}
+            <span className={active ? "iris-text" : undefined}>{code.toUpperCase()}</span>
+          </button>
+        );
+      })}
     </div>
   );
 };
@@ -132,7 +145,7 @@ const NavBar = () => {
                       href={`#${link}`}
                       data-wave={link}
                       aria-current={isActive ? "true" : undefined}
-                      className={`group relative isolate flex items-baseline gap-1.5 rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast hover:bg-fg/[0.05] hover:text-accent ${
+                      className={`group relative isolate flex items-baseline rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast hover:bg-fg/[0.05] hover:text-accent ${
                         isActive ? "text-fg" : "text-muted"
                       }`}
                     >
@@ -145,25 +158,17 @@ const NavBar = () => {
                           aria-hidden="true"
                         />
                       )}
-                      <span
-                        className={`font-mono text-[0.65rem] transition-colors duration-fast ${
-                          isActive ? "text-accent" : "text-muted/60 group-hover:text-accent/70"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {sectionNumber(link)}
-                      </span>
                       <span>{t(`nav.${link}`)}</span>
                     </a>
                   </li>
                 );
               })}
             </ul>
-            <LanguageSwitch />
+            <LanguageSwitch id="desktop" />
           </div>
 
           <div className="flex items-center gap-1 lg:hidden">
-            <LanguageSwitch />
+            <LanguageSwitch id="mobile" />
             <button
               onClick={() => setNav(true)}
               className="grid h-11 w-11 place-items-center text-fg"
@@ -210,13 +215,10 @@ const NavBar = () => {
                 href={`#${link}`}
                 onClick={closeNav}
                 tabIndex={nav ? 0 : -1}
-                className={`flex items-baseline gap-3 rounded-sm px-3 py-3 text-xl font-semibold tracking-[-0.02em] ${
+                className={`flex items-baseline rounded-sm px-3 py-3 text-xl font-semibold tracking-[-0.02em] ${
                   activeSection === link ? "text-fg" : "text-muted hover:text-fg"
                 }`}
               >
-                <span className={`w-5 font-mono text-[0.7rem] ${activeSection === link ? "text-accent" : ""}`}>
-                  {sectionNumber(link)}
-                </span>
                 {t(`nav.${link}`)}
               </a>
             </li>

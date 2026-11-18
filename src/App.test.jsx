@@ -54,7 +54,7 @@ describe("Language switcher", () => {
   test("switches the UI to French", () => {
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "FR" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Français" })[0]);
 
     expect(
       screen.getByRole("heading", { level: 1, name: /développeur full-stack\. sur le web, je construis tout/i })
@@ -76,7 +76,7 @@ describe("SEO", () => {
     expect(window.location.pathname).toBe("/");
     expect(document.title).toMatch(/^Mehdi Aichouch \| Full-Stack Developer/);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "FR" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Français" })[0]);
 
     expect(window.location.pathname).toBe("/fr");
     expect(document.documentElement.lang).toBe("fr");
