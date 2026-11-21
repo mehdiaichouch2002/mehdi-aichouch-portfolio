@@ -106,16 +106,25 @@ const app = (body, opts) => frame(`<div class="row" style="height:calc(100% - 38
 
 const TALL = { "carhartt-tall": 1050 };
 
+// The B2B store is behind a partner login, so the only public screen is the sign-in page.
+// That page is where the Entra ID single sign-on lands, so the cover shows it with what
+// sits behind it (the integrations I built) in front, rather than the login alone.
+const carharttIntegrations = (style) => `
+<div class="float" style="${style};padding:22px 24px">
+  <div class="row between"><span class="h2">Behind the partner login</span><span class="chip ok"><span class="led"></span>all connected</span></div>
+  ${[["Microsoft Entra ID", "Single sign-on, JWT checked against JWKS", "SSO"], ["Amplience", "Product imagery and content over the DAM CDN", "REST"], ["Prices and stock", "Tiered prices, catalogue permissions, stock sync", "REST"]]
+    .map(([n, d, t]) => `<div class="row g12" style="margin-top:14px;padding-top:14px;border-top:1px solid #26262b"><span class="led ok"></span><span class="b small" style="width:160px">${n}</span><span class="small muted f1">${d}</span><span class="chip ac">${t}</span></div>`).join("")}
+</div>`;
+
+// Client cards scale their cover by 1.12 for the scroll parallax, which crops ~70px off
+// each side, so the Carhartt compositions keep their content inside 100…1100px
 const COVERS = {
-  carhartt: () => device("carhartt", "b2b.carhartt-wip.com"),
+  carhartt: () => `
+${frame(`<img src="${shot("carhartt", "desktop")}">`, { addr: "b2b.carhartt-wip.com", x: 100, y: 56, w: 660, h: 445 })}
+${carharttIntegrations("left:470px;top:290px;width:620px")}`,
   "carhartt-tall": () => `
-${frame(`<img src="${shot("carhartt", "desktop")}">`, { addr: "b2b.carhartt-wip.com", x: 60, y: 76, w: 960, h: 640 })}
-<div class="phone" style="left:850px;top:400px;width:290px"><img src="${shot("carhartt", "mobile")}"></div>
-<div class="float" style="left:60px;top:770px;width:700px;padding:20px 22px">
-  <div class="row between"><span class="h2">Integrations</span><span class="chip ok"><span class="led"></span>all connected</span></div>
-  ${[["Microsoft Entra ID", "Single sign-on for retail partners", "SSO"], ["Amplience", "Product imagery and content over the DAM CDN", "REST"], ["Inventory & pricing", "Tiered prices, catalogue permissions, stock sync", "REST"]]
-    .map(([n, d, t]) => `<div class="row g12" style="margin-top:14px;padding-top:14px;border-top:1px solid #26262b"><span class="led ok"></span><span class="b small" style="width:170px">${n}</span><span class="small muted f1">${d}</span><span class="chip ac">${t}</span></div>`).join("")}
-</div>`,
+${frame(`<img src="${shot("carhartt", "desktop")}">`, { addr: "b2b.carhartt-wip.com", x: 110, y: 130, w: 980, h: 620 })}
+${carharttIntegrations("left:330px;top:670px;width:750px")}`,
   anita: () => device("anita", "www.anita.com"),
   edwin: () => device("edwin", "edwin-europe.com"),
   portfolio: () => device("portfolio", "mehdiaichouch.com"),
