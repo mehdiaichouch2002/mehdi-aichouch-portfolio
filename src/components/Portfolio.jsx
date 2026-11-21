@@ -39,7 +39,7 @@ const Portfolio = () => {
   return (
     <section id="portfolio" aria-labelledby="work-title" className="section">
       <div className="page">
-        <SectionHeader id="work-title" section="portfolio" title={t("portfolio.title")} intro={t("portfolio.description")} />
+        <SectionHeader id="work-title" title={t("portfolio.title")} intro={t("portfolio.description")} />
 
         <h3 className="eyebrow mt-16">{t("portfolio.clientTitle")}</h3>
         <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">

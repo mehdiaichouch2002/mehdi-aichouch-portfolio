@@ -102,7 +102,7 @@ export default function ChatPanel({ isOpen, chat }) {
         >
           <div className="px-4 py-3 border-b border-line flex-shrink-0">
             <p className="font-semibold text-fg leading-tight">{t("chat.title")}</p>
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted truncate mt-0.5">
+            <p className="text-[0.85rem] text-muted truncate mt-0.5">
               {t("chat.subtitle")}
             </p>
           </div>

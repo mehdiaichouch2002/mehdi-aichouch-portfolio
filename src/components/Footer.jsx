@@ -138,7 +138,7 @@ const Footer = () => {
 
         <button
           onClick={toTop}
-          className="group inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-[0.72rem] uppercase tracking-[0.12em] text-muted transition-colors duration-fast hover:text-fg md:mr-40 md:self-auto"
+          className="group inline-flex min-h-[44px] items-center gap-2 self-start text-[0.9rem] text-muted transition-colors duration-fast hover:text-fg md:mr-40 md:self-auto"
         >
           <span className="grid h-9 w-9 place-items-center rounded-full border border-line transition-[border-color,transform] duration-fast ease-out group-hover:-translate-y-0.5 group-hover:border-accent/60">
             <FiArrowUp aria-hidden="true" />

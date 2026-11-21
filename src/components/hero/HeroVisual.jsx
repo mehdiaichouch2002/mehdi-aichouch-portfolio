@@ -176,7 +176,7 @@ const HeroVisual = ({ className = "" }) => {
           <div className="hs-scene">
             <div className="hs-ground" />
             {LAYERS.map(({ key, Art }, i) => (
-              <div key={key} className="hs-layer" style={{ "--i": i }}>
+              <div key={key} className="hs-layer" data-layer={key} style={{ "--i": i }}>
                 {/* Underside of the slab: a second face just below gives the glass its thickness */}
                 <div className="hs-edge" />
                 <div className="hs-plate">
@@ -185,6 +185,7 @@ const HeroVisual = ({ className = "" }) => {
                   </svg>
                   <div className="hs-sheen" />
                   <div className="hs-ping" />
+                  <div className="hs-lit" />
                 </div>
                 {/* Outside the plate: the plate is flat, the label must stay 3D to face the viewer */}
                 <span className="hs-label">{t(`home.stack.${key}`)}</span>

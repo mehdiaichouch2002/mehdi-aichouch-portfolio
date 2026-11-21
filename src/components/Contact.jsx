@@ -84,7 +84,7 @@ const Contact = () => {
   // Called as a function (not <Field/>) so inputs keep focus between renders
   const Field = ({ id, name, label, children }) => (
     <div>
-      <label htmlFor={id} className="mb-2 block font-mono text-[0.72rem] uppercase tracking-[0.12em] text-muted">
+      <label htmlFor={id} className="mb-2 block text-[0.9rem] text-muted">
         {label}
       </label>
       {children}
@@ -104,7 +104,7 @@ const Contact = () => {
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(ellipse_50%_60%_at_20%_0%,rgb(var(--accent)/0.08),transparent)]" aria-hidden="true" />
       <div className="page grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
         <div>
-          <SectionHeader id="contact-title" section="contact" title={t("contact.title")} intro={t("contact.subtitle")} />
+          <SectionHeader id="contact-title" title={t("contact.title")} intro={t("contact.subtitle")} />
 
           <p className="eyebrow mt-12">{t("contact.direct")}</p>
           <ul className="mt-3 border-t border-line">

@@ -19,7 +19,7 @@ const Experience = () => {
     <section id="experience" aria-labelledby="experience-title" className="section">
       <div className="page grid gap-14 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-20">
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:self-start">
-          <SectionHeader id="experience-title" section="experience" title={t("timeline.title")} intro={t("timeline.intro")} />
+          <SectionHeader id="experience-title" title={t("timeline.title")} intro={t("timeline.intro")} />
         </div>
 
         <div>
@@ -43,7 +43,7 @@ const Experience = () => {
                   transition={{ duration: DUR.base, ease: EASE }}
                   aria-hidden="true"
                 />
-                <p className="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-muted tabular-nums">{job.date}</p>
+                <p className="text-[0.9rem] text-muted tabular-nums">{job.date}</p>
                 <h3 className="mt-2 text-[1.3rem] leading-snug tracking-[-0.02em]">{job.role}</h3>
                 <p className="mt-0.5 text-fg/70">{job.org}</p>
                 {job.note && <p className="mt-1 text-sm text-muted">{job.note}</p>}

@@ -8,10 +8,4 @@ const navLinks = [
   { id: 6, link: "contact" },
 ];
 
-// "01", "02"… for the micro-labels; home has no number
-export const sectionNumber = (link) => {
-  const i = navLinks.findIndex((n) => n.link === link);
-  return i > 0 ? String(i).padStart(2, "0") : "";
-};
-
 export default navLinks;

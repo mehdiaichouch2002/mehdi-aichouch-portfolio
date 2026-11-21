@@ -63,7 +63,7 @@ const Skills = () => {
     <section id="skills" aria-labelledby="skills-title" className="section isolate overflow-x-clip">
       <div className="topo-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
       <div className="page">
-        <SectionHeader id="skills-title" section="skills" title={t("skills.title")} intro={t("skills.description")} />
+        <SectionHeader id="skills-title" title={t("skills.title")} intro={t("skills.description")} />
 
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {Object.entries(LAYOUT).map(([group, span], i) => (
@@ -74,12 +74,7 @@ const Skills = () => {
               {...handlers}
               className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
               {group === "backend" && icons && <icons.BackendMark />}
-              <div className="relative flex items-baseline justify-between gap-3">
-                <h3 className="text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
-                <span className="font-mono text-[0.7rem] text-muted" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
+              <h3 className="relative text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
               <ul className="relative mt-5 flex flex-wrap gap-2">
                 {groups[group].map((skill) => {
                   const Icon = icons?.ICONS[skill];

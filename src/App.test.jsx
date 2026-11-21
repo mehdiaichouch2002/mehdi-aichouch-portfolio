@@ -7,7 +7,7 @@ describe("App smoke test", () => {
     render(<App />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: /full-stack developer\. i build anything for the web/i })
+      screen.getByRole("heading", { level: 1, name: /full-stack developer\. from the database to the checkout/i })
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /^work$/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /^skills$/i })).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe("Language switcher", () => {
     fireEvent.click(screen.getAllByRole("button", { name: "Français" })[0]);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: /développeur full-stack\. sur le web, je construis tout/i })
+      screen.getByRole("heading", { level: 1, name: /développeur full-stack\. de la donnée au panier/i })
     ).toBeInTheDocument();
   });
 });

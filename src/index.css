@@ -103,9 +103,10 @@
     @apply border-t border-line py-24 md:py-32;
   }
 
-  /* "01 / Work" micro-label above every section title */
+  /* Small label naming a group of content (the hero's name line, "Client stores"):
+     sentence case, muted, no tracking */
   .eyebrow {
-    @apply font-mono text-[0.75rem] uppercase tracking-[0.14em] text-muted;
+    @apply text-[0.9rem] text-muted;
   }
 
   .section-title {
@@ -464,6 +465,9 @@ html.lenis.lenis-stopped {
 .rise-line:nth-child(2) > span {
   animation-delay: 90ms;
 }
+.rise-line:nth-child(3) > span {
+  animation-delay: 180ms;
+}
 
 @keyframes rise {
   from { transform: translateY(105%); }
@@ -582,6 +586,46 @@ html.lenis.lenis-stopped {
   animation: hs-ping 6s linear infinite;
   animation-delay: calc(1.3s + (3 - var(--i)) * 0.9s);
 }
+/* Lit layer: hovering a phrase of the hero subline (Home.jsx, data-layer) lights the
+   layer it names. Opacity only; no script, the link is :has() on the hero. */
+.hs-lit {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgb(var(--accent));
+  box-shadow: 0 0 6cqw rgb(var(--accent) / 0.3), inset 0 0 5cqw rgb(var(--accent) / 0.16);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+#home:has(.hero-layer[data-layer="interface"]:hover) .hs-layer[data-layer="interface"] .hs-lit,
+#home:has(.hero-layer[data-layer="commerce"]:hover) .hs-layer[data-layer="commerce"] .hs-lit,
+#home:has(.hero-layer[data-layer="api"]:hover) .hs-layer[data-layer="api"] .hs-lit,
+#home:has(.hero-layer[data-layer="data"]:hover) .hs-layer[data-layer="data"] .hs-lit {
+  opacity: 1;
+}
+#home:has(.hero-layer[data-layer="interface"]:hover) .hs-layer[data-layer="interface"] .hs-label,
+#home:has(.hero-layer[data-layer="commerce"]:hover) .hs-layer[data-layer="commerce"] .hs-label,
+#home:has(.hero-layer[data-layer="api"]:hover) .hs-layer[data-layer="api"] .hs-label,
+#home:has(.hero-layer[data-layer="data"]:hover) .hs-layer[data-layer="data"] .hs-label {
+  color: rgb(var(--accent));
+}
+
+/* The subline's layer phrases: a shade brighter than the sentence around them, and
+   on a mouse a dotted underline (the "hover me" convention, not a link) */
+.hero-layer {
+  color: rgb(var(--text) / 0.9);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-layer {
+    text-decoration: underline dotted 1px;
+    text-decoration-color: rgb(var(--text) / 0.3);
+    text-underline-offset: 0.22em;
+  }
+  .hero-layer:hover {
+    text-decoration-color: rgb(var(--accent) / 0.8);
+  }
+}
+
 .hs-label {
   position: absolute;
   left: 100%;

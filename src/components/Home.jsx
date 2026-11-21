@@ -9,15 +9,16 @@ import RollText from "./motion/RollText";
 const liveStores = projects.filter((p) => p.category === "commercial");
 const hostname = (url) => new URL(url).hostname.replace(/^www\./, "");
 
-// "I build *anything* for the web." -> the starred word in the holographic spectrum
-const withAccent = (line) =>
-  line.split("*").map((part, i) =>
-    i % 2 ? (
-      <span key={i} className="iris-text">
-        {part}
-      </span>
-    ) : (
+// The subline names the four layers of the stack; each phrase carries data-layer,
+// and hovering it lights that layer in HeroVisual (pure CSS, :has() in index.css)
+const Subline = ({ parts }) =>
+  parts.map((part, i) =>
+    typeof part === "string" ? (
       part
+    ) : (
+      <span key={i} data-layer={part.layer} className="hero-layer">
+        {part.text}
+      </span>
     )
   );
 
@@ -44,17 +45,17 @@ const Home = () => {
           {/* The name is part of the h1 (it is what people search for), styled as the eyebrow */}
           <h1 id="hero-title">
             <span className="eyebrow hero-in block font-normal">{t("home.eyebrow")}</span>{" "}
-            <span className="mt-6 block max-w-[15ch] text-[clamp(2.6rem,6.4vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] lg:max-w-[14.5ch]">
+            <span className="mt-6 block max-w-[15ch] text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.055em] lg:max-w-[14.5ch]">
               {headline.map((line) => (
                 <span key={line} className="rise-line">
-                  <span>{withAccent(line)}</span>{" "}
+                  <span>{line}</span>{" "}
                 </span>
               ))}
             </span>
           </h1>
 
           <p className="mt-6 max-w-[30rem] text-[1.15rem] leading-relaxed text-muted md:text-[1.25rem]">
-            {t("home.subline")}
+            <Subline parts={t("home.subline")} />
           </p>
 
           <div className="hero-in mt-8 flex flex-wrap items-center gap-3" style={{ "--d": "380ms" }}>

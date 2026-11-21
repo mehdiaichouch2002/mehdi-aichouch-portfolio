@@ -108,12 +108,12 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
       <div className={`flex flex-col ${featured ? "p-6 md:p-8" : "p-5 md:p-6"}`}>
         <div className="flex items-center justify-between gap-4">
           {isLive ? (
-            <p className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-live">
+            <p className="inline-flex items-center gap-2 text-[0.85rem] text-live">
               <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden="true" />
               {t("portfolio.live")}
             </p>
           ) : (
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-muted">GitHub</p>
+            <p className="text-[0.85rem] text-muted">GitHub</p>
           )}
           <a
             href={project.href}
@@ -142,10 +142,9 @@ const ProjectCard = ({ project, onOpen, onHover, featured = false, index = 0, cl
 
         <button
           onClick={(e) => onOpen(project, e.currentTarget)}
-          className="mt-5 inline-flex items-center gap-1.5 self-start font-mono text-[0.75rem] uppercase tracking-[0.1em] text-fg after:absolute after:inset-0 after:rounded-[inherit] after:content-[''] [@media(hover:hover)_and_(pointer:fine)]:after:cursor-none"
+          className="mt-5 self-start text-[0.95rem] font-semibold text-fg underline decoration-line-strong underline-offset-4 transition-colors duration-fast group-hover:decoration-accent after:absolute after:inset-0 after:rounded-[inherit] after:content-[''] [@media(hover:hover)_and_(pointer:fine)]:after:cursor-none"
         >
           {cta}
-          <span className="transition-transform duration-fast ease-out group-hover:translate-x-1" aria-hidden="true">→</span>
           <span className="sr-only">: {project.title}</span>
         </button>
       </div>

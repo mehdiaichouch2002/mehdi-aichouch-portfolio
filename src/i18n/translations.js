@@ -18,14 +18,23 @@ const translations = {
       contact: "Contact",
     },
     home: {
-      // Two lines; the word between asterisks is set in the accent color
-      headline: ["Full-stack developer.", "I build *anything* for the web."],
-      eyebrow: "Mehdi Aichouch · Fès, Morocco",
-      subline: "PHP, Laravel, React and Magento 2, on e-commerce platforms for European brands.",
+      headline: ["Full-stack developer.", "From the database to the checkout."],
+      eyebrow: "Mehdi Aichouch, based in Fès, Morocco",
+      // One phrase per layer of the stack, top to bottom: hovering a phrase lights its layer
+      subline: [
+        { layer: "interface", text: "React interfaces" },
+        ", ",
+        { layer: "commerce", text: "Magento 2 stores" },
+        ", ",
+        { layer: "api", text: "Laravel APIs" },
+        " and ",
+        { layer: "data", text: "the MySQL data behind them" },
+        ", for European brands.",
+      ],
       cta: "See my work",
       contactCta: "Get in touch",
       resume: "Download resume",
-      availability: "Available immediately · Based in Fès, Morocco · Open to remote, hybrid or on-site",
+      availability: "Available now for remote, hybrid or on-site work.",
       liveStores: "Live stores I've worked on",
       visualAlt: "The layers of a web app: interface, commerce, API and data",
       stack: { interface: "interface", commerce: "commerce", api: "api", data: "data" },
@@ -40,13 +49,13 @@ const translations = {
     },
     timeline: {
       title: "Experience",
-      intro: "Jobs and freelance work, most recent first.",
+      intro: "Three years of e-commerce in production, at Cartware / Morocommerce and now freelance.",
       educationTitle: "Education",
       certificationTitle: "Certification",
     },
     portfolio: {
       title: "Work",
-      description: "Client stores first, then open-source and personal projects.",
+      description: "Three Magento stores for European brands, plus client sites, modules and tools.",
       live: "Live",
       role: "My role",
       clientRole: "Magento 2 developer (full-stack) at Cartware / Morocommerce",
@@ -105,7 +114,7 @@ const translations = {
     },
     skills: {
       title: "Skills",
-      description: "What I use day to day, grouped by area.",
+      description: "The stack behind those stores, from the database to the browser.",
       groups: {
         backend: "Backend",
         frontend: "Frontend",
@@ -170,7 +179,7 @@ const translations = {
     },
     experience: [
       {
-        org: "Self-employed · Remote",
+        org: "Self-employed, remote",
         role: "Full-stack developer (freelance)",
         date: "Aug 2026 – Present",
         note: "Client projects through agencies.",
@@ -248,13 +257,23 @@ const translations = {
       contact: "Contact",
     },
     home: {
-      headline: ["Développeur full-stack.", "Sur le web, je construis *tout*."],
-      eyebrow: "Mehdi Aichouch · Fès, Maroc",
-      subline: "PHP, Laravel, React et Magento 2, sur des plateformes e-commerce pour des marques européennes.",
+      // Forced break: on one line the last line would run over the stack's top layer
+      headline: ["Développeur full-stack.", "De la donnée", "au panier."],
+      eyebrow: "Mehdi Aichouch, basé à Fès, au Maroc",
+      subline: [
+        { layer: "interface", text: "Des interfaces React" },
+        ", ",
+        { layer: "commerce", text: "des boutiques Magento 2" },
+        ", ",
+        { layer: "api", text: "des API Laravel" },
+        " et ",
+        { layer: "data", text: "les données MySQL derrière" },
+        ", pour des marques européennes.",
+      ],
       cta: "Voir mes projets",
       contactCta: "Me contacter",
       resume: "Télécharger le CV",
-      availability: "Disponible immédiatement · Basé à Fès, Maroc · Télétravail, hybride ou sur site",
+      availability: "Disponible dès maintenant, en télétravail, hybride ou sur site.",
       liveStores: "Boutiques en ligne sur lesquelles j'ai travaillé",
       visualAlt: "Les couches d'une application web : interface, e-commerce, API et données",
       stack: { interface: "interface", commerce: "e-commerce", api: "api", data: "données" },
@@ -269,13 +288,13 @@ const translations = {
     },
     timeline: {
       title: "Parcours",
-      intro: "Postes et missions freelance, du plus récent au plus ancien.",
+      intro: "Trois ans d'e-commerce en production, chez Cartware / Morocommerce puis en freelance.",
       educationTitle: "Formation",
       certificationTitle: "Certification",
     },
     portfolio: {
       title: "Projets",
-      description: "D'abord les boutiques clientes, puis les projets open source et personnels.",
+      description: "Trois boutiques Magento pour des marques européennes, plus des sites clients, des modules et des outils.",
       live: "En ligne",
       role: "Mon rôle",
       clientRole: "Développeur Magento 2 (full-stack) chez Cartware / Morocommerce",
@@ -332,7 +351,7 @@ const translations = {
     },
     skills: {
       title: "Compétences",
-      description: "Ce que j'utilise au quotidien, par domaine.",
+      description: "La stack derrière ces boutiques, de la base de données au navigateur.",
       groups: {
         backend: "Backend",
         frontend: "Frontend",
@@ -410,7 +429,7 @@ const translations = {
     },
     experience: [
       {
-        org: "Indépendant · À distance",
+        org: "Indépendant, à distance",
         role: "Développeur full-stack freelance",
         date: "Depuis août 2026",
         note: "Projets clients via des agences.",

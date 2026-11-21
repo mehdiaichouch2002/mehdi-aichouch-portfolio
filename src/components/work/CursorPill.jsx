@@ -68,12 +68,12 @@ const CursorPill = forwardRef((_, ref) => {
       {/* Centering lives on its own element: motion's scale would overwrite the translate */}
       <div className="-translate-x-1/2 -translate-y-1/2">
         <m.div
-          className="whitespace-nowrap rounded-full bg-accent px-4 py-2.5 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-canvas shadow-glow"
+          className="whitespace-nowrap rounded-full bg-accent px-4 py-2.5 text-[0.85rem] font-semibold text-canvas shadow-glow"
           initial={false}
           animate={label ? { scale: 1, opacity: 1 } : { scale: 0.4, opacity: 0 }}
           transition={{ duration: DUR.base, ease: EASE }}
         >
-          {label ?? shown.current} →
+          {label ?? shown.current}
         </m.div>
       </div>
     </m.div>

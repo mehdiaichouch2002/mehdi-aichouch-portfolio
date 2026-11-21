@@ -14,7 +14,7 @@ const About = () => {
     <section id="about" aria-labelledby="about-title" className="section">
       <div className="page grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
         <div>
-          <SectionHeader id="about-title" section="about" title={t("about.title")} />
+          <SectionHeader id="about-title" title={t("about.title")} />
           <Reveal as="figure" delay={0.1} className="halftone mt-10 w-full max-w-[280px] overflow-hidden rounded-lg border border-line bg-surface">
             {/* 4:5 crops of the original photo, 320/640 px wide (1x/2x of the 280 px frame) */}
             <picture>
