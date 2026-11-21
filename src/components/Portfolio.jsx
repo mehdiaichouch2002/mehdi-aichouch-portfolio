@@ -4,6 +4,7 @@ import projects from "../data/projects";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
 import ProjectCard from "./work/ProjectCard";
+import ProjectRow from "./work/ProjectRow";
 import ProjectDetail from "./work/ProjectDetail";
 import CursorPill from "./work/CursorPill";
 
@@ -59,11 +60,13 @@ const Portfolio = () => {
         <div className="mt-24">
           <h3 className="text-[1.6rem] leading-tight tracking-[-0.03em]">{t("portfolio.otherTitle")}</h3>
           <p className="mt-2 max-w-[36rem] text-muted">{t("portfolio.otherDescription")}</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {visible.map((project, i) => (
-              <ProjectCard key={project.id} project={project} onOpen={open} onHover={onHover} index={i} />
+          {/* An index, not a second grid of cards. From lg the rows share the list's
+              columns (subgrid), so stack and links line up from row to row. */}
+          <ul className="mt-8 border-b border-line lg:grid lg:grid-cols-[9rem_1fr_15rem_auto] lg:gap-x-8">
+            {visible.map((project) => (
+              <ProjectRow key={project.id} project={project} onOpen={open} onHover={onHover} />
             ))}
-          </div>
+          </ul>
           {otherWork.length > INITIAL_VISIBLE && (
             <button onClick={() => setExpanded((v) => !v)} aria-expanded={expanded} className="btn-secondary mt-10">
               {expanded ? t("portfolio.showLess") : t("portfolio.showAll").replace("{count}", otherWork.length)}

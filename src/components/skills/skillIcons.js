@@ -29,12 +29,3 @@ export const ICONS = {
   Composer: SiComposer,
 };
 
-// The hero tile of the grid gets the platform marks large
-export const BackendMark = () => (
-  <div className="pointer-events-none absolute -bottom-5 -right-3 flex gap-3 text-[5.5rem] text-fg/[0.04]" aria-hidden="true">
-    <SiPhp />
-    <SiLaravel />
-    <SiMagento />
-  </div>
-);
-

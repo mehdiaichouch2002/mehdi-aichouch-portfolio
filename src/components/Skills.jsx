@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import SectionHeader from "./common/SectionHeader";
-import Reveal from "./motion/Reveal";
-import usePointerCard from "../hooks/usePointerCard";
 
 // Mirrors the Skills section of the resume PDFs in public/.
 const SKILL_GROUPS = {
@@ -16,16 +14,9 @@ const SKILL_GROUPS = {
   practices: ["Agile / Scrum", "Code review", "Refactoring legacy code", "Debugging in production"],
 };
 
-// Bento placement on large screens (4 columns, 3 rows)
-const LAYOUT = {
-  backend: "lg:col-span-2",
-  frontend: "lg:col-span-2",
-  apis: "lg:col-span-2",
-  data: "lg:col-span-2",
-  devops: "lg:col-span-2",
-  practices: "",
-  languages: "",
-};
+// Row order. Practices and spoken languages are set quieter than the tools.
+const ORDER = ["backend", "frontend", "apis", "data", "devops", "practices", "languages"];
+const QUIET = new Set(["practices", "languages"]);
 
 // Brand icons are ~65 kB of SVG paths, so they load in their own chunk once the
 // page is idle. Until then each chip keeps an icon-sized gap (no layout shift).
@@ -53,7 +44,6 @@ const useIdleIcons = () => {
 const Skills = () => {
   const { t } = useLanguage();
   const icons = useIdleIcons();
-  const { handlers } = usePointerCard();
   const groups = { ...SKILL_GROUPS, languages: t("skills.spoken") };
   // Skill names stay in English except the plain-word ones listed in skills.terms
   const terms = t("skills.terms");
@@ -65,38 +55,34 @@ const Skills = () => {
       <div className="page">
         <SectionHeader id="skills-title" title={t("skills.title")} intro={t("skills.description")} />
 
-        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {Object.entries(LAYOUT).map(([group, span], i) => (
-            <Reveal
-              as="li"
-              key={group}
-              delay={(i % 4) * 0.06}
-              {...handlers}
-              className={`card spotlight overflow-hidden p-6 transition-colors duration-base ease-out hover:border-line-strong ${span}`}>
-              {group === "backend" && icons && <icons.BackendMark />}
-              <h3 className="relative text-[1.05rem] tracking-[-0.01em]">{t(`skills.groups.${group}`)}</h3>
-              <ul className="relative mt-5 flex flex-wrap gap-2">
+        {/* A typeset list, not a grid of cards: one ruled row per area, the area on
+            the left, its tools set as text on the right */}
+        <ul className="mt-14 border-b border-line">
+          {ORDER.map((group) => (
+            <li key={group} className="grid gap-x-10 gap-y-3 border-t border-line py-6 md:grid-cols-[13rem_1fr] md:py-7">
+              <h3 className={`text-[1.05rem] tracking-[-0.01em] ${QUIET.has(group) ? "text-muted" : ""}`}>
+                {t(`skills.groups.${group}`)}
+              </h3>
+              <ul className="flex flex-wrap gap-x-7 gap-y-2.5">
                 {groups[group].map((skill) => {
                   const Icon = icons?.ICONS[skill];
                   return (
                     <li
                       key={skill}
-                      className={`inline-flex items-center gap-2 rounded-full border border-line bg-canvas/60 px-3 py-1.5 text-[0.88rem] ${
-                        group === "practices" || group === "languages" ? "text-muted" : "text-fg/90"
-                      }`}
+                      className={`inline-flex items-center gap-2 text-[1.05rem] ${QUIET.has(group) ? "text-muted" : "text-fg/90"}`}
                     >
                       {HAS_ICON.has(skill) &&
                         (Icon ? (
-                          <Icon className="h-[1em] w-[1em] shrink-0 text-muted" aria-hidden="true" />
+                          <Icon className="h-[0.95em] w-[0.95em] shrink-0 text-muted" aria-hidden="true" />
                         ) : (
-                          <span className="h-[1em] w-[1em] shrink-0" aria-hidden="true" />
+                          <span className="h-[0.95em] w-[0.95em] shrink-0" aria-hidden="true" />
                         ))}
                       {label(skill)}
                     </li>
                   );
                 })}
               </ul>
-            </Reveal>
+            </li>
           ))}
         </ul>
       </div>
