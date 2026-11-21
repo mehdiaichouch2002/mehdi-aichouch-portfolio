@@ -173,18 +173,6 @@
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
   }
 
-  /* Holographic text: the spectrum clipped to the glyphs */
-  .iris-text {
-    background-image: var(--iris);
-    background-size: 200% 100%;
-    background-position: 0 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-  }
-
   /* Topographic contour lines (generated: src/assets/textures/topo.svg) */
   .topo-bg {
     background: url("./assets/textures/topo.svg") center / cover no-repeat;
@@ -401,35 +389,69 @@
   animation-timing-function: var(--ease-out);
 }
 
-/* Language switch (NavBar.jsx): a glass track; the current language sits under a
-   lens with the holographic edge, which slides across with a spring (layoutId). */
-.lang-switch {
-  display: flex;
+/* Language switch (NavBar.jsx): a two-tile split-flap display, like a departure board,
+   reading the other language's code. Each tile is two halves clipped from one full
+   glyph box; the hinge is the hairline across the middle. Transform only. */
+.lang-flap {
+  display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 999px;
-  border: 1px solid rgb(var(--border));
-  background: rgb(var(--surface) / 0.45);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  min-height: 44px; /* touch target; the tiles are smaller */
+  padding: 0 2px;
+  border-radius: 4px;
 }
-.lang-lens {
+.flap {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 24px;
+  perspective: 90px;
+  font: 400 0.8rem/24px "Geist Mono", ui-monospace, monospace;
+  text-align: center;
+  color: rgb(var(--text));
+}
+.flap-half {
   position: absolute;
   inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  border: 1px solid transparent;
-  /* Opaque inside (glass highlight over the surface colour), iris only on the 1px edge */
-  background:
-    linear-gradient(160deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02)) padding-box,
-    linear-gradient(rgb(var(--surface-2)), rgb(var(--surface-2))) padding-box,
-    var(--iris) border-box;
-  box-shadow: 0 0 14px -2px rgb(var(--accent) / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.12);
+  border-radius: 3px;
+  border: 1px solid rgb(var(--border-strong));
+  backface-visibility: hidden;
+  transform-origin: 50% 50%;
 }
-.lang-switch button:focus-visible {
-  outline: 2px solid rgb(var(--accent));
+/* The top leaf is a shade lighter than the bottom one, as on a real board */
+.flap-top {
+  background: linear-gradient(rgb(var(--surface-2)), rgb(30 30 34));
+  clip-path: inset(0 0 50% 0);
+}
+.flap-bottom {
+  background: linear-gradient(rgb(22 22 25), rgb(var(--surface)));
+  clip-path: inset(50% 0 0 0);
+}
+/* The hinge */
+.flap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: rgb(0 0 0 / 0.7);
+  pointer-events: none;
+}
+/* The flip itself (old top falls, new bottom lands) is driven by Motion in NavBar.jsx.
+   Hover: each top leaf lifts a little off its hinge, as if about to fall */
+@media (hover: hover) and (pointer: fine) {
+  .flap > .flap-top:first-child {
+    transition: transform var(--dur-fast) var(--ease-out) var(--fd, 0ms);
+  }
+  .lang-flap:hover .flap > .flap-top:first-child {
+    transform: rotateX(-24deg);
+  }
+  .lang-flap:hover .flap-half {
+    border-color: rgb(var(--accent) / 0.45);
+  }
+}
+.lang-flap:focus-visible {
   outline-offset: 2px;
 }
 

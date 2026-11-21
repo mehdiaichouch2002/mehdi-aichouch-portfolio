@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { cancelFrame, frame, m } from "motion/react";
 import navLinks from "../data/navLinks";
+import { langPath } from "../data/site";
 import useScrolled from "../hooks/useScrolled";
 import { useLanguage } from "../context/LanguageContext";
 import ScrollProgress from "./common/ScrollProgress";
@@ -11,12 +12,8 @@ import { DUR, EASE } from "../lib/motion";
 // Section links are plain anchors: CSS scroll-behavior + scroll-padding-top (index.css)
 // handle the smooth scroll and the header offset, and reduced motion turns smoothing off.
 const NAV_HEIGHT = 64; // keep in sync with --nav-h
-// Code shown in the switch, full name for screen readers (in its own language)
-const LANGUAGES = [
-  { code: "en", name: "English" },
-  { code: "fr", name: "Français" },
-];
-const LENS_SPRING = { type: "spring", stiffness: 520, damping: 34, mass: 0.7 };
+// Each language's name in its own language (the link's accessible name)
+const ENDONYM = { en: "English", fr: "Français" };
 // "home" is reached through the wordmark
 const sectionLinks = navLinks.filter(({ link }) => link !== "home");
 
@@ -30,32 +27,82 @@ const Wordmark = ({ onClick }) => (
   </a>
 );
 
-// A glass lens with the holographic edge slides to the current language.
-// `id` keeps the desktop and mobile instances (both mounted) from sharing one lens.
-const LanguageSwitch = ({ id }) => {
+// One tile of the split-flap display. When the letter changes, the old top half
+// falls forward on its hinge and the new bottom half lands, like a departure board.
+// Static layers sit behind the two moving leaves, which are keyed by `n` so each change
+// plays once; once the flip is over the leaves are removed and the static layers show
+// the new letter. The flip waits out the language crossfade (a view transition of
+// DUR.base): while it runs the page shows snapshots, so a flip inside it is never seen.
+// Motion drives the leaves (inline style each frame) rather than CSS keyframes, which
+// Chrome could leave painted at their first keyframe here.
+const FALL = { duration: 0.17, ease: [0.55, 0, 1, 0.45] };
+const LAND = { duration: 0.23, ease: EASE };
+const FlapTile = ({ from, to, n, moving, delay }) => (
+  <span className="flap" style={{ "--fd": `${delay * 1000}ms` }}>
+    <span className="flap-half flap-top">{to}</span>
+    <span className="flap-half flap-bottom">{moving ? from : to}</span>
+    {moving && (
+      <>
+        <m.span
+          key={`fall-${n}`}
+          className="flap-half flap-top"
+          initial={{ rotateX: 0 }}
+          animate={{ rotateX: -90 }}
+          transition={{ ...FALL, delay: DUR.base + delay }}
+        >
+          {from}
+        </m.span>
+        <m.span
+          key={`land-${n}`}
+          className="flap-half flap-bottom"
+          initial={{ rotateX: 90 }}
+          animate={{ rotateX: 0 }}
+          transition={{ ...LAND, delay: DUR.base + delay + FALL.duration }}
+        >
+          {to}
+        </m.span>
+      </>
+    )}
+  </span>
+);
+
+// Language switch: a link to the other language, shown on a two-tile split-flap
+// display ("FR" on the English page). Clicking flips the tiles to the new code.
+// A real link to /fr or /, so it also opens in a new tab and needs no JS to work.
+const LanguageSwitch = () => {
   const { lang, setLang } = useLanguage();
+  const target = lang === "en" ? "fr" : "en";
+  const code = target.toUpperCase();
+  // What the tiles showed before and show now; n counts the flips
+  const [flap, setFlap] = useState({ from: code, to: code, n: 0, moving: false });
+  useEffect(() => {
+    setFlap((f) => (f.to === code ? f : { from: f.to, to: code, n: f.n + 1, moving: true }));
+    // The flip waits out the 400ms language crossfade, then the second tile takes 70ms
+    // delay + 170ms fall + 230ms land; plus some slack. A timer, not animationend: in the
+    // hidden instance (desktop or mobile) the animations never run.
+    const id = setTimeout(() => setFlap((f) => ({ ...f, moving: false })), 1000);
+    return () => clearTimeout(id);
+  }, [code]);
+
   return (
-    <div className="lang-switch" role="group" aria-label="Language">
-      {LANGUAGES.map(({ code, name }) => {
-        const active = lang === code;
-        return (
-          <button
-            key={code}
-            type="button"
-            onClick={() => setLang(code)}
-            aria-label={name}
-            lang={code}
-            aria-pressed={active}
-            className={`relative isolate min-h-[32px] min-w-[38px] rounded-full px-2.5 font-mono text-[0.72rem] tracking-[0.04em] transition-colors duration-fast ${
-              active ? "" : "text-muted hover:text-fg"
-            }`}
-          >
-            {active && <m.span layoutId={`lang-lens-${id}`} className="lang-lens" transition={LENS_SPRING} aria-hidden="true" />}
-            <span className={active ? "iris-text" : undefined}>{code.toUpperCase()}</span>
-          </button>
-        );
-      })}
-    </div>
+    <a
+      href={langPath(target)}
+      hrefLang={target}
+      lang={target}
+      aria-label={ENDONYM[target]}
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; // new tab/window: let it be
+        e.preventDefault();
+        setLang(target);
+      }}
+      className="lang-flap"
+    >
+      <span className="flex gap-[3px]" aria-hidden="true">
+        {[0, 1].map((i) => (
+          <FlapTile key={i} from={flap.from[i]} to={flap.to[i]} n={flap.n} moving={flap.moving} delay={i * 0.07} />
+        ))}
+      </span>
+    </a>
   );
 };
 
@@ -145,30 +192,23 @@ const NavBar = () => {
                       href={`#${link}`}
                       data-wave={link}
                       aria-current={isActive ? "true" : undefined}
-                      className={`group relative isolate flex items-baseline rounded-full px-3 py-2 text-[0.9rem] transition-colors duration-fast hover:bg-fg/[0.05] hover:text-accent ${
+                      // No pill: the liquid line's dip under the link already marks the
+                      // section being read, and the hovered one
+                      className={`flex items-baseline px-3 py-2 text-[0.9rem] transition-colors duration-fast hover:text-fg ${
                         isActive ? "text-fg" : "text-muted"
                       }`}
                     >
-                      {/* One pill shared by all links: it glides to whichever section is active */}
-                      {isActive && (
-                        <m.span
-                          layoutId="nav-active"
-                          className="absolute inset-0 -z-10 rounded-full border border-line bg-surface/80"
-                          transition={{ duration: DUR.base, ease: EASE }}
-                          aria-hidden="true"
-                        />
-                      )}
                       <span>{t(`nav.${link}`)}</span>
                     </a>
                   </li>
                 );
               })}
             </ul>
-            <LanguageSwitch id="desktop" />
+            <LanguageSwitch />
           </div>
 
-          <div className="flex items-center gap-1 lg:hidden">
-            <LanguageSwitch id="mobile" />
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitch />
             <button
               onClick={() => setNav(true)}
               className="grid h-11 w-11 place-items-center text-fg"
@@ -197,8 +237,7 @@ const NavBar = () => {
         }`}
         aria-hidden={!nav}
       >
-        <div className="flex h-nav items-center justify-between border-b border-line px-5">
-          <span className="eyebrow">Menu</span>
+        <div className="flex h-nav items-center justify-end border-b border-line px-5">
           <button onClick={closeNav} className="grid h-11 w-11 place-items-center text-fg" aria-label="Close menu" tabIndex={nav ? 0 : -1}>
             <FiX size={22} aria-hidden="true" />
           </button>

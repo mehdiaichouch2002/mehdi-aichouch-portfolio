@@ -160,8 +160,9 @@ const translations = {
     footer: {
       location: "Fès, Morocco.",
       backToTop: "Back to top",
-      localTime: "Local time in Fès",
-      builtWith: "Built with React and Tailwind CSS.",
+      // {time} is replaced with the current time in Fès (Footer.jsx)
+      localTime: "It's {time} in Fès.",
+      builtWith: "Set in Geist. Built with React, Tailwind CSS and Motion.",
     },
     chat: {
       open: "Ask AI",
@@ -410,8 +411,8 @@ const translations = {
     footer: {
       location: "Fès, Maroc.",
       backToTop: "Haut de page",
-      localTime: "Heure locale à Fès",
-      builtWith: "Réalisé avec React et Tailwind CSS.",
+      localTime: "Il est {time} à Fès.",
+      builtWith: "Composé en Geist. Réalisé avec React, Tailwind CSS et Motion.",
     },
     chat: {
       open: "Demander à l'IA",

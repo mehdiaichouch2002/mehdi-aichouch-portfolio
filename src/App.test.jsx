@@ -54,11 +54,25 @@ describe("Language switcher", () => {
   test("switches the UI to French", () => {
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Français" })[0]);
+    fireEvent.click(screen.getAllByRole("link", { name: "Français" })[0]);
 
     expect(
       screen.getByRole("heading", { level: 1, name: /développeur full-stack\. de la donnée au panier/i })
     ).toBeInTheDocument();
+  });
+
+  test("links to the other language, named in that language", () => {
+    render(<App />);
+    const toFrench = screen.getAllByRole("link", { name: "Français" })[0];
+    expect(toFrench).toHaveAttribute("href", "/fr");
+    expect(toFrench).toHaveAttribute("hreflang", "fr");
+
+    fireEvent.click(toFrench);
+
+    // The switch now offers English, and takes the page back to it
+    fireEvent.click(screen.getAllByRole("link", { name: "English" })[0]);
+    expect(window.location.pathname).toBe("/");
+    expect(document.documentElement.lang).toBe("en");
   });
 });
 
@@ -76,7 +90,7 @@ describe("SEO", () => {
     expect(window.location.pathname).toBe("/");
     expect(document.title).toMatch(/^Mehdi Aichouch \| Full-Stack Developer/);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Français" })[0]);
+    fireEvent.click(screen.getAllByRole("link", { name: "Français" })[0]);
 
     expect(window.location.pathname).toBe("/fr");
     expect(document.documentElement.lang).toBe("fr");

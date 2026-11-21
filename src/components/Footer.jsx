@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { m, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { FiArrowUp } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext";
 import { contactLinks, socialLinks } from "../data/contactLinks";
 import { scrollToTarget } from "../lib/smoothScroll";
@@ -9,18 +8,22 @@ import { DUR, EASE } from "../lib/motion";
 const fesTime = () =>
   new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Casablanca", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
 
-// "Local time 18:24" in Fès, refreshed twice a minute (text only, no animation)
-// Empty until mounted: the prerendered HTML can't know what time it is.
-const LocalTime = ({ label }) => {
+// "It's 18:24 in Fès", refreshed twice a minute (text only, no animation).
+// Hidden until mounted: the prerendered HTML can't know what time it is, and the first
+// client render has to match it.
+const LocalTime = ({ sentence }) => {
   const [time, setTime] = useState("");
   useEffect(() => {
     setTime(fesTime());
     const id = setInterval(() => setTime(fesTime()), 30000);
     return () => clearInterval(id);
   }, []);
+  const [before, after] = sentence.split("{time}");
   return (
-    <p className="font-mono text-[0.72rem]">
-      {label} <span className="tabular-nums text-fg">{time}</span>
+    <p className={time ? undefined : "invisible"}>
+      {before}
+      <span className="tabular-nums text-fg">{time || "00:00"}</span>
+      {after}
     </p>
   );
 };
@@ -122,8 +125,8 @@ const Footer = () => {
           <p className="text-fg">
             &copy; {new Date().getFullYear()} Mehdi Aichouch. {t("footer.location")}
           </p>
-          <LocalTime label={t("footer.localTime")} />
-          <p className="font-mono text-[0.72rem]">{t("footer.builtWith")}</p>
+          <LocalTime sentence={t("footer.localTime")} />
+          <p>{t("footer.builtWith")}</p>
         </div>
 
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
@@ -136,13 +139,11 @@ const Footer = () => {
           ))}
         </ul>
 
+        {/* Plain text, like the links beside it: no icon in a circle */}
         <button
           onClick={toTop}
-          className="group inline-flex min-h-[44px] items-center gap-2 self-start text-[0.9rem] text-muted transition-colors duration-fast hover:text-fg md:mr-40 md:self-auto"
+          className="min-h-[44px] self-start text-left text-muted underline decoration-line-strong underline-offset-4 transition-colors duration-fast hover:text-fg hover:decoration-accent md:mr-40 md:self-auto"
         >
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-line transition-[border-color,transform] duration-fast ease-out group-hover:-translate-y-0.5 group-hover:border-accent/60">
-            <FiArrowUp aria-hidden="true" />
-          </span>
           {t("footer.backToTop")}
         </button>
       </div>
