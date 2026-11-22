@@ -69,6 +69,17 @@
     -moz-osx-font-smoothing: grayscale;
     /* Fine film grain, tiled SVG (no image request) */
     background-image: var(--grain);
+    /* Text can't be selected or images dragged out; form fields and the chat input
+       still can (Safari would make inherited user-select: none fields uneditable) */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  img {
+    -webkit-user-drag: none;
   }
 
   h1, h2, h3, h4 {
