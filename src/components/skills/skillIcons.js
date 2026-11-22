@@ -29,3 +29,29 @@ export const ICONS = {
   Composer: SiComposer,
 };
 
+
+// Brand colours, lightened where the official one would vanish on the dark page
+// (GitHub and JWT are black, .NET, Python, MySQL, Elastic and Composer too dark)
+export const COLORS = {
+  "PHP 8": "#8892BF",
+  Laravel: "#FF2D20",
+  "Magento 2 / Adobe Commerce": "#EE672F",
+  "Java / Spring Boot": "#6DB33F",
+  "C# / .NET": "#8C6CFF",
+  Python: "#FFD43B",
+  React: "#61DAFB",
+  "JavaScript (ES6+)": "#F7DF1E",
+  "Alpine.js": "#8BC0D0",
+  "Tailwind CSS": "#38BDF8",
+  "HTML5 / CSS3": "#E34F26",
+  "OAuth2 / JWT": "#FB015B",
+  "MySQL (query and index tuning)": "#F29111",
+  "Elasticsearch / OpenSearch": "#00BFB3",
+  Redis: "#FF4438",
+  Docker: "#2496ED",
+  "Git / GitHub": "#F0F0F0",
+  "CI/CD pipelines": "#2088FF",
+  Nginx: "#1FAF55",
+  "Linux (Ubuntu)": "#E95420",
+  Composer: "#C58B5A",
+};

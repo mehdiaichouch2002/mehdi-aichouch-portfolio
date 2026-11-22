@@ -73,7 +73,11 @@ const Skills = () => {
                     >
                       {HAS_ICON.has(skill) &&
                         (Icon ? (
-                          <Icon className="h-[0.95em] w-[0.95em] shrink-0 text-muted" aria-hidden="true" />
+                          <Icon
+                            className="h-[0.95em] w-[0.95em] shrink-0"
+                            style={{ color: icons.COLORS[skill] }}
+                            aria-hidden="true"
+                          />
                         ) : (
                           <span className="h-[0.95em] w-[0.95em] shrink-0" aria-hidden="true" />
                         ))}
